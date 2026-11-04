@@ -17,3 +17,7 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 - Uji UI Playwright di Docker dengan pemilihan area terdampak (`e2e/impact-map.json`).
 - CI GitHub Actions (lint, Larastan level 8, audit dependensi, PHPUnit + coverage ≥ 80%, Playwright, gitleaks, build image), workflow rilis image, dan Dependabot.
 - Dokumentasi serah terima, analisis proses bisnis tiga SOP, ADR 0001–0007, aturan agent (`AGENTS.md`), dan usulan aturan tambahan.
+
+### Catatan
+
+- Model peran sementara: hanya Super Admin yang menjadi prioritas; peran lain disesuaikan setelah data dukung diterima. MFA (R6) ditunda untuk MVP 1.

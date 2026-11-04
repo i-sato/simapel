@@ -67,5 +67,7 @@ Semua area, karena ini PR awal: `@setup`, `@auth`, `@account`, `@dashboard`, `@l
 
 ## Belum termasuk / tindak lanjut
 
+- Model peran akan direvisi mengikuti data dukung; untuk sekarang peran yang diprioritaskan adalah Super Admin.
+- MFA (R6) ditunda untuk MVP 1.
 - Modul manajemen pengguna & audit log (UI), SOP Builder, pelatihan, tugas, dan peserta.
 - Keputusan data dukung, pemetaan lajur SOP, kalender kerja, retensi (JRA), PPDP, target deploy, dan pilihan aturan agent tambahan.

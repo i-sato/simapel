@@ -33,6 +33,8 @@ Tanggal keputusan: 4 November 2026.
    - clean architecture;
    - keamanan OWASP dan kepatuhan UU PDP;
    - CI/CD di GitHub private.
+6. MFA (usulan R6) ditunda karena target saat ini adalah MVP 1 berbentuk prototipe.
+7. Model peran akan berubah mengikuti data dukung. Peran utama yang disiapkan lebih dulu adalah **Super Admin**; peran lain (`admin_regional`, `pegawai`) di enum `Role` bersifat sementara dan akan disesuaikan.
 
 ## Cara melanjutkan
 
@@ -66,7 +68,7 @@ Urutan ini masih usulan dan disesuaikan setelah data dukung diterima.
 
 ## Batasan yang diketahui
 
-- MFA belum tersedia (usulan R6).
+- MFA belum tersedia (usulan R6, ditunda untuk MVP 1).
 - Alarm otomatis untuk event keamanan belum tersedia.
 - Ukuran image production sekitar 590 MB (Debian). Optimasi ke Alpine dapat dikaji bila diperlukan.
 - `make` membutuhkan lingkungan Unix (macOS, Linux, WSL2). Perintah `docker compose` setara tercantum di [pengembangan.md](pengembangan.md).

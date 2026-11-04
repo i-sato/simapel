@@ -45,7 +45,7 @@ Kepatuhan pelindungan data dibahas di [kepatuhan-pdp.md](kepatuhan-pdp.md).
 
 | Celah | Rencana |
 |---|---|
-| Belum ada MFA untuk Super Admin | Usulan: TOTP untuk peran administrator (perlu keputusan) |
+| Belum ada MFA untuk Super Admin | Ditunda untuk MVP 1 (prototipe); wajib dikaji ulang sebelum go-live |
 | Belum ada alarm otomatis pada event keamanan | Notifikasi ke admin bila percobaan login dibatasi berulang |
 | Retensi audit log belum ditetapkan | Menunggu Jadwal Retensi Arsip (JRA) instansi |
 | Pemeriksaan kata sandi bocor (HIBP) tidak aktif | Sengaja dimatikan karena mengirim hash parsial ke layanan luar negeri; aktifkan hanya bila disetujui |
