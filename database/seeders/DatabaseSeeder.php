@@ -2,24 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+/**
+ * Sengaja tidak membuat akun maupun data contoh. Akun pertama dibuat dengan
+ * `php artisan simapel:user:create` agar tidak ada kredensial bawaan.
+ */
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $this->command?->info('Tidak ada data bawaan. Buat akun dengan: php artisan simapel:user:create');
     }
 }

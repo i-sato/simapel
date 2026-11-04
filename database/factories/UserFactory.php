@@ -2,44 +2,55 @@
 
 namespace Database\Factories;
 
+use App\Domain\Identity\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
+ * Data sintetis untuk pengujian. NIP diawali 9999 agar tidak menyerupai NIP nyata.
+ *
  * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
+    public const PASSWORD = 'Rahasia-Uji-123!';
+
+    protected static ?string $passwordHash = null;
 
     /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
         return [
+            'nip' => '9999'.fake()->unique()->numerify('##############'),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'role' => Role::Pegawai,
+            'is_active' => true,
+            'password' => static::$passwordHash ??= Hash::make(self::PASSWORD),
+            'password_change_required' => false,
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
+    public function role(Role $role): static
     {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
+        return $this->state(fn (): array => ['role' => $role]);
+    }
+
+    public function superAdmin(): static
+    {
+        return $this->role(Role::SuperAdminRegional);
+    }
+
+    public function inactive(): static
+    {
+        return $this->state(fn (): array => ['is_active' => false]);
+    }
+
+    public function mustChangePassword(): static
+    {
+        return $this->state(fn (): array => ['password_change_required' => true]);
     }
 }

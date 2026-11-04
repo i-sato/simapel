@@ -1,8 +1,4 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
-
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+// Perintah artisan berbasis class berada di app/Console/Commands dan dimuat otomatis.
+// Jadwal (scheduler) didaftarkan di sini bila dibutuhkan, mis. retensi audit log.
