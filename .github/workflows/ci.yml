@@ -1,0 +1,209 @@
+# CI SIMAPEL — berjalan di repository private (GitHub-hosted runner).
+# Action di-pin ke commit SHA (pembaruan lewat Dependabot) untuk keamanan rantai pasok.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      e2e_scope:
+        description: "Cakupan uji UI"
+        type: choice
+        options: [affected, all]
+        default: all
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PHP_VERSION: "8.5"
+  PHP_EXTENSIONS: pdo_mysql, intl, zip, bcmath
+
+jobs:
+  quality:
+    name: Gaya kode, analisis statis & audit dependensi
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          coverage: none
+          tools: composer:v2
+
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.composer/cache/files
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+
+      - run: composer install --no-interaction --no-progress --prefer-dist
+      - name: Pint (gaya kode)
+        run: vendor/bin/pint --test
+      - name: Larastan (level 8)
+        run: vendor/bin/phpstan analyse --no-progress --memory-limit=1G
+      - name: Audit kerentanan Composer
+        run: composer audit --locked
+
+  tests:
+    name: PHPUnit + coverage (MySQL 8.4)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: simapel_testing
+          MYSQL_USER: simapel
+          MYSQL_PASSWORD: ci-only-db-password
+          MYSQL_ROOT_PASSWORD: ci-only-root-password
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -pci-only-root-password --silent"
+          --health-interval=5s --health-timeout=5s --health-retries=30
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_USERNAME: simapel
+      DB_PASSWORD: ci-only-db-password
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          coverage: pcov
+          ini-values: pcov.directory=app
+          tools: composer:v2
+
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.composer/cache/files
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+
+      - run: composer install --no-interaction --no-progress --prefer-dist
+      - name: Siapkan .env pengujian
+        run: cp .env.example .env && php artisan key:generate --ansi
+      - name: PHPUnit (Unit, Architecture, Feature)
+        run: php vendor/bin/phpunit --coverage-clover build/coverage/clover.xml --coverage-text
+      - name: Ambang coverage minimum 80%
+        run: php scripts/coverage-check.php build/coverage/clover.xml 80
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: coverage
+          path: build/coverage
+          retention-days: 14
+          if-no-files-found: ignore
+
+  e2e:
+    name: UI Playwright (area terdampak)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Siapkan .env (kata sandi database acak)
+        run: ./scripts/setup-env.sh
+
+      - name: Tentukan area UI terdampak
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.sha }}
+          SCOPE: ${{ inputs.e2e_scope }}
+        run: |
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            git diff --name-only "$BASE_SHA...$HEAD_SHA" > e2e/.changed-files
+          elif [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$SCOPE" = "affected" ]; then
+            git diff --name-only HEAD~1...HEAD > e2e/.changed-files
+          else
+            echo ALL > e2e/.changed-files
+          fi
+          echo "File berubah:"; cat e2e/.changed-files
+
+      - name: Build & jalankan stack Docker
+        run: |
+          docker compose build app
+          docker compose up -d --wait db app
+          docker compose exec -T app composer install --no-interaction --no-progress --prefer-dist
+          docker compose exec -T app php artisan key:generate --force --ansi
+          docker compose exec -T app php artisan migrate --force
+          docker compose up -d --wait
+
+      - name: Uji resolver area terdampak
+        run: docker compose --profile e2e run --rm --no-deps playwright sh -c "npm ci --no-audit --no-fund --loglevel=error && node --test scripts/"
+
+      - name: Playwright
+        run: |
+          password="$(openssl rand -hex 16)Aa1!"
+          echo "::add-mask::$password"
+          docker compose exec -T -e E2E_PASSWORD="$password" app php artisan db:seed --class=E2eSeeder --force
+          docker compose --profile e2e run --rm -e E2E_PASSWORD="$password" -e CI=true playwright \
+            sh -c "npm ci --no-audit --no-fund --loglevel=error && node scripts/run-affected.mjs .changed-files"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: playwright-report
+          path: e2e/playwright-report
+          retention-days: 14
+          if-no-files-found: ignore
+
+      - name: Log container (bila gagal)
+        if: failure()
+        run: docker compose logs --no-color --tail=200
+
+  secrets:
+    name: Pemindaian rahasia (gitleaks)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: gitleaks (riwayat git)
+        run: |
+          docker run --rm -v "$PWD:/repo" --entrypoint sh zricethezav/gitleaks:v8.30.1 \
+            -c 'git config --global --add safe.directory /repo && gitleaks git --redact --no-banner --exit-code 1 /repo'
+
+  image:
+    name: Build image produksi
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: docker/php/Dockerfile
+          target: prod
+          push: false
+          tags: simapel-app:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
