@@ -35,3 +35,5 @@ Thumbs.db
 /e2e/test-results/
 /e2e/blob-report/
 /e2e/.changed-files
+# Storage state Playwright berisi cookie sesi.
+/e2e/.auth/

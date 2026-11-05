@@ -1,0 +1,74 @@
+# Serah terima
+
+Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui di setiap PR yang mengubah status.
+
+## Status saat ini (4 November 2026)
+
+| Area | Status |
+|---|---|
+| Fondasi teknis (Laravel 13, PHP 8.5, MySQL 8.4, Docker) | Selesai |
+| Clean architecture + uji arsitektur | Selesai |
+| Autentikasi NIP, keamanan akun, audit login | Selesai |
+| Tema UI referensi, layout, halaman galat | Selesai |
+| Pengujian: 101 PHPUnit, coverage 99%, 16 uji UI Playwright, 8 uji resolver | Selesai |
+| CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
+| Manajemen pengguna (UI), audit log (UI) | Belum: modul berikutnya |
+| SOP Builder, pelatihan, tugas, peserta | Belum: menunggu data dukung |
+| Assessment & sertifikat | Ditunda (ADR 0007) |
+| Continuous Delivery (deploy) | Menunggu informasi server |
+
+## Keputusan pemilik proyek
+
+Tanggal keputusan: 4 November 2026.
+
+1. Laravel memakai versi terbaik dari sisi keamanan, yaitu Laravel 13 dengan PHP 8.5 (ADR 0001).
+2. Teknologi database sama dengan referensi, yaitu MySQL (8.4 LTS, ADR 0002). Skema dan migrasi data diputuskan setelah data dukung diterima.
+3. Root project berada di folder `simapel/` dengan acuan refactor di `reference-simapel/`. Proyek disiapkan sebagai GitHub project, dan setiap perubahan disiapkan sebagai Pull Request.
+4. Assessment dan sertifikat diabaikan dulu (ADR 0007).
+5. Aturan tambahan:
+   - Playwright di Docker untuk uji UI;
+   - unit test di setiap perubahan;
+   - uji UI hanya area terdampak;
+   - dokumentasi di setiap PR;
+   - clean architecture;
+   - keamanan OWASP dan kepatuhan UU PDP;
+   - CI/CD di GitHub private.
+6. MFA (usulan R6) ditunda karena target saat ini adalah MVP 1 berbentuk prototipe.
+7. Model peran akan berubah mengikuti data dukung. Peran utama yang disiapkan lebih dulu adalah **Super Admin**; peran lain (`admin_regional`, `pegawai`) di enum `Role` bersifat sementara dan akan disesuaikan.
+
+## Cara melanjutkan
+
+1. Baca `AGENTS.md`, lalu [arsitektur.md](arsitektur.md) dan [pengujian.md](pengujian.md).
+2. Jalankan `make setup`, `make user`, lalu `make ci` untuk memastikan lingkungan sehat.
+3. Buat branch dari `main`, kerjakan satu modul, dan ikuti Definition of Done di `AGENTS.md`.
+4. Tambahkan catatan di `docs/perubahan/` dan entri `CHANGELOG.md`, lalu buka PR.
+
+## Usulan urutan modul berikutnya
+
+Urutan ini masih usulan dan disesuaikan setelah data dukung diterima.
+
+1. **Manajemen pengguna & audit log (UI)** untuk Super Admin: buat/ubah/nonaktifkan akun, reset kata sandi (wajib ganti saat login), dan daftar audit dengan filter.
+2. **SOP Builder** dengan mesin alur: tahap, prasyarat linear default, tahap keputusan, validator per lajur, versi, dan publikasi.
+3. **Pelatihan & tim**: buat dari versi SOP (snapshot), penugasan Admin/Ketua yang dapat diganti, dan anggota tim kontekstual.
+4. **Tugas & bukti**: antrean "Tugas Saya", validasi/revisi, realisasi waktu terhadap mutu baku, dan kalender.
+5. **Peserta mengikuti siklus SOP**: impor data DTS/LMS, status seleksi, penetapan, kehadiran, dan status akhir.
+6. **Laporan & ekspor** dengan proteksi formula CSV.
+
+## Pertanyaan terbuka
+
+| Topik | Pertanyaan | Pemilik |
+|---|---|---|
+| Data | Contoh data dukung (pendaftar DTS, peserta, kehadiran, nilai LMS, data pegawai) dan keputusan migrasi dari `db_simapel` | Pemilik proyek |
+| Proses | Pemetaan lajur SOP → peran aplikasi dan validator; perlakuan keputusan Kepala Balai | Pemilik proses |
+| Kalender | Hari kalender atau hari kerja; sumber kalender libur | Pemilik proses |
+| PDP | Dasar pemrosesan, PPDP, retensi (JRA), teks pemberitahuan privasi | Hukum/PPDP instansi |
+| GitHub | Pemilik/nama repository dan paket (fitur protected branch di repo private butuh Pro/Team) | Pemilik proyek |
+| Deploy | Lokasi server (di Indonesia), akses jaringan, HTTPS, backup | Tim infrastruktur |
+| Aturan agent | Pilihan dari `agent-rules-usulan.md` | Pemilik proyek |
+
+## Batasan yang diketahui
+
+- MFA belum tersedia (usulan R6, ditunda untuk MVP 1).
+- Alarm otomatis untuk event keamanan belum tersedia.
+- Ukuran image production sekitar 590 MB (Debian). Optimasi ke Alpine dapat dikaji bila diperlukan.
+- `make` membutuhkan lingkungan Unix (macOS, Linux, WSL2). Perintah `docker compose` setara tercantum di [pengembangan.md](pengembangan.md).

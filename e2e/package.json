@@ -1,0 +1,14 @@
+{
+    "name": "simapel-e2e",
+    "private": true,
+    "type": "module",
+    "description": "Uji UI SIMAPEL dengan Playwright (dijalankan di container Docker).",
+    "scripts": {
+        "test": "playwright test",
+        "test:affected": "node scripts/run-affected.mjs .changed-files",
+        "test:scripts": "node --test scripts/"
+    },
+    "devDependencies": {
+        "@playwright/test": "1.64.1"
+    }
+}
