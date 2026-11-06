@@ -45,16 +45,16 @@ Tanggal keputusan: 4 November 2026.
 
 ## Rencana MVP-1
 
-Problem statement pemilik proyek ("Simapel Business Story" + "Additional Features V.1") dan keputusan 7 November 2026 menggantikan usulan urutan modul sebelumnya. Langkah, kriteria selesai, dan prompt per langkah ada di [mvp-1/panduan.md](mvp-1/panduan.md).
+Problem statement pemilik proyek ("Simapel Business Story" + "Additional Features V.1" dan "V.2") dan keputusan 7 November 2026 menggantikan usulan urutan modul sebelumnya. Langkah, kriteria selesai, dan prompt per langkah ada di [mvp-1/panduan.md](mvp-1/panduan.md).
 
-Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) dengan Ketua/Sekretaris/Anggota. Pusat proses MVP-1 adalah informasi pelatihan (draft → final), penugasan Admin/Panitia dengan peringatan bentrok, template WA, kelengkapan BAP/SK/ST, dan pemetaan beban kerja. Alur tahap SOP dari referensi ditunda.
+Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) dengan Ketua/Sekretaris/Anggota. Pusat proses MVP-1 adalah informasi pelatihan (draft → final), penugasan Admin/Panitia dengan peringatan bentrok, template WA, kelengkapan BAP/SK/ST, dan pemetaan beban kerja. Alur tahap SOP dari referensi ditunda; MVP-1 cukup menyimpan link SOP per tim kerja dan memakai durasi kritis administratif global yang mengacu pada SOP.
 
 ## Pertanyaan terbuka
 
 | Topik | Pertanyaan | Pemilik |
 |---|---|---|
 | Data | Daftar pegawai dan komposisi tim diinput lewat aplikasi (impor CSV), bukan lewat repository | Pemilik proyek |
-| Peringatan | Ambang eskalasi kelengkapan BAP/SK/ST (usulan: ≤ 3 hari sebelum pelaksanaan) | Pemilik proyek |
+| SOP | Link SOP tiap tim kerja dan konfirmasi durasi kritis default (BAP H+1, SK/ST H+2, siap H+3 dari SOP TalDig) | Pemilik proyek |
 | Data peserta | Pembatasan akses Google Sheet peserta yang saat ini terbuka untuk siapa saja yang memiliki tautan | Pemilik proyek |
 | PDP | Dasar pemrosesan, PPDP, retensi (JRA), teks pemberitahuan privasi | Hukum/PPDP instansi |
 | GitHub | Paket akun (fitur protected branch di repo private butuh Pro/Team) | Pemilik proyek |
