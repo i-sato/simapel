@@ -12,8 +12,8 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Tema UI referensi, layout, halaman galat | Selesai |
 | Pengujian: 101 PHPUnit, coverage 99%, 16 uji UI Playwright, 8 uji resolver | Selesai |
 | CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
-| Manajemen pengguna (UI), audit log (UI) | Belum: modul berikutnya |
-| SOP Builder, pelatihan, tugas, peserta | Belum: menunggu data dukung |
+| Pegawai, tim kerja, pelatihan, penugasan, template WA, administrasi, beban kerja | Belum: langkah 1–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
+| SOP Builder dan alur tahap SOP | Ditunda dari MVP-1 |
 | Assessment & sertifikat | Ditunda (ADR 0007) |
 | Continuous Delivery (deploy) | Menunggu informasi server |
 
@@ -43,26 +43,21 @@ Tanggal keputusan: 4 November 2026.
 3. Buat branch dari `main`, kerjakan satu modul, dan ikuti Definition of Done di `AGENTS.md`.
 4. Tambahkan catatan di `docs/perubahan/` dan entri `CHANGELOG.md`, lalu buka PR.
 
-## Usulan urutan modul berikutnya
+## Rencana MVP-1
 
-Urutan ini masih usulan dan disesuaikan setelah data dukung diterima.
+Problem statement pemilik proyek ("Simapel Business Story" + "Additional Features V.1") dan keputusan 7 November 2026 menggantikan usulan urutan modul sebelumnya. Langkah, kriteria selesai, dan prompt per langkah ada di [mvp-1/panduan.md](mvp-1/panduan.md).
 
-1. **Manajemen pengguna & audit log (UI)** untuk Super Admin: buat/ubah/nonaktifkan akun, reset kata sandi (wajib ganti saat login), dan daftar audit dengan filter.
-2. **SOP Builder** dengan mesin alur: tahap, prasyarat linear default, tahap keputusan, validator per lajur, versi, dan publikasi.
-3. **Pelatihan & tim**: buat dari versi SOP (snapshot), penugasan Admin/Ketua yang dapat diganti, dan anggota tim kontekstual.
-4. **Tugas & bukti**: antrean "Tugas Saya", validasi/revisi, realisasi waktu terhadap mutu baku, dan kalender.
-5. **Peserta mengikuti siklus SOP**: impor data DTS/LMS, status seleksi, penetapan, kehadiran, dan status akhir.
-6. **Laporan & ekspor** dengan proteksi formula CSV.
+Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) dengan Ketua/Sekretaris/Anggota. Pusat proses MVP-1 adalah informasi pelatihan (draft → final), penugasan Admin/Panitia dengan peringatan bentrok, template WA, kelengkapan BAP/SK/ST, dan pemetaan beban kerja. Alur tahap SOP dari referensi ditunda.
 
 ## Pertanyaan terbuka
 
 | Topik | Pertanyaan | Pemilik |
 |---|---|---|
-| Data | Contoh data dukung (pendaftar DTS, peserta, kehadiran, nilai LMS, data pegawai) dan keputusan migrasi dari `db_simapel` | Pemilik proyek |
-| Proses | Pemetaan lajur SOP → peran aplikasi dan validator; perlakuan keputusan Kepala Balai | Pemilik proses |
-| Kalender | Hari kalender atau hari kerja; sumber kalender libur | Pemilik proses |
+| Data | Daftar pegawai dan komposisi tim diinput lewat aplikasi (impor CSV), bukan lewat repository | Pemilik proyek |
+| Peringatan | Ambang eskalasi kelengkapan BAP/SK/ST (usulan: ≤ 3 hari sebelum pelaksanaan) | Pemilik proyek |
+| Data peserta | Pembatasan akses Google Sheet peserta yang saat ini terbuka untuk siapa saja yang memiliki tautan | Pemilik proyek |
 | PDP | Dasar pemrosesan, PPDP, retensi (JRA), teks pemberitahuan privasi | Hukum/PPDP instansi |
-| GitHub | Pemilik/nama repository dan paket (fitur protected branch di repo private butuh Pro/Team) | Pemilik proyek |
+| GitHub | Paket akun (fitur protected branch di repo private butuh Pro/Team) | Pemilik proyek |
 | Deploy | Lokasi server (di Indonesia), akses jaringan, HTTPS, backup | Tim infrastruktur |
 | Aturan agent | Pilihan dari `agent-rules-usulan.md` | Pemilik proyek |
 
