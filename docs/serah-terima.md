@@ -10,7 +10,7 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Clean architecture + uji arsitektur | Selesai |
 | Autentikasi NIP, keamanan akun, audit login | Selesai |
 | Tema UI referensi, layout, halaman galat | Selesai |
-| Pengujian: 375 PHPUnit, coverage 98%, 37 uji UI Playwright, 15 uji resolver | Selesai |
+| Pengujian: 377 PHPUnit, coverage 98%, 37 uji UI Playwright, 15 uji resolver | Selesai |
 | CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
 | Pegawai, tim kerja, model peran berlapis (langkah 1) | Selesai (PR `feat/peran-pegawai-tim`, ADR 0008) |
 | Pengaturan link dan ketentuan SOP berversi (langkah 2) | Selesai (PR `feat/pengaturan`, ADR 0010); draf 2026 menunggu tinjauan Super Admin |
@@ -54,6 +54,10 @@ Tanggal keputusan: 4 November 2026.
     - Super Admin ikut mengakses Template WA karena dapat bertugas layaknya anggota tim kerja;
     - kata "gratis" wajib ada di 5 baris berisi terakhir template;
     - link panduan yang wajib adalah panduan pendaftaran pelatihan tim kerja; panduan DTS opsional.
+12. Keputusan 7 November 2026 (K17):
+    - "segera berakhir" hanya saat pelatihan berlangsung;
+    - "tenggat hari ini" berlaku 00.00–23.59 WIB pada hari tenggat;
+    - "administrasi kritis" mulai sehari setelah tenggat administrasi siap.
 
 ## Cara melanjutkan
 
@@ -72,7 +76,6 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 
 | Topik | Pertanyaan | Pemilik |
 |---|---|---|
-| Peringatan | "Segera berakhir" hanya saat pelatihan berlangsung; "mendekati tenggat" hanya pada hari tenggat | Pemilik proyek |
 | Data | Daftar pegawai dan komposisi tim diinput lewat aplikasi (impor CSV), bukan lewat repository | Pemilik proyek |
 | SOP | Tinjau draf ketentuan 2026 di menu Pengaturan: lampirkan link SOP, konfirmasi BAP H+5 dan ST H+6 (KDD) serta ST H+4 (ASN), lalu berlakukan | Pemilik proyek |
 | PDP | Dasar pemrosesan, PPDP, retensi (JRA), teks pemberitahuan privasi | Hukum/PPDP instansi |

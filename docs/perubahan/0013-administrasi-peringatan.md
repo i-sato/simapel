@@ -45,11 +45,13 @@
 | Presentation | `AdministrativeDocumentController` (ubah, perbarui, delegasi; dokumen diperiksa terhadap pelatihan pada URL), `DocumentRequest`, view `trainings/document-form`, kartu Administrasi, komponen `<x-training.alert-badges>`, badge di daftar, dashboard baru |
 | E2E | Helper `e2e/support/trainings.ts`; tes resolver lintas modul kini memeriksa tag inti, bukan daftar persis |
 
-## Keputusan implementasi (mohon dikonfirmasi)
+## Keputusan implementasi (dikonfirmasi pemilik proyek, K17)
 
 1. **"Segera berakhir"** hanya ditampilkan saat pelatihan sedang berlangsung (sudah mulai dan belum selesai). Pelatihan yang belum dimulai tidak ditandai, walaupun berakhir dalam ≤ N hari.
-2. **"Mendekati tenggat"** hanya muncul tepat pada hari tenggat, sesuai prompt. Belum ada peringatan H-1 dan seterusnya.
-3. **"Kritis"** muncul mulai sehari setelah tenggat administrasi siap, atau pada hari pertama pelatihan.
+2. **"Tenggat hari ini" (mendekati tenggat)** tampil sepanjang hari tenggat, 00.00–23.59 WIB (zona waktu aplikasi `Asia/Jakarta`), lalu menjadi "lewat tenggat" mulai 00.00 WIB hari berikutnya. Batas jam ini diuji eksplisit.
+3. **"Kritis"** muncul mulai sehari setelah tenggat administrasi siap, atau pada hari pertama pelatihan bila lebih dulu.
+Keputusan implementasi lain (mohon dikonfirmasi bila perlu):
+
 4. **Delegasi** per dokumen, hanya kepada Sekretaris tim kerja pelatihan (K2: maks. satu Sekretaris per tim). Ketua dan Super Admin tetap dapat memperbarui dokumen yang sudah didelegasikan.
 5. **"Berkas belum lengkap"** di dashboard menghitung pelatihan Final yang sedang berjalan dengan dokumen Selesai < 3.
 
@@ -69,7 +71,7 @@ Uji manual:
 
 | Pemeriksaan | Hasil |
 |---|---|
-| PHPUnit 13 (MySQL 8.4) | 375 tes lulus |
+| PHPUnit 13 (MySQL 8.4) | 377 tes lulus |
 | Coverage baris | 98,63% (ambang 80%) |
 | Larastan level 8, Pint, uji arsitektur | Bersih |
 | Playwright (area terdampak) | 36 lulus, 1 dilewati; diulang dua kali |

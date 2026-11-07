@@ -9,6 +9,7 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 - Dokumen administrasi BAP/SK/ST yang dibuat otomatis saat pelatihan difinalisasi: status Belum/Dalam proses/Selesai, nomor, tanggal, link berkas, dan delegasi dari Ketua ke Sekretaris tim ([docs/perubahan/0013-administrasi-peringatan.md](docs/perubahan/0013-administrasi-peringatan.md)).
 - Peringatan per pelatihan berbasis salinan ketentuan SOP: mendekati/lewat tenggat, administrasi kritis, tenggat belum ditetapkan, link peserta kosong, segera berakhir, dan bentrok penugasan; tampil di daftar, detail, dan dashboard.
 - Dashboard: kartu ringkasan, "Perlu tindakan saya", dan ringkasan pelatihan berjalan untuk semua pegawai.
+- Keputusan peringatan K17: "segera berakhir" hanya saat berlangsung, "tenggat hari ini" berlaku 00.00–23.59 WIB, "kritis" mulai sehari setelah administrasi siap.
 
 ### Dokumentasi
 
