@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Training;
 
+use App\Domain\Shared\DateRange;
 use DateTimeImmutable;
 
 /**
@@ -103,6 +104,16 @@ final readonly class TrainingSchedule
         }
 
         return (int) $this->registrationEnd->diff($this->trainingStart)->days;
+    }
+
+    /**
+     * Rentang beban kerja penugasan: awal pendaftaran sampai akhir pelatihan (K8).
+     */
+    public function assignmentRange(): ?DateRange
+    {
+        return $this->registrationStart === null || $this->trainingEnd === null
+            ? null
+            : new DateRange($this->registrationStart, $this->trainingEnd);
     }
 
     public function equals(self $other): bool

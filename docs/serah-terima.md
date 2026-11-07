@@ -10,12 +10,13 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Clean architecture + uji arsitektur | Selesai |
 | Autentikasi NIP, keamanan akun, audit login | Selesai |
 | Tema UI referensi, layout, halaman galat | Selesai |
-| Pengujian: 277 PHPUnit, coverage 98%, 30 uji UI Playwright, 12 uji resolver | Selesai |
+| Pengujian: 308 PHPUnit, coverage 98%, 32 uji UI Playwright, 13 uji resolver | Selesai |
 | CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
 | Pegawai, tim kerja, model peran berlapis (langkah 1) | Selesai (PR `feat/peran-pegawai-tim`, ADR 0008) |
 | Pengaturan link dan ketentuan SOP berversi (langkah 2) | Selesai (PR `feat/pengaturan`, ADR 0010); draf 2026 menunggu tinjauan Super Admin |
 | Pelatihan Draft → Final dan learning path (langkah 3) | Selesai (PR `feat/pelatihan`, ADR 0009) |
-| Penugasan, template WA, administrasi, beban kerja | Belum: langkah 4–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
+| Penugasan Admin/Panitia dan bentrok jadwal (langkah 4) | Selesai (PR `feat/penugasan`) |
+| Template WA, administrasi, beban kerja | Belum: langkah 5–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
 | SOP Builder dan alur tahap SOP | Ditunda dari MVP-1 |
 | Assessment & sertifikat | Ditunda (ADR 0007) |
 | Continuous Delivery (deploy) | Menunggu informasi server |
@@ -61,6 +62,7 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 
 | Topik | Pertanyaan | Pemilik |
 |---|---|---|
+| Penugasan | Makna "Admin yang ditunjuk Ketua tercentang otomatis" (saat ini: penugasan tersimpan tampil tercentang) | Pemilik proyek |
 | Data | Daftar pegawai dan komposisi tim diinput lewat aplikasi (impor CSV), bukan lewat repository | Pemilik proyek |
 | SOP | Tinjau draf ketentuan 2026 di menu Pengaturan: lampirkan link SOP, konfirmasi BAP H+5 dan ST H+6 (KDD) serta ST H+4 (ASN), lalu berlakukan | Pemilik proyek |
 | PDP | Dasar pemrosesan, PPDP, retensi (JRA), teks pemberitahuan privasi | Hukum/PPDP instansi |
@@ -71,7 +73,7 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 ## Batasan yang diketahui
 
 - MFA belum tersedia (usulan R6, ditunda untuk MVP 1).
-- Admin yang ditugaskan per pelatihan belum ada (langkah 4). Sampai saat itu, Super Admin memfinalisasi, sedangkan Super Admin dan Ketua tim kerja terkait melengkapi pelatihan Final.
+- Bentrok penugasan diperiksa saat penugasan dibuat; perubahan tanggal pelatihan sesudahnya hanya memunculkan badge bentrok, tanpa meminta alasan baru.
 - Uji UI berjalan dengan satu worker karena uji Super Admin berbagi satu sesi. Bila jumlah uji membuat waktu tunggu terlalu lama, pertimbangkan sesi admin per worker (perlu menyesuaikan batas login per IP di lingkungan e2e).
 - Alarm otomatis untuk event keamanan belum tersedia.
 - Ukuran image production sekitar 590 MB (Debian). Optimasi ke Alpine dapat dikaji bila diperlukan.

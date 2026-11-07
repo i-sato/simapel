@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Training;
 
+use App\Application\Assignment\Contracts\AssignmentRepository;
 use App\Application\Identity\Contracts\UserAccountRepository;
 use App\Application\Organization\Contracts\WorkTeamRepository;
 use App\Domain\Training\TrainingActor;
@@ -16,6 +17,7 @@ final readonly class TrainingActorProvider
     public function __construct(
         private UserAccountRepository $users,
         private WorkTeamRepository $teams,
+        private AssignmentRepository $assignments,
     ) {}
 
     public function forUser(int $userId): TrainingActor
@@ -31,8 +33,7 @@ final readonly class TrainingActorProvider
             isActive: $account->isActive,
             isSuperAdmin: $account->role->isSuperAdmin(),
             ledTeamIds: $this->teams->teamIdsLedBy($userId),
-            // Langkah 4: isi dengan pelatihan tempat pengguna ditugaskan sebagai Admin.
-            assignedAdminTrainingIds: [],
+            assignedAdminTrainingIds: $this->assignments->adminTrainingIdsOf($userId),
         );
     }
 }

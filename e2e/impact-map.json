@@ -173,7 +173,8 @@
                 "@dashboard",
                 "@tim-kerja",
                 "@pengaturan",
-                "@pelatihan"
+                "@pelatihan",
+                "@penugasan"
             ]
         },
         {
@@ -189,7 +190,8 @@
                 "@auth",
                 "@dashboard",
                 "@pegawai",
-                "@tim-kerja"
+                "@tim-kerja",
+                "@penugasan"
             ]
         },
         {
@@ -208,7 +210,8 @@
                 "@pegawai",
                 "@tim-kerja",
                 "@pengaturan",
-                "@pelatihan"
+                "@pelatihan",
+                "@penugasan"
             ]
         },
         {
@@ -219,7 +222,8 @@
                 "@pegawai",
                 "@tim-kerja",
                 "@pengaturan",
-                "@pelatihan"
+                "@pelatihan",
+                "@penugasan"
             ]
         },
         {
@@ -229,7 +233,8 @@
                 "@auth",
                 "@dashboard",
                 "@pegawai",
-                "@tim-kerja"
+                "@tim-kerja",
+                "@penugasan"
             ]
         },
         {
@@ -287,7 +292,8 @@
             "pattern": "app/Domain/Organization/**",
             "tags": [
                 "@tim-kerja",
-                "@pelatihan"
+                "@pelatihan",
+                "@penugasan"
             ]
         },
         {
@@ -310,7 +316,8 @@
             "pattern": "app/Models/TeamMembership.php",
             "tags": [
                 "@tim-kerja",
-                "@pelatihan"
+                "@pelatihan",
+                "@penugasan"
             ]
         },
         {
@@ -398,42 +405,75 @@
         {
             "pattern": "resources/views/trainings/**",
             "tags": [
-                "@pelatihan"
+                "@pelatihan",
+                "@penugasan"
             ]
         },
         {
             "pattern": "app/Http/Controllers/TrainingController.php",
             "tags": [
-                "@pelatihan"
+                "@pelatihan",
+                "@penugasan"
             ]
         },
         {
             "pattern": "app/Http/Requests/Training/**",
             "tags": [
-                "@pelatihan"
+                "@pelatihan",
+                "@penugasan"
             ]
         },
         {
             "pattern": "app/Domain/Training/**",
             "tags": [
-                "@pelatihan"
+                "@pelatihan",
+                "@penugasan"
             ]
         },
         {
             "pattern": "app/Application/Training/**",
             "tags": [
-                "@pelatihan"
+                "@pelatihan",
+                "@penugasan"
             ]
         },
         {
             "pattern": "app/Models/TrainingRecord.php",
             "tags": [
-                "@pelatihan"
+                "@pelatihan",
+                "@penugasan"
             ]
         },
         {
             "pattern": "app/Models/LearningPathRecord.php",
             "tags": [
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "app/Domain/Assignment/**",
+            "tags": [
+                "@penugasan",
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "app/Application/Assignment/**",
+            "tags": [
+                "@penugasan",
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/TrainingAssignmentController.php",
+            "tags": [
+                "@penugasan"
+            ]
+        },
+        {
+            "pattern": "app/Models/TrainingAssignmentRecord.php",
+            "tags": [
+                "@penugasan",
                 "@pelatihan"
             ]
         },

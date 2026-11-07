@@ -72,6 +72,45 @@
     </section>
 </div>
 
+<section class="card" aria-labelledby="assignment-heading">
+    <div class="between">
+        <h2 id="assignment-heading">Penugasan</h2>
+        @can('manage-training-assignments', $training)
+            <a class="btn btn-outline btn-sm" href="{{ route('trainings.assignments.edit', $training) }}">Atur penugasan</a>
+        @endcan
+    </div>
+    @if ($assignments->isEmpty())
+        <div class="empty">Belum ada Admin maupun Panitia.</div>
+    @else
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Pegawai</th><th>Peran</th><th>Keterangan</th></tr></thead>
+                <tbody>
+                    @foreach ($assignments as $assignment)
+                        <tr>
+                            <td>{{ $assignment->user->name }}</td>
+                            <td><span @class(['badge', 'success' => $assignment->role === \App\Domain\Assignment\AssignmentRole::Admin])>{{ $assignment->role->label() }}</span></td>
+                            <td>
+                                <div class="pill-row">
+                                    @foreach ($teamRoles[$assignment->user_id] ?? [] as $label)
+                                        <span class="badge blue">{{ $label }}</span>
+                                    @endforeach
+                                    @foreach ($conflicts[$assignment->user_id] ?? [] as $conflict)
+                                        <span class="badge warning" title="Bentrok dengan &quot;{{ $conflict->trainingName }}&quot;">⚠ {{ $conflict->label() }}<span class="sr-only"> (bentrok dengan {{ $conflict->trainingName }})</span></span>
+                                    @endforeach
+                                </div>
+                                @if ($assignment->force_reason)
+                                    <div class="help">Alasan bentrok: {{ $assignment->force_reason }}</div>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+</section>
+
 <section class="card" aria-labelledby="path-heading">
     <h2 id="path-heading">Learning path</h2>
     @if ($sequence === null || $training->learningPath === null)

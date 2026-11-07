@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Application\Assignment\Contracts\AssignmentCandidateRepository;
+use App\Application\Assignment\Contracts\AssignmentRepository;
 use App\Application\Audit\Contracts\AuditTrail;
 use App\Application\Identity\Contracts\PasswordHasher;
 use App\Application\Identity\Contracts\SessionTerminator;
@@ -16,6 +18,8 @@ use App\Application\Training\Contracts\TrainingRepository;
 use App\Application\Training\TrainingAccess;
 use App\Domain\Identity\PasswordPolicy;
 use App\Infrastructure\Persistence\DatabaseTransaction;
+use App\Infrastructure\Persistence\EloquentAssignmentCandidateRepository;
+use App\Infrastructure\Persistence\EloquentAssignmentRepository;
 use App\Infrastructure\Persistence\EloquentAuditTrail;
 use App\Infrastructure\Persistence\EloquentLearningPathRepository;
 use App\Infrastructure\Persistence\EloquentSettingsRepository;
@@ -55,6 +59,8 @@ class AppServiceProvider extends ServiceProvider
         SopProvisionRepository::class => EloquentSopProvisionRepository::class,
         TrainingRepository::class => EloquentTrainingRepository::class,
         LearningPathRepository::class => EloquentLearningPathRepository::class,
+        AssignmentRepository::class => EloquentAssignmentRepository::class,
+        AssignmentCandidateRepository::class => EloquentAssignmentCandidateRepository::class,
         AuditTrail::class => EloquentAuditTrail::class,
         PasswordHasher::class => LaravelPasswordHasher::class,
         SessionTerminator::class => DatabaseSessionTerminator::class,
@@ -102,6 +108,7 @@ class AppServiceProvider extends ServiceProvider
         // Pelatihan (ADR 0009): aturan ada di App\Domain\Training\TrainingPermissions; use case menegakkan aturan yang sama.
         Gate::define('create-training', fn (User $user): bool => $this->app->make(TrainingAccess::class)->canCreateAny($user->id));
         Gate::define('update-training', fn (User $user, TrainingRecord $training): bool => $this->app->make(TrainingAccess::class)->canEdit($user->id, $training->id));
+        Gate::define('manage-training-assignments', fn (User $user, TrainingRecord $training): bool => $this->app->make(TrainingAccess::class)->canManageAssignments($user->id, $training->id));
         Gate::define('finalize-training', fn (User $user, TrainingRecord $training): bool => $this->app->make(TrainingAccess::class)->canFinalize($user->id, $training->id));
 
         View::composer('layouts.app', NavigationComposer::class);

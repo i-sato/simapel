@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TrainingAssignmentController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\WorkTeamController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,8 @@ Route::middleware(['auth', 'password.change-required'])->group(function (): void
     Route::get('/trainings/{training}', [TrainingController::class, 'show'])->name('trainings.show');
     Route::get('/trainings/{training}/edit', [TrainingController::class, 'edit'])->middleware('can:update-training,training')->name('trainings.edit');
     Route::put('/trainings/{training}', [TrainingController::class, 'update'])->middleware('can:update-training,training')->name('trainings.update');
+    Route::get('/trainings/{training}/assignments', [TrainingAssignmentController::class, 'edit'])->middleware('can:manage-training-assignments,training')->name('trainings.assignments.edit');
+    Route::put('/trainings/{training}/assignments', [TrainingAssignmentController::class, 'update'])->middleware('can:manage-training-assignments,training')->name('trainings.assignments.update');
     Route::post('/trainings/{training}/finalize', [TrainingController::class, 'finalize'])->middleware('can:finalize-training,training')->name('trainings.finalize');
 
     // Khusus Super Admin.

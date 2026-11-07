@@ -11,8 +11,10 @@ use App\Domain\Training\TrainingStatus;
 use App\Domain\Training\Zonation;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Persistensi pelatihan. Aturan ada di App\Domain\Training\Training.
@@ -54,6 +56,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property CarbonImmutable|null $finalized_at
  * @property-read WorkTeam $team
  * @property-read LearningPathRecord|null $learningPath
+ * @property-read Collection<int, TrainingAssignmentRecord> $assignments
  */
 #[Fillable([
     'work_team_id', 'status', 'name', 'registration_url', 'registration_start', 'registration_end',
@@ -107,6 +110,14 @@ class TrainingRecord extends Model
     public function team(): BelongsTo
     {
         return $this->belongsTo(WorkTeam::class, 'work_team_id');
+    }
+
+    /**
+     * @return HasMany<TrainingAssignmentRecord, $this>
+     */
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(TrainingAssignmentRecord::class, 'training_id');
     }
 
     /**

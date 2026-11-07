@@ -80,4 +80,11 @@ final class TrainingScheduleTest extends TestCase
         $this->assertTrue($schedule->equals(TrainingBuilder::schedule()));
         $this->assertFalse($schedule->equals(TrainingBuilder::schedule(trainingEnd: '2026-12-18')));
     }
+
+    public function test_assignment_range_runs_from_registration_start_to_training_end(): void
+    {
+        $this->assertSame('1–17 Des', TrainingBuilder::schedule()->assignmentRange()?->label());
+        $this->assertNull(TrainingBuilder::schedule(null, '2026-12-10', '2026-12-15', '2026-12-17')->assignmentRange());
+        $this->assertNull(TrainingBuilder::schedule('2026-12-01', '2026-12-10', '2026-12-15', null)->assignmentRange());
+    }
 }
