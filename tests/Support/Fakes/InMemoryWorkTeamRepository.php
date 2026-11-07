@@ -67,4 +67,9 @@ final class InMemoryWorkTeamRepository implements WorkTeamRepository
 
         return $ids;
     }
+
+    public function roleOf(int $teamId, int $employeeId): ?TeamRole
+    {
+        return $this->members[$teamId][$employeeId] ?? null;
+    }
 }

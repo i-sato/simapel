@@ -30,5 +30,13 @@ interface TrainingRepository
      */
     public function inLearningPath(int $learningPathId): array;
 
+    /**
+     * Pelatihan yang sedang berjalan pada tanggal tersebut: pendaftaran sudah dibuka
+     * dan pelatihan belum berakhir (urut tanggal mulai pelatihan).
+     *
+     * @return list<Training>
+     */
+    public function running(\DateTimeImmutable $on): array;
+
     public function levelOccupant(int $learningPathId, TrainingLevel $level): ?int;
 }

@@ -10,14 +10,15 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Clean architecture + uji arsitektur | Selesai |
 | Autentikasi NIP, keamanan akun, audit login | Selesai |
 | Tema UI referensi, layout, halaman galat | Selesai |
-| Pengujian: 344 PHPUnit, coverage 98%, 34 uji UI Playwright, 14 uji resolver | Selesai |
+| Pengujian: 377 PHPUnit, coverage 98%, 37 uji UI Playwright, 15 uji resolver | Selesai |
 | CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
 | Pegawai, tim kerja, model peran berlapis (langkah 1) | Selesai (PR `feat/peran-pegawai-tim`, ADR 0008) |
 | Pengaturan link dan ketentuan SOP berversi (langkah 2) | Selesai (PR `feat/pengaturan`, ADR 0010); draf 2026 menunggu tinjauan Super Admin |
 | Pelatihan Draft → Final dan learning path (langkah 3) | Selesai (PR `feat/pelatihan`, ADR 0009) |
 | Penugasan Admin/Panitia dan bentrok jadwal (langkah 4) | Selesai (PR `feat/penugasan`) |
 | Template WA (langkah 5) | Selesai (PR `feat/template-wa`) |
-| Administrasi, beban kerja | Belum: langkah 6–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
+| Administrasi BAP/SK/ST, peringatan, dashboard (langkah 6) | Selesai (PR `feat/administrasi-peringatan`) |
+| Pemetaan beban kerja, UAT | Belum: langkah 7–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
 | SOP Builder dan alur tahap SOP | Ditunda dari MVP-1 |
 | Assessment & sertifikat | Ditunda (ADR 0007) |
 | Continuous Delivery (deploy) | Menunggu informasi server |
@@ -53,6 +54,10 @@ Tanggal keputusan: 4 November 2026.
     - Super Admin ikut mengakses Template WA karena dapat bertugas layaknya anggota tim kerja;
     - kata "gratis" wajib ada di 5 baris berisi terakhir template;
     - link panduan yang wajib adalah panduan pendaftaran pelatihan tim kerja; panduan DTS opsional.
+12. Keputusan 7 November 2026 (K17):
+    - "segera berakhir" hanya saat pelatihan berlangsung;
+    - "tenggat hari ini" berlaku 00.00–23.59 WIB pada hari tenggat;
+    - "administrasi kritis" mulai sehari setelah tenggat administrasi siap.
 
 ## Cara melanjutkan
 

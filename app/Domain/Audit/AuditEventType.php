@@ -36,6 +36,8 @@ enum AuditEventType: string
     case TrainingAssignmentRemoved = 'training_assignment.removed';
     case MessageTemplateSaved = 'message_template.saved';
     case MessageTemplateReset = 'message_template.reset';
+    case DocumentDelegated = 'administrative_document.delegated';
+    case DocumentUpdated = 'administrative_document.updated';
 
     public function label(): string
     {
@@ -70,6 +72,8 @@ enum AuditEventType: string
             self::TrainingAssignmentRemoved => 'Penugasan pelatihan dicabut',
             self::MessageTemplateSaved => 'Template WA disimpan',
             self::MessageTemplateReset => 'Template WA di-reset ke default',
+            self::DocumentDelegated => 'Dokumen administrasi didelegasikan',
+            self::DocumentUpdated => 'Dokumen administrasi diperbarui',
         };
     }
 }

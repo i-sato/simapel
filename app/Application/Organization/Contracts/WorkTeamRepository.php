@@ -30,4 +30,6 @@ interface WorkTeamRepository
      * @return list<int>
      */
     public function teamIdsLedBy(int $employeeId): array;
+
+    public function roleOf(int $teamId, int $employeeId): ?TeamRole;
 }

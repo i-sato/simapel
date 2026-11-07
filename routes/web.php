@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\EmployeeImportController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SopProvisionController;
 use App\Http\Controllers\Admin\TeamMemberController;
+use App\Http\Controllers\AdministrativeDocumentController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
@@ -48,6 +49,10 @@ Route::middleware(['auth', 'password.change-required'])->group(function (): void
         Route::put('/trainings/{training}/messages/{template}', [MessageTemplateController::class, 'update'])->whereNumber('template')->name('trainings.messages.update');
         Route::post('/trainings/{training}/messages/{template}/reset', [MessageTemplateController::class, 'reset'])->whereNumber('template')->name('trainings.messages.reset');
     });
+    // Dokumen BAP/SK/ST: hak diperiksa use case (Ketua, Super Admin, Sekretaris yang ditugaskan).
+    Route::get('/trainings/{training}/documents/{document}/edit', [AdministrativeDocumentController::class, 'edit'])->name('trainings.documents.edit');
+    Route::put('/trainings/{training}/documents/{document}', [AdministrativeDocumentController::class, 'update'])->name('trainings.documents.update');
+    Route::post('/trainings/{training}/documents/{document}/delegate', [AdministrativeDocumentController::class, 'delegate'])->name('trainings.documents.delegate');
     Route::post('/trainings/{training}/finalize', [TrainingController::class, 'finalize'])->middleware('can:finalize-training,training')->name('trainings.finalize');
 
     // Khusus Super Admin.

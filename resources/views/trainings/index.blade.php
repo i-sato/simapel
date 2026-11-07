@@ -86,7 +86,12 @@
                             </td>
                             <td class="nowrap">{{ $training->registration_start?->format('d-m-Y') ?? '—' }} s.d. {{ $training->registration_end?->format('d-m-Y') ?? '—' }}</td>
                             <td class="nowrap">{{ $training->training_start?->format('d-m-Y') ?? '—' }} s.d. {{ $training->training_end?->format('d-m-Y') ?? '—' }}</td>
-                            <td><div class="pill-row"><x-training.status-badges :training="$training" :phase="$phases->for($training)" /></div></td>
+                            <td>
+                                <div class="pill-row"><x-training.status-badges :training="$training" :phase="$phases->for($training)" /></div>
+                                @if (($alerts[$training->id] ?? []) !== [])
+                                    <div class="pill-row mt-8"><x-training.alert-badges :alerts="$alerts[$training->id]" /></div>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

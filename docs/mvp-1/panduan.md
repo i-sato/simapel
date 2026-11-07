@@ -24,6 +24,7 @@ Acuan kebutuhan: "Simapel Business Story" + "Additional Features V.1" dan "V.2" 
 | K14 | Akses link daftar peserta | Keputusan 7 November 2026: SIMAPEL hanya menyimpan tautan. Hak akses Sheet/berkas mengikuti aturan platform penyedia dan diatur oleh pemilik berkas |
 | K15 | Penugasan | Keputusan 7 November 2026: (1) Admin ditetapkan ulang oleh Ketua untuk setiap pelatihan baru, tanpa centang otomatis; yang tampil tercentang hanya penugasan yang sudah disimpan. (2) Satu pegawai boleh menjadi Admin sekaligus Panitia pada pelatihan yang sama. (3) Bentrok diperiksa saat penugasan dibuat; perubahan tanggal pelatihan sesudahnya tidak meminta alasan baru, cukup badge bentrok |
 | K16 | Template WA | Keputusan 7 November 2026: (1) Super Admin ikut mengakses Template WA karena dapat bertugas layaknya anggota tim kerja; (2) kata "gratis" wajib ada di bagian akhir, yaitu 5 baris berisi terakhir; (3) link panduan yang wajib adalah link panduan pendaftaran pelatihan tim kerja (`{{link_panduan_pelatihan}}`), sedangkan panduan DTS opsional |
+| K17 | Peringatan | Keputusan 7 November 2026: (1) "segera berakhir" hanya saat pelatihan sedang berlangsung; (2) "tenggat hari ini" tampil sepanjang hari tenggat 00.00–23.59 WIB, lalu menjadi "lewat tenggat" mulai 00.00 WIB hari berikutnya; (3) "administrasi kritis" mulai sehari setelah tenggat administrasi siap, atau pada hari pertama pelatihan bila lebih dulu |
 
 ## Ringkasan langkah
 

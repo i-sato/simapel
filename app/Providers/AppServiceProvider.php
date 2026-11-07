@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Application\Administration\Contracts\AdministrativeDocumentRepository;
 use App\Application\Assignment\Contracts\AssignmentCandidateRepository;
 use App\Application\Assignment\Contracts\AssignmentRepository;
 use App\Application\Audit\Contracts\AuditTrail;
@@ -19,6 +20,7 @@ use App\Application\Training\Contracts\TrainingRepository;
 use App\Application\Training\TrainingAccess;
 use App\Domain\Identity\PasswordPolicy;
 use App\Infrastructure\Persistence\DatabaseTransaction;
+use App\Infrastructure\Persistence\EloquentAdministrativeDocumentRepository;
 use App\Infrastructure\Persistence\EloquentAssignmentCandidateRepository;
 use App\Infrastructure\Persistence\EloquentAssignmentRepository;
 use App\Infrastructure\Persistence\EloquentAuditTrail;
@@ -64,6 +66,7 @@ class AppServiceProvider extends ServiceProvider
         AssignmentRepository::class => EloquentAssignmentRepository::class,
         AssignmentCandidateRepository::class => EloquentAssignmentCandidateRepository::class,
         CustomTemplateRepository::class => EloquentCustomTemplateRepository::class,
+        AdministrativeDocumentRepository::class => EloquentAdministrativeDocumentRepository::class,
         AuditTrail::class => EloquentAuditTrail::class,
         PasswordHasher::class => LaravelPasswordHasher::class,
         SessionTerminator::class => DatabaseSessionTerminator::class,

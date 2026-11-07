@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Training;
 
+use App\Application\Administration\Contracts\AdministrativeDocumentRepository;
 use App\Application\Audit\Contracts\AuditTrail;
 use App\Application\Organization\Contracts\WorkTeamRepository;
 use App\Application\Organization\Exceptions\WorkTeamNotFound;
@@ -33,6 +34,7 @@ final readonly class FinalizeTraining
         private TrainingActorProvider $actors,
         private ResolveSopProvision $resolve,
         private TrainingPreparation $preparation,
+        private AdministrativeDocumentRepository $documents,
         private AuditTrail $audit,
         private Transaction $transaction,
         private Clock $clock,
@@ -57,6 +59,8 @@ final readonly class FinalizeTraining
             $resolved = $this->resolve->handle($team->code, $now);
             $final = $draft->finalize($resolved === null ? null : SopSnapshot::fromResolved($resolved), $now);
             $this->trainings->save($final, $actorId);
+            // Dokumen BAP, SK, dan ST dibuat otomatis untuk pelatihan Final (langkah 6).
+            $this->documents->openMissing($trainingId);
 
             $warnings = $this->preparation->warningsFor($final);
             $snapshot = $final->sopSnapshot;
