@@ -32,6 +32,8 @@ enum AuditEventType: string
     case TrainingUpdated = 'training.updated';
     case TrainingFinalized = 'training.finalized';
     case LearningPathCreated = 'learning_path.created';
+    case TrainingAssignmentAdded = 'training_assignment.added';
+    case TrainingAssignmentRemoved = 'training_assignment.removed';
 
     public function label(): string
     {
@@ -62,6 +64,8 @@ enum AuditEventType: string
             self::TrainingUpdated => 'Pelatihan diubah',
             self::TrainingFinalized => 'Pelatihan difinalisasi',
             self::LearningPathCreated => 'Learning path dibuat',
+            self::TrainingAssignmentAdded => 'Penugasan pelatihan ditambahkan',
+            self::TrainingAssignmentRemoved => 'Penugasan pelatihan dicabut',
         };
     }
 }

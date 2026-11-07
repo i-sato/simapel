@@ -15,8 +15,8 @@ namespace App\Domain\Training;
  * Batasan isi pelatihan Final (tetap lengkap, tim dan salinan ketentuan SOP tidak
  * berubah) ditegakkan di Training::revise(), bukan di sini.
  *
- * Titik perluasan langkah 4: Admin yang ditunjuk pada pelatihan tersebut
- * (TrainingActor::$assignedAdminTrainingIds).
+ * Admin yang ditunjuk pada pelatihan tersebut diisi dari penugasan Admin (langkah 4)
+ * ke TrainingActor::$assignedAdminTrainingIds.
  */
 final class TrainingPermissions
 {
@@ -39,6 +39,14 @@ final class TrainingPermissions
     {
         return $actor->isActive
             && ($actor->isSuperAdmin || $actor->leads($training->teamId) || $actor->isAssignedAdminOf($training->id));
+    }
+
+    /**
+     * Mengatur penugasan Admin/Panitia: Ketua tim kerja terkait dan Super Admin.
+     */
+    public static function canManageAssignments(TrainingActor $actor, Training $training): bool
+    {
+        return $actor->isActive && ($actor->isSuperAdmin || $actor->leads($training->teamId));
     }
 
     public static function canFinalize(TrainingActor $actor, Training $training): bool

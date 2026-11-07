@@ -77,4 +77,15 @@ final class TrainingPermissionsAndGapTest extends TestCase
         $this->assertStringContainsString('hanya 5 hari', (string) PreparationGap::warning($schedule, AdministrativeDeadlines::of(5, 6, 6, 9)));
         $this->assertNull(PreparationGap::warning(TrainingBuilder::schedule(null, null, null, null), AdministrativeDeadlines::of(5, 6, 6, 9)));
     }
+
+    public function test_assignments_are_managed_by_team_ketua_and_super_admin(): void
+    {
+        $draft = TrainingBuilder::draft(teamId: 1, id: 9);
+
+        $this->assertTrue(TrainingPermissions::canManageAssignments(new TrainingActor(1, true, true), $draft));
+        $this->assertTrue(TrainingPermissions::canManageAssignments(new TrainingActor(5, true, false, ledTeamIds: [1]), $draft));
+        $this->assertFalse(TrainingPermissions::canManageAssignments(new TrainingActor(6, true, false, ledTeamIds: [2]), $draft));
+        $this->assertFalse(TrainingPermissions::canManageAssignments(new TrainingActor(8, true, false, assignedAdminTrainingIds: [9]), $draft));
+        $this->assertFalse(TrainingPermissions::canManageAssignments(new TrainingActor(1, false, true), $draft));
+    }
 }
