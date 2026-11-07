@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MessageTemplateController;
 use App\Http\Controllers\TrainingAssignmentController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\WorkTeamController;
@@ -41,6 +42,12 @@ Route::middleware(['auth', 'password.change-required'])->group(function (): void
     Route::put('/trainings/{training}', [TrainingController::class, 'update'])->middleware('can:update-training,training')->name('trainings.update');
     Route::get('/trainings/{training}/assignments', [TrainingAssignmentController::class, 'edit'])->middleware('can:manage-training-assignments,training')->name('trainings.assignments.edit');
     Route::put('/trainings/{training}/assignments', [TrainingAssignmentController::class, 'update'])->middleware('can:manage-training-assignments,training')->name('trainings.assignments.update');
+    Route::middleware('can:use-message-templates,training')->group(function (): void {
+        Route::get('/trainings/{training}/messages', [MessageTemplateController::class, 'index'])->name('trainings.messages.index');
+        Route::post('/trainings/{training}/messages', [MessageTemplateController::class, 'store'])->name('trainings.messages.store');
+        Route::put('/trainings/{training}/messages/{template}', [MessageTemplateController::class, 'update'])->whereNumber('template')->name('trainings.messages.update');
+        Route::post('/trainings/{training}/messages/{template}/reset', [MessageTemplateController::class, 'reset'])->whereNumber('template')->name('trainings.messages.reset');
+    });
     Route::post('/trainings/{training}/finalize', [TrainingController::class, 'finalize'])->middleware('can:finalize-training,training')->name('trainings.finalize');
 
     // Khusus Super Admin.

@@ -88,4 +88,16 @@ final class TrainingPermissionsAndGapTest extends TestCase
         $this->assertFalse(TrainingPermissions::canManageAssignments(new TrainingActor(8, true, false, assignedAdminTrainingIds: [9]), $draft));
         $this->assertFalse(TrainingPermissions::canManageAssignments(new TrainingActor(1, false, true), $draft));
     }
+
+    public function test_message_templates_for_training_crew_only(): void
+    {
+        $training = TrainingBuilder::draft(teamId: 1, id: 9);
+
+        $this->assertTrue(TrainingPermissions::canUseMessageTemplates(new TrainingActor(1, true, true), $training));
+        $this->assertTrue(TrainingPermissions::canUseMessageTemplates(new TrainingActor(2, true, false, ledTeamIds: [1]), $training));
+        $this->assertTrue(TrainingPermissions::canUseMessageTemplates(new TrainingActor(3, true, false, assignedAdminTrainingIds: [9]), $training));
+        $this->assertTrue(TrainingPermissions::canUseMessageTemplates(new TrainingActor(4, true, false, assignedPanitiaTrainingIds: [9]), $training));
+        $this->assertFalse(TrainingPermissions::canUseMessageTemplates(new TrainingActor(5, true, false, ledTeamIds: [2], assignedPanitiaTrainingIds: [10]), $training));
+        $this->assertFalse(TrainingPermissions::canUseMessageTemplates(new TrainingActor(4, false, false, assignedPanitiaTrainingIds: [9]), $training));
+    }
 }

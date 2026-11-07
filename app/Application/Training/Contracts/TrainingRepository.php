@@ -23,5 +23,12 @@ interface TrainingRepository
     /**
      * Pelatihan yang menempati level tertentu pada learning path, bila ada.
      */
+    /**
+     * Pelatihan dalam satu learning path.
+     *
+     * @return list<Training>
+     */
+    public function inLearningPath(int $learningPathId): array;
+
     public function levelOccupant(int $learningPathId, TrainingLevel $level): ?int;
 }

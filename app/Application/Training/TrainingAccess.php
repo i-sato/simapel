@@ -63,6 +63,13 @@ final readonly class TrainingAccess
         return $training !== null && TrainingPermissions::canManageAssignments($this->actors->forUser($userId), $training);
     }
 
+    public function canUseMessageTemplates(int $userId, int $trainingId): bool
+    {
+        $training = $this->trainings->find($trainingId);
+
+        return $training !== null && TrainingPermissions::canUseMessageTemplates($this->actors->forUser($userId), $training);
+    }
+
     public function canFinalize(int $userId, int $trainingId): bool
     {
         $training = $this->trainings->find($trainingId);

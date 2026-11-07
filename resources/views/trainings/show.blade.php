@@ -21,6 +21,9 @@
         @can('update-training', $training)
             <a class="btn btn-outline" href="{{ route('trainings.edit', $training) }}">{{ $isFinal ? 'Lengkapi' : 'Ubah draft' }}</a>
         @endcan
+        @can('use-message-templates', $training)
+            <a class="btn btn-outline" href="{{ route('trainings.messages.index', $training) }}">Template WA</a>
+        @endcan
         @can('finalize-training', $training)
             <form method="POST" action="{{ route('trainings.finalize', $training) }}">
                 @csrf

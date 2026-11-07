@@ -49,6 +49,20 @@ final class TrainingPermissions
         return $actor->isActive && ($actor->isSuperAdmin || $actor->leads($training->teamId));
     }
 
+    /**
+     * Template WA (K9, langkah 5): Panitia, Ketua tim terkait, dan Admin yang ditugaskan
+     * pada pelatihan tersebut; Super Admin dapat mengakses seluruh fitur (K1).
+     */
+    public static function canUseMessageTemplates(TrainingActor $actor, Training $training): bool
+    {
+        return $actor->isActive && (
+            $actor->isSuperAdmin
+            || $actor->leads($training->teamId)
+            || $actor->isAssignedAdminOf($training->id)
+            || $actor->isPanitiaOf($training->id)
+        );
+    }
+
     public static function canFinalize(TrainingActor $actor, Training $training): bool
     {
         return $actor->isActive

@@ -10,13 +10,14 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Clean architecture + uji arsitektur | Selesai |
 | Autentikasi NIP, keamanan akun, audit login | Selesai |
 | Tema UI referensi, layout, halaman galat | Selesai |
-| Pengujian: 308 PHPUnit, coverage 98%, 32 uji UI Playwright, 13 uji resolver | Selesai |
+| Pengujian: 344 PHPUnit, coverage 98%, 34 uji UI Playwright, 14 uji resolver | Selesai |
 | CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
 | Pegawai, tim kerja, model peran berlapis (langkah 1) | Selesai (PR `feat/peran-pegawai-tim`, ADR 0008) |
 | Pengaturan link dan ketentuan SOP berversi (langkah 2) | Selesai (PR `feat/pengaturan`, ADR 0010); draf 2026 menunggu tinjauan Super Admin |
 | Pelatihan Draft → Final dan learning path (langkah 3) | Selesai (PR `feat/pelatihan`, ADR 0009) |
 | Penugasan Admin/Panitia dan bentrok jadwal (langkah 4) | Selesai (PR `feat/penugasan`) |
-| Template WA, administrasi, beban kerja | Belum: langkah 5–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
+| Template WA (langkah 5) | Selesai (PR `feat/template-wa`) |
+| Administrasi, beban kerja | Belum: langkah 6–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
 | SOP Builder dan alur tahap SOP | Ditunda dari MVP-1 |
 | Assessment & sertifikat | Ditunda (ADR 0007) |
 | Continuous Delivery (deploy) | Menunggu informasi server |
@@ -66,6 +67,7 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 
 | Topik | Pertanyaan | Pemilik |
 |---|---|---|
+| Template WA | Super Admin ikut mengakses Template WA (K1); "bagian akhir" = 5 baris berisi terakhir | Pemilik proyek |
 | Data | Daftar pegawai dan komposisi tim diinput lewat aplikasi (impor CSV), bukan lewat repository | Pemilik proyek |
 | SOP | Tinjau draf ketentuan 2026 di menu Pengaturan: lampirkan link SOP, konfirmasi BAP H+5 dan ST H+6 (KDD) serta ST H+4 (ASN), lalu berlakukan | Pemilik proyek |
 | PDP | Dasar pemrosesan, PPDP, retensi (JRA), teks pemberitahuan privasi | Hukum/PPDP instansi |

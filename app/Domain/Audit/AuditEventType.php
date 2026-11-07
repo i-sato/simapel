@@ -34,6 +34,8 @@ enum AuditEventType: string
     case LearningPathCreated = 'learning_path.created';
     case TrainingAssignmentAdded = 'training_assignment.added';
     case TrainingAssignmentRemoved = 'training_assignment.removed';
+    case MessageTemplateSaved = 'message_template.saved';
+    case MessageTemplateReset = 'message_template.reset';
 
     public function label(): string
     {
@@ -66,6 +68,8 @@ enum AuditEventType: string
             self::LearningPathCreated => 'Learning path dibuat',
             self::TrainingAssignmentAdded => 'Penugasan pelatihan ditambahkan',
             self::TrainingAssignmentRemoved => 'Penugasan pelatihan dicabut',
+            self::MessageTemplateSaved => 'Template WA disimpan',
+            self::MessageTemplateReset => 'Template WA di-reset ke default',
         };
     }
 }

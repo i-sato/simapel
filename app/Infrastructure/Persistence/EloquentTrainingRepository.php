@@ -58,6 +58,16 @@ final class EloquentTrainingRepository implements TrainingRepository
         }
     }
 
+    public function inLearningPath(int $learningPathId): array
+    {
+        return array_values(TrainingRecord::query()
+            ->where('learning_path_id', $learningPathId)
+            ->orderBy('id')
+            ->get()
+            ->map(fn (TrainingRecord $record): Training => $this->toDomain($record))
+            ->all());
+    }
+
     public function levelOccupant(int $learningPathId, TrainingLevel $level): ?int
     {
         $id = TrainingRecord::query()->where('learning_path_id', $learningPathId)->where('level', $level)->value('id');

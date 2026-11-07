@@ -84,4 +84,19 @@ final class InMemoryAssignmentRepository implements AssignmentRepository
 
         return $ids;
     }
+
+    public function panitiaTrainingIdsOf(int $employeeId): array
+    {
+        $ids = [];
+
+        foreach ($this->assignments as $assignment) {
+            if ($assignment->employeeId === $employeeId && $assignment->role === AssignmentRole::Panitia) {
+                $ids[] = $assignment->trainingId;
+            }
+        }
+
+        sort($ids);
+
+        return $ids;
+    }
 }

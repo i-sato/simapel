@@ -63,5 +63,10 @@ final class DateRangeTest extends TestCase
         $this->assertSame('5 Agu', self::range('2026-08-05', '2026-08-05')->label());
         $this->assertSame('28 Okt–3 Nov', self::range('2026-10-28', '2026-11-03')->label());
         $this->assertSame('28 Des 2026–3 Jan 2027', self::range('2026-12-28', '2027-01-03')->label());
+
+        $this->assertSame('1–10 Desember 2026', self::range('2026-12-01', '2026-12-10')->longLabel());
+        $this->assertSame('5 Agustus 2026', self::range('2026-08-05', '2026-08-05')->longLabel());
+        $this->assertSame('28 Oktober–3 November 2026', self::range('2026-10-28', '2026-11-03')->longLabel());
+        $this->assertSame('28 Desember 2026–3 Januari 2027', self::range('2026-12-28', '2027-01-03')->longLabel());
     }
 }

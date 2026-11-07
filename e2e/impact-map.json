@@ -174,7 +174,8 @@
                 "@tim-kerja",
                 "@pengaturan",
                 "@pelatihan",
-                "@penugasan"
+                "@penugasan",
+                "@template-wa"
             ]
         },
         {
@@ -211,7 +212,8 @@
                 "@tim-kerja",
                 "@pengaturan",
                 "@pelatihan",
-                "@penugasan"
+                "@penugasan",
+                "@template-wa"
             ]
         },
         {
@@ -223,7 +225,8 @@
                 "@tim-kerja",
                 "@pengaturan",
                 "@pelatihan",
-                "@penugasan"
+                "@penugasan",
+                "@template-wa"
             ]
         },
         {
@@ -309,7 +312,8 @@
             "tags": [
                 "@tim-kerja",
                 "@pengaturan",
-                "@pelatihan"
+                "@pelatihan",
+                "@template-wa"
             ]
         },
         {
@@ -355,7 +359,8 @@
         {
             "pattern": "app/Domain/Settings/**",
             "tags": [
-                "@pengaturan"
+                "@pengaturan",
+                "@template-wa"
             ]
         },
         {
@@ -369,7 +374,8 @@
         {
             "pattern": "app/Application/Settings/**",
             "tags": [
-                "@pengaturan"
+                "@pengaturan",
+                "@template-wa"
             ]
         },
         {
@@ -406,7 +412,8 @@
             "pattern": "resources/views/trainings/**",
             "tags": [
                 "@pelatihan",
-                "@penugasan"
+                "@penugasan",
+                "@template-wa"
             ]
         },
         {
@@ -420,28 +427,32 @@
             "pattern": "app/Http/Requests/Training/**",
             "tags": [
                 "@pelatihan",
-                "@penugasan"
+                "@penugasan",
+                "@template-wa"
             ]
         },
         {
             "pattern": "app/Domain/Training/**",
             "tags": [
                 "@pelatihan",
-                "@penugasan"
+                "@penugasan",
+                "@template-wa"
             ]
         },
         {
             "pattern": "app/Application/Training/**",
             "tags": [
                 "@pelatihan",
-                "@penugasan"
+                "@penugasan",
+                "@template-wa"
             ]
         },
         {
             "pattern": "app/Models/TrainingRecord.php",
             "tags": [
                 "@pelatihan",
-                "@penugasan"
+                "@penugasan",
+                "@template-wa"
             ]
         },
         {
@@ -454,14 +465,16 @@
             "pattern": "app/Domain/Assignment/**",
             "tags": [
                 "@penugasan",
-                "@pelatihan"
+                "@pelatihan",
+                "@template-wa"
             ]
         },
         {
             "pattern": "app/Application/Assignment/**",
             "tags": [
                 "@penugasan",
-                "@pelatihan"
+                "@pelatihan",
+                "@template-wa"
             ]
         },
         {
@@ -474,7 +487,32 @@
             "pattern": "app/Models/TrainingAssignmentRecord.php",
             "tags": [
                 "@penugasan",
-                "@pelatihan"
+                "@pelatihan",
+                "@template-wa"
+            ]
+        },
+        {
+            "pattern": "app/Domain/Messaging/**",
+            "tags": [
+                "@template-wa"
+            ]
+        },
+        {
+            "pattern": "app/Application/Messaging/**",
+            "tags": [
+                "@template-wa"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/MessageTemplateController.php",
+            "tags": [
+                "@template-wa"
+            ]
+        },
+        {
+            "pattern": "app/Models/MessageTemplateRecord.php",
+            "tags": [
+                "@template-wa"
             ]
         },
         {
