@@ -77,7 +77,7 @@ Tanggal keputusan: 4 November 2026.
 
 ## Cara melanjutkan
 
-1. Baca `AGENTS.md`, lalu [arsitektur.md](arsitektur.md) dan [pengujian.md](pengujian.md).
+1. Baca `AGENTS.md`, lalu [teknis/spesifikasi-teknis.md](teknis/spesifikasi-teknis.md), [arsitektur.md](arsitektur.md), dan [pengujian.md](pengujian.md). Struktur data ada di [teknis/model-data.md](teknis/model-data.md).
 2. Jalankan `make setup`, `make user`, lalu `make ci` untuk memastikan lingkungan sehat.
 3. Buat branch dari `main`, kerjakan satu modul, dan ikuti Definition of Done di `AGENTS.md`.
 4. Tambahkan catatan di `docs/perubahan/` dan entri `CHANGELOG.md`, lalu buka PR.

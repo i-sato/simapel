@@ -6,6 +6,13 @@
 | [mvp-1/panduan.md](mvp-1/panduan.md) | Langkah menuju MVP-1, keputusan pemilik proyek, dan prompt per langkah |
 | [mvp-1/uat.md](mvp-1/uat.md) | Checklist UAT per peran dengan data demo (`make demo`) |
 | [mvp-1/panduan-pengguna.md](mvp-1/panduan-pengguna.md) | Panduan singkat per peran untuk pengguna |
+| [teknis/spesifikasi-teknis.md](teknis/spesifikasi-teknis.md) | Spesifikasi teknis: teknologi, modul, konfigurasi, endpoint, keamanan, audit, kebutuhan non-fungsional |
+| [teknis/model-data.md](teknis/model-data.md) | ERD dan kamus data |
+| [teknis/use-case.md](teknis/use-case.md) | Aktor, diagram use case, katalog use case |
+| [teknis/hak-akses.md](teknis/hak-akses.md) | Matriks hak akses per peran |
+| [teknis/alur-dan-status.md](teknis/alur-dan-status.md) | Alur proses, diagram status, sequence diagram |
+| [teknis/operasional.md](teknis/operasional.md) | Instalasi, pembaruan, backup, log, checklist go-live |
+| [glosarium.md](glosarium.md) | Istilah bisnis dan teknis |
 | [arsitektur.md](arsitektur.md) | Clean architecture, aturan dependensi, cara menambah fitur |
 | [pengembangan.md](pengembangan.md) | Lingkungan Docker, perintah harian, pemecahan masalah |
 | [pengujian.md](pengujian.md) | Unit/feature/arsitektur test, coverage, Playwright, uji UI terdampak |
