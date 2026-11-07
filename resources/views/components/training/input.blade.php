@@ -6,6 +6,7 @@
         @if ($type === 'url') maxlength="2048" placeholder="https://" @endif
         @if ($type === 'number') min="1" max="{{ \App\Domain\Training\TrainingDetails::MAX_NUMBER }}" step="1" @endif
         @if ($type === 'text') maxlength="255" @endif
+        @if ($type === 'time') step="60" @endif
         @if ($help) aria-describedby="{{ $name }}-help" @endif>
     @if ($help)<p class="help" id="{{ $name }}-help">{{ $help }}</p>@endif
     @error($name)<p class="help text-accent">{{ $message }}</p>@enderror

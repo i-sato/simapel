@@ -22,6 +22,7 @@ final class DefaultTemplate
             '3. Daftar dan selesaikan pelatihan sesuai jadwal berikut:',
             '- Link pelatihan: {{link_pendaftaran}}',
             '- Jadwal pendaftaran: {{tanggal_pendaftaran}}',
+            '- Pendaftaran ditutup: {{batas_pendaftaran}}',
             '- Jadwal pelatihan: {{tanggal_pelatihan}}',
             '- Daftar peserta: {{link_daftar_peserta}}',
         ];

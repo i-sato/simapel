@@ -33,5 +33,8 @@ final readonly class TrainingInput
         public ?int $registrationQuota = null,
         public ?int $learningPathId = null,
         public ?string $newLearningPathName = null,
+        public ?string $region = null,
+        public ?string $registrationClosesAt = null,
+        public ?string $partnerName = null,
     ) {}
 }

@@ -53,8 +53,11 @@
         <h2 id="schedule-heading">Jadwal dan tautan</h2>
         <dl class="meta-list">
             <dt>Pendaftaran</dt><dd>{{ $date($training->registration_start) }} s.d. {{ $date($training->registration_end) }}</dd>
+            <dt>Pendaftaran ditutup</dt><dd>{{ $registrationDeadline ?? '—' }}</dd>
             <dt>Pelaksanaan</dt><dd>{{ $date($training->training_start) }} s.d. {{ $date($training->training_end) }}</dd>
-            <dt>Mitra/lokasi</dt><dd>{{ $training->partner_location ?? '—' }}</dd>
+            <dt>Wilayah kerja</dt><dd>@if ($training->region){{ $training->region->label() }} ({{ $training->region->timezoneLabel() }})@else<span class="badge warning">Wilayah belum diisi</span>@endif</dd>
+            <dt>Mitra</dt><dd>{{ $training->partner?->name ?? '—' }}</dd>
+            <dt>Lokasi</dt><dd>{{ $training->partner_location ?? '—' }}</dd>
             <dt>Link pendaftaran</dt><dd>{!! $link($training->registration_url, 'Buka link pendaftaran') !!}</dd>
             <dt>Link silabus</dt><dd>{!! $link($training->syllabus_url, 'Buka silabus') !!}</dd>
             <dt>Link daftar peserta</dt><dd>{!! $link($training->participant_list_url, 'Buka daftar peserta') !!}</dd>

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Domain\Messaging;
 
+use App\Domain\Messaging\DefaultTemplate;
 use App\Domain\Messaging\MessageValues;
 use App\Domain\Messaging\TemplateRenderer;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -53,5 +54,19 @@ final class TemplateRendererTest extends TestCase
         $text = TemplateRenderer::render('{{nama_pelatihan}} {{link_pendaftaran}}', $this->values(['nama_pelatihan' => '{{link_pendaftaran}} @php']));
 
         $this->assertSame('{{link_pendaftaran}} @php https://digitalent.example.test/pelatihan/1', $text);
+    }
+
+    public function test_default_template_includes_registration_deadline_and_region_placeholders(): void
+    {
+        $body = DefaultTemplate::body(false);
+
+        $this->assertStringContainsString('Pendaftaran ditutup: {{batas_pendaftaran}}', $body);
+        $this->assertSame(
+            'Ditutup: 11 Desember 2026 pukul 00.59 WITA (10 Desember 2026 pukul 23.59 WIB) · Bali',
+            TemplateRenderer::render('Ditutup: {{batas_pendaftaran}} · {{wilayah_kerja}}', new MessageValues([
+                'batas_pendaftaran' => '11 Desember 2026 pukul 00.59 WITA (10 Desember 2026 pukul 23.59 WIB)',
+                'wilayah_kerja' => 'Bali',
+            ])),
+        );
     }
 }

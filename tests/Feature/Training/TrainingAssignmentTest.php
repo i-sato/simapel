@@ -68,7 +68,7 @@ final class TrainingAssignmentTest extends TestCase
             'zonation' => 'wilayah_kerja',
             'lesson_hours' => 32,
             'participant_target' => 100,
-            'registration_quota' => 300,
+            'registration_quota' => 300, 'region' => 'diy',
         ]);
     }
 

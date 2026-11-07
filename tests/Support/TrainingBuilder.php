@@ -4,6 +4,7 @@ namespace Tests\Support;
 
 use App\Application\Training\TrainingInput;
 use App\Domain\Shared\HttpUrl;
+use App\Domain\Shared\WorkRegion;
 use App\Domain\Training\Certification;
 use App\Domain\Training\ExecutionMode;
 use App\Domain\Training\ParticipantCategory;
@@ -56,6 +57,7 @@ final class TrainingBuilder
             lessonHours: 32,
             participantTarget: 100,
             registrationQuota: 300,
+            region: WorkRegion::Diy,
         );
     }
 
@@ -94,6 +96,9 @@ final class TrainingBuilder
             'registrationQuota' => 300,
             'learningPathId' => null,
             'newLearningPathName' => null,
+            'region' => 'diy',
+            'registrationClosesAt' => null,
+            'partnerName' => null,
         ], $overrides);
 
         return new TrainingInput(...$values);

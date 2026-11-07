@@ -6,6 +6,8 @@ namespace App\Application\Training;
 
 use App\Domain\Shared\HttpUrl;
 use App\Domain\Shared\InvalidUrl;
+use App\Domain\Shared\TimeOfDay;
+use App\Domain\Shared\WorkRegion;
 use App\Domain\Training\Certification;
 use App\Domain\Training\ExecutionMode;
 use App\Domain\Training\InvalidTraining;
@@ -48,6 +50,10 @@ final class TrainingDetailsFactory
             lessonHours: $input->lessonHours,
             participantTarget: $input->participantTarget,
             registrationQuota: $input->registrationQuota,
+            region: self::choice(WorkRegion::class, $input->region, 'work_region'),
+            registrationClosesAt: $input->registrationClosesAt === null || trim($input->registrationClosesAt) === ''
+                ? null
+                : TimeOfDay::fromString($input->registrationClosesAt, 'registration_closes_at'),
         );
     }
 

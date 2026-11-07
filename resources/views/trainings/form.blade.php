@@ -58,7 +58,19 @@
                 @error('work_team_id')<p class="help text-accent">{{ $message }}</p>@enderror
             </div>
             <x-training.input name="batch" label="Batch" type="number" :value="$training->batch" :required="$req('batch')" />
-            <x-training.input name="partner_location" label="Mitra/lokasi" :value="$training->partner_location" :required="$req('partner_location')" />
+            <div class="field">
+                <label for="partner_name">Mitra (bila pelaksanaan oleh mitra)</label>
+                <input id="partner_name" name="partner_name" list="partner-options" maxlength="{{ \App\Domain\Partner\Partner::MAX_NAME }}" autocomplete="off" value="{{ old('partner_name', $training->partner?->name) }}" aria-describedby="partner_name-help">
+                <datalist id="partner-options">
+                    @foreach ($partners as $partner)
+                        <option value="{{ $partner->name }}">{{ $partner->region->label() }}</option>
+                    @endforeach
+                </datalist>
+                <p class="help" id="partner_name-help">Ketik untuk memilih mitra terdaftar; wilayah kerja otomatis mengikuti mitra. Nama baru didaftarkan sebagai mitra (Ketua, Admin, dan Super Admin).</p>
+                @error('partner_name')<p class="help text-accent">{{ $message }}</p>@enderror
+            </div>
+            <x-training.enum-select name="work_region" label="Wilayah kerja" :cases="$regions" :value="$training->region" :required="$req('work_region')" />
+            <x-training.input name="partner_location" label="Lokasi (alamat/tempat pelaksanaan)" :value="$training->partner_location" :required="$req('partner_location')" />
             <x-training.enum-select name="method" label="Metode" :cases="$methods" :value="$training->method" :required="$req('method')" />
         </div>
     </section>
@@ -68,6 +80,8 @@
         <div class="form-grid">
             <x-training.input name="registration_start" label="Awal pendaftaran" type="date" :value="$training->registration_start" :required="$req('registration_start')" />
             <x-training.input name="registration_end" label="Akhir pendaftaran" type="date" :value="$training->registration_end" :required="$req('registration_end')" />
+            <x-training.input name="registration_closes_at" label="Jam penutupan pendaftaran (WIB)" type="time" :value="substr($training->registration_closes_at ?? '23:59', 0, 5)"
+                help="Default 23.59 WIB. Template WA menampilkannya sesuai zona waktu wilayah kerja (Bali: WITA)." />
             <x-training.input name="training_start" label="Awal pelatihan" type="date" :value="$training->training_start" :required="$req('training_start')" />
             <x-training.input name="training_end" label="Akhir pelatihan" type="date" :value="$training->training_end" :required="$req('training_end')" />
         </div>

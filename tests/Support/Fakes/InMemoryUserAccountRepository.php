@@ -69,7 +69,7 @@ final class InMemoryUserAccountRepository implements UserAccountRepository
 
         $record = $this->accounts[$userId];
 
-        return new AccountSummary($userId, $record['nip'], $record['profile']->name, $record['role'], $record['isActive']);
+        return new AccountSummary($userId, $record['nip'], $record['profile']->name, $record['role'], $record['isActive'], $record['canBeAdmin']);
     }
 
     public function update(int $userId, EmployeeChanges $changes): void

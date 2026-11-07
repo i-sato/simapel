@@ -38,6 +38,8 @@ enum AuditEventType: string
     case MessageTemplateReset = 'message_template.reset';
     case DocumentDelegated = 'administrative_document.delegated';
     case DocumentUpdated = 'administrative_document.updated';
+    case PartnerCreated = 'partner.created';
+    case PartnerUpdated = 'partner.updated';
 
     public function label(): string
     {
@@ -74,6 +76,8 @@ enum AuditEventType: string
             self::MessageTemplateReset => 'Template WA di-reset ke default',
             self::DocumentDelegated => 'Dokumen administrasi didelegasikan',
             self::DocumentUpdated => 'Dokumen administrasi diperbarui',
+            self::PartnerCreated => 'Mitra didaftarkan',
+            self::PartnerUpdated => 'Mitra diubah',
         };
     }
 }

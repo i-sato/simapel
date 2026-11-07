@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Shared\WorkRegion;
 use App\Domain\Training\Certification;
 use App\Domain\Training\ExecutionMode;
 use App\Domain\Training\ParticipantCategory;
@@ -43,6 +44,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int|null $participant_target
  * @property int|null $registration_quota
  * @property int|null $learning_path_id
+ * @property WorkRegion|null $region
+ * @property string $registration_closes_at
+ * @property int|null $partner_id
+ * @property-read PartnerRecord|null $partner
  * @property int|null $sop_provision_id
  * @property int|null $sop_fiscal_year
  * @property int|null $sop_version
@@ -62,7 +67,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'work_team_id', 'status', 'name', 'registration_url', 'registration_start', 'registration_end',
     'training_start', 'training_end', 'partner_location', 'participant_list_url', 'method', 'batch',
     'syllabus_url', 'level', 'certification', 'coc_shows_score', 'execution', 'participant_category',
-    'zonation', 'lesson_hours', 'participant_target', 'registration_quota', 'learning_path_id',
+    'zonation', 'region', 'registration_closes_at', 'partner_id', 'lesson_hours', 'participant_target', 'registration_quota', 'learning_path_id',
     'sop_provision_id', 'sop_fiscal_year', 'sop_version', 'sop_number', 'sop_url', 'sop_bap_days',
     'sop_sk_days', 'sop_st_days', 'sop_ready_days', 'sop_is_fallback', 'finalized_at', 'finalized_by',
     'created_by', 'updated_by',
@@ -70,6 +75,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class TrainingRecord extends Model
 {
     protected $table = 'trainings';
+
+    /** @var array<string, mixed> */
+    protected $attributes = ['registration_closes_at' => '23:59:00'];
 
     /**
      * @return array<string, string>
@@ -90,6 +98,7 @@ class TrainingRecord extends Model
             'execution' => ExecutionMode::class,
             'participant_category' => ParticipantCategory::class,
             'zonation' => Zonation::class,
+            'region' => WorkRegion::class,
             'lesson_hours' => 'integer',
             'participant_target' => 'integer',
             'registration_quota' => 'integer',
@@ -110,6 +119,14 @@ class TrainingRecord extends Model
     public function team(): BelongsTo
     {
         return $this->belongsTo(WorkTeam::class, 'work_team_id');
+    }
+
+    /**
+     * @return BelongsTo<PartnerRecord, $this>
+     */
+    public function partner(): BelongsTo
+    {
+        return $this->belongsTo(PartnerRecord::class, 'partner_id');
     }
 
     /**

@@ -17,6 +17,8 @@ enum Placeholder: string
     case LinkPendaftaran = 'link_pendaftaran';
     case TanggalPendaftaran = 'tanggal_pendaftaran';
     case TanggalPelatihan = 'tanggal_pelatihan';
+    case BatasPendaftaran = 'batas_pendaftaran';
+    case WilayahKerja = 'wilayah_kerja';
     case LinkDaftarPeserta = 'link_daftar_peserta';
     case LinkLoginDigitalent = 'link_login_digitalent';
     case LinkRegistrasiDigitalent = 'link_registrasi_digitalent';
@@ -39,6 +41,8 @@ enum Placeholder: string
             self::LinkPendaftaran => 'Link pendaftaran/pelatihan',
             self::TanggalPendaftaran => 'Periode pendaftaran',
             self::TanggalPelatihan => 'Periode pelatihan',
+            self::BatasPendaftaran => 'Tanggal dan jam penutupan pendaftaran dalam zona waktu wilayah kerja (WIB/WITA)',
+            self::WilayahKerja => 'Wilayah kerja pelatihan (DIY, Jawa Tengah, Bali)',
             self::LinkDaftarPeserta => 'Link daftar peserta (diisi setelah pendaftaran ditutup)',
             self::LinkLoginDigitalent => 'Link login Digitalent (Pengaturan)',
             self::LinkRegistrasiDigitalent => 'Link registrasi Digitalent (Pengaturan)',

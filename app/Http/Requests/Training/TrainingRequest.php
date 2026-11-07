@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Training;
 
 use App\Application\Training\TrainingInput;
+use App\Domain\Partner\Partner;
+use App\Domain\Shared\WorkRegion;
 use App\Domain\Training\Certification;
 use App\Domain\Training\ExecutionMode;
 use App\Domain\Training\ParticipantCategory;
@@ -58,6 +60,9 @@ final class TrainingRequest extends FormRequest
             'registration_quota' => $number,
             'learning_path_id' => ['nullable', 'integer', Rule::exists('learning_paths', 'id')],
             'new_learning_path' => ['nullable', 'string', 'max:150'],
+            'work_region' => ['nullable', Rule::enum(WorkRegion::class)],
+            'registration_closes_at' => ['nullable', 'string', 'max:8'],
+            'partner_name' => ['nullable', 'string', 'max:'.Partner::MAX_NAME],
         ];
     }
 
@@ -90,6 +95,9 @@ final class TrainingRequest extends FormRequest
             'registration_quota' => 'kuota pendaftar',
             'learning_path_id' => 'learning path',
             'new_learning_path' => 'nama learning path baru',
+            'work_region' => 'wilayah kerja',
+            'registration_closes_at' => 'jam penutupan pendaftaran',
+            'partner_name' => 'mitra',
         ];
     }
 
@@ -123,6 +131,9 @@ final class TrainingRequest extends FormRequest
             registrationQuota: $this->number('registration_quota'),
             learningPathId: $this->number('learning_path_id'),
             newLearningPathName: $this->text('new_learning_path'),
+            region: $this->text('work_region'),
+            registrationClosesAt: $this->text('registration_closes_at'),
+            partnerName: $this->text('partner_name'),
         );
     }
 

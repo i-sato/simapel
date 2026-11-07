@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MessageTemplateController;
+use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\TrainingAssignmentController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\WorkTeamController;
@@ -54,6 +55,11 @@ Route::middleware(['auth', 'password.change-required'])->group(function (): void
     Route::put('/trainings/{training}/documents/{document}', [AdministrativeDocumentController::class, 'update'])->name('trainings.documents.update');
     Route::post('/trainings/{training}/documents/{document}/delegate', [AdministrativeDocumentController::class, 'delegate'])->name('trainings.documents.delegate');
     Route::post('/trainings/{training}/finalize', [TrainingController::class, 'finalize'])->middleware('can:finalize-training,training')->name('trainings.finalize');
+
+    // Mitra: semua pegawai melihat; Super Admin, Ketua, dan pegawai bertanda Admin mengelola (K18).
+    Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
+    Route::post('/partners', [PartnerController::class, 'store'])->middleware('can:manage-partners')->name('partners.store');
+    Route::put('/partners/{partner}', [PartnerController::class, 'update'])->middleware('can:manage-partners')->name('partners.update');
 
     // Khusus Super Admin.
     Route::middleware('can:manage-organization')->group(function (): void {

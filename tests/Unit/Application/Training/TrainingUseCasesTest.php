@@ -3,6 +3,7 @@
 namespace Tests\Unit\Application\Training;
 
 use App\Application\Organization\Exceptions\WorkTeamNotFound;
+use App\Application\Partner\PartnerResolver;
 use App\Application\Sop\ResolveSopProvision;
 use App\Application\Training\CreateTrainingDraft;
 use App\Application\Training\Exceptions\LearningPathNotFound;
@@ -32,6 +33,7 @@ use Tests\Support\Fakes\InMemoryAdministrativeDocumentRepository;
 use Tests\Support\Fakes\InMemoryAssignmentRepository;
 use Tests\Support\Fakes\InMemoryAuditTrail;
 use Tests\Support\Fakes\InMemoryLearningPathRepository;
+use Tests\Support\Fakes\InMemoryPartnerRepository;
 use Tests\Support\Fakes\InMemorySopProvisionRepository;
 use Tests\Support\Fakes\InMemoryTrainingRepository;
 use Tests\Support\Fakes\InMemoryUserAccountRepository;
@@ -50,6 +52,10 @@ final class TrainingUseCasesTest extends TestCase
     private InMemorySopProvisionRepository $provisions;
 
     private InMemoryAuditTrail $audit;
+
+    private InMemoryPartnerRepository $partners;
+
+    private PartnerResolver $partnerResolver;
 
     private CreateTrainingDraft $create;
 
@@ -87,13 +93,15 @@ final class TrainingUseCasesTest extends TestCase
         $this->kdd = $this->teams->addTeam(WorkTeamCode::Kdd);
         $this->teams->members[$this->dta][$this->ketuaDta] = TeamRole::Ketua;
 
+        $this->partners = new InMemoryPartnerRepository;
+        $this->partnerResolver = new PartnerResolver($this->partners, $this->audit);
         $actors = new TrainingActorProvider($users, $this->teams, new InMemoryAssignmentRepository($this->trainings, $this->teams));
         $placement = new LearningPathPlacement($this->paths, $this->trainings, $this->audit);
         $resolve = new ResolveSopProvision($this->provisions, $clock);
         $preparation = new TrainingPreparation($resolve, $this->teams, $clock);
 
-        $this->create = new CreateTrainingDraft($this->trainings, $this->teams, $actors, $placement, $this->audit, $transaction, $clock);
-        $this->update = new UpdateTraining($this->trainings, $this->teams, $actors, $placement, $this->audit, $transaction, $clock);
+        $this->create = new CreateTrainingDraft($this->trainings, $this->teams, $actors, $placement, $this->partnerResolver, $this->audit, $transaction, $clock);
+        $this->update = new UpdateTraining($this->trainings, $this->teams, $actors, $placement, $this->partnerResolver, $this->audit, $transaction, $clock);
         $this->finalize = new FinalizeTraining($this->trainings, $this->teams, $actors, $resolve, $preparation, new InMemoryAdministrativeDocumentRepository, $this->audit, $transaction, $clock);
         $this->access = new TrainingAccess($actors, $this->trainings);
     }

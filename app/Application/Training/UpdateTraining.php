@@ -7,6 +7,7 @@ namespace App\Application\Training;
 use App\Application\Audit\Contracts\AuditTrail;
 use App\Application\Organization\Contracts\WorkTeamRepository;
 use App\Application\Organization\Exceptions\WorkTeamNotFound;
+use App\Application\Partner\PartnerResolver;
 use App\Application\Shared\Contracts\Clock;
 use App\Application\Shared\Contracts\Transaction;
 use App\Application\Training\Contracts\TrainingRepository;
@@ -27,6 +28,7 @@ final readonly class UpdateTraining
         private WorkTeamRepository $teams,
         private TrainingActorProvider $actors,
         private LearningPathPlacement $placement,
+        private PartnerResolver $partners,
         private AuditTrail $audit,
         private Transaction $transaction,
         private Clock $clock,
@@ -51,6 +53,8 @@ final readonly class UpdateTraining
             }
 
             $this->teams->find($teamId) ?? throw new WorkTeamNotFound;
+            [$partnerId, $region] = $this->partners->resolve($actor, $input->partnerName, $details->region);
+            $details = $details->withPartner($partnerId, $region);
 
             $pathId = $this->placement->place($input, $teamId, $details, $trainingId, $actorId);
             $revised = $current->revise($teamId, $details, $pathId, $this->clock->now());
