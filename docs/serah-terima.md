@@ -2,7 +2,7 @@
 
 Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui di setiap PR yang mengubah status.
 
-## Status saat ini (4 November 2026)
+## Status saat ini (7 November 2026): MVP-1 siap UAT (versi 0.1.0)
 
 | Area | Status |
 |---|---|
@@ -10,7 +10,7 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Clean architecture + uji arsitektur | Selesai |
 | Autentikasi NIP, keamanan akun, audit login | Selesai |
 | Tema UI referensi, layout, halaman galat | Selesai |
-| Pengujian: 415 PHPUnit, coverage 98%, 41 uji UI Playwright, 17 uji resolver | Selesai |
+| Pengujian: 418 PHPUnit, coverage 98%, 41 uji UI Playwright, 17 uji resolver | Selesai |
 | CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
 | Pegawai, tim kerja, model peran berlapis (langkah 1) | Selesai (PR `feat/peran-pegawai-tim`, ADR 0008) |
 | Pengaturan link dan ketentuan SOP berversi (langkah 2) | Selesai (PR `feat/pengaturan`, ADR 0010); draf 2026 menunggu tinjauan Super Admin |
@@ -20,7 +20,7 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Administrasi BAP/SK/ST, peringatan, dashboard (langkah 6) | Selesai (PR `feat/administrasi-peringatan`) |
 | Mitra, wilayah kerja, jam penutupan pendaftaran (K18) | Selesai (PR `feat/mitra-wilayah-kerja`, ADR 0011) |
 | Pemetaan beban kerja (langkah 7) | Selesai (PR `feat/beban-kerja`) |
-| UAT dan rilis MVP-1 | Belum: langkah 8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
+| UAT dan rilis MVP-1 (langkah 8) | Siap UAT: `make demo`, [mvp-1/uat.md](mvp-1/uat.md), [mvp-1/panduan-pengguna.md](mvp-1/panduan-pengguna.md); tag `v0.1.0` menunggu persetujuan |
 | SOP Builder dan alur tahap SOP | Ditunda dari MVP-1 |
 | Assessment & sertifikat | Ditunda (ADR 0007) |
 | Continuous Delivery (deploy) | Menunggu informasi server |
@@ -68,6 +68,12 @@ Tanggal keputusan: 4 November 2026.
     - beban kerja dihitung per pelatihan, dan filter tim menampilkan Panitia lintas tim;
     - bentrok beban kerja mengecualikan Ketua;
     - Sekretaris dinilai bentrok bila beririsan dengan tugas Admin/Panitia di pelatihan lain.
+
+## Langkah setelah MVP-1
+
+1. Jalankan UAT dengan [mvp-1/uat.md](mvp-1/uat.md), lalu catat temuan sebagai issue atau PR perbaikan.
+2. Tinjau butir keamanan dan PDP yang belum terpenuhi di [perubahan/0017-uat-rilis-mvp-1.md](perubahan/0017-uat-rilis-mvp-1.md) sebelum memasukkan data nyata.
+3. Siapkan server production di Indonesia, lalu lengkapi checklist pengerasan di [keamanan.md](keamanan.md).
 
 ## Cara melanjutkan
 

@@ -25,6 +25,8 @@ make user
 
 Tidak ada akun maupun kata sandi bawaan. Akun pertama dibuat lewat `make user` (`php artisan simapel:user:create`).
 
+Untuk demo/UAT, `make demo` **menghapus seluruh data lokal**, lalu mengisi data sintetis (`DemoSeeder`: 20 pegawai, 3 tim, 9 pelatihan). Kata sandi akun demo ditampilkan sekali di terminal. Skenario UAT ada di [mvp-1/uat.md](mvp-1/uat.md).
+
 Tanpa `make`:
 
 ```sh

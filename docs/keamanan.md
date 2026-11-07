@@ -63,4 +63,6 @@ Panitia, Ketua, dan Admin dapat menulis template pesan WA sendiri. Isi itu adala
 | Belum ada MFA untuk Super Admin | Ditunda untuk MVP 1 (prototipe); wajib dikaji ulang sebelum go-live |
 | Belum ada alarm otomatis pada event keamanan | Notifikasi ke admin bila percobaan login dibatasi berulang |
 | Retensi audit log belum ditetapkan | Menunggu Jadwal Retensi Arsip (JRA) instansi |
+| Belum ada halaman audit log untuk Super Admin | Tampilan baca saja dengan filter peristiwa dan tanggal (pasca MVP-1) |
+| Link daftar peserta terlihat semua pegawai | Akses berkas diatur pemilik Sheet di platform penyedia (K14); pastikan Sheet tidak terbuka untuk publik |
 | Pemeriksaan kata sandi bocor (HIBP) tidak aktif | Sengaja dimatikan karena mengirim hash parsial ke layanan luar negeri; aktifkan hanya bila disetujui |
