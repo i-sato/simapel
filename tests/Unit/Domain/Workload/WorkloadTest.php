@@ -88,14 +88,14 @@ final class WorkloadTest extends TestCase
         $this->assertSame(3, (new WorkloadCell([1, 2, 3, 4], false))->intensity());
     }
 
-    public function test_conflict_only_between_admin_or_panitia_and_only_in_overlapping_periods(): void
+    public function test_conflict_only_in_overlapping_periods_and_never_for_ketua(): void
     {
         $weeks = PeriodGrouping::periods(self::range('2026-11-02', '2026-11-22'), Granularity::Minggu);
         $items = [
             self::item(1, 10, WorkloadRole::Panitia, '2026-11-02', '2026-11-10', 'DTA'),
             self::item(1, 20, WorkloadRole::Admin, '2026-11-10', '2026-11-12', 'KDD'),     // beririsan 10 Nov (minggu ke-2)
             self::item(2, 40, WorkloadRole::Ketua, '2026-11-02', '2026-11-20'),
-            self::item(2, 41, WorkloadRole::Sekretaris, '2026-11-02', '2026-11-20'),         // peran tim: bukan bentrok
+            self::item(2, 41, WorkloadRole::Panitia, '2026-11-02', '2026-11-20'),            // Ketua tidak pernah bentrok
         ];
 
         $matrix = WorkloadMatrix::build($items, $weeks);
@@ -110,7 +110,48 @@ final class WorkloadTest extends TestCase
     {
         $this->assertSame('Ketua tim', WorkloadRole::Ketua->label());
         $this->assertTrue(WorkloadRole::Panitia->countsForConflict());
-        $this->assertFalse(WorkloadRole::Sekretaris->countsForConflict());
+        $this->assertTrue(WorkloadRole::Sekretaris->countsForConflict());
+        $this->assertFalse(WorkloadRole::Ketua->countsForConflict());
         $this->assertSame('Bulanan', Granularity::Bulan->label());
+    }
+
+    /**
+     * K19: Sekretaris bentrok dengan Admin/Panitia di pelatihan lain, tetapi tidak dengan
+     * tugas Sekretaris lain di timnya sendiri; Ketua tidak pernah bentrok.
+     */
+    public function test_secretary_conflicts_with_crew_duty_elsewhere_but_not_with_own_team_admin(): void
+    {
+
+        $ownTeam = [
+            self::item(7, 1, WorkloadRole::Sekretaris, '2026-11-02', '2026-11-12'),
+            self::item(7, 2, WorkloadRole::Sekretaris, '2026-11-05', '2026-11-15'),
+        ];
+        $this->assertFalse(self::conflictInNovember($ownTeam));
+        $this->assertSame([], WorkloadMatrix::conflictingTrainings($ownTeam));
+
+        $crewElsewhere = [...$ownTeam, self::item(7, 3, WorkloadRole::Panitia, '2026-11-10', '2026-11-20', 'KDD')];
+        $this->assertTrue(self::conflictInNovember($crewElsewhere));
+        $this->assertSame([1, 2, 3], WorkloadMatrix::conflictingTrainings($crewElsewhere));
+
+        $ketuaAndCrew = [
+            self::item(7, 1, WorkloadRole::Ketua, '2026-11-02', '2026-11-12'),
+            self::item(7, 3, WorkloadRole::Admin, '2026-11-10', '2026-11-20', 'KDD'),
+        ];
+        $this->assertFalse(self::conflictInNovember($ketuaAndCrew));
+
+        $this->assertTrue(WorkloadRole::Sekretaris->conflictsWith(WorkloadRole::Panitia));
+        $this->assertTrue(WorkloadRole::Admin->conflictsWith(WorkloadRole::Sekretaris));
+        $this->assertFalse(WorkloadRole::Sekretaris->conflictsWith(WorkloadRole::Sekretaris));
+        $this->assertFalse(WorkloadRole::Ketua->conflictsWith(WorkloadRole::Panitia));
+    }
+
+    /**
+     * @param  list<WorkloadItem>  $items  milik pegawai 7
+     */
+    private static function conflictInNovember(array $items): bool
+    {
+        $month = PeriodGrouping::periods(self::range('2026-11-01', '2026-11-30'), Granularity::Bulan);
+
+        return WorkloadMatrix::build($items, $month)[7][0]->conflict;
     }
 }

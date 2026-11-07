@@ -24,7 +24,7 @@
                         <tr>
                             <td><a href="{{ route('trainings.show', $item->trainingId) }}">{{ $item->trainingName }}</a></td>
                             <td>{{ $item->teamCode }}</td>
-                            <td><span @class(['badge', 'success' => $item->role === \App\Domain\Workload\WorkloadRole::Admin, 'blue' => ! $item->role->countsForConflict()])>{{ $item->role->label() }}</span></td>
+                            <td><span @class(['badge', 'success' => $item->role === \App\Domain\Workload\WorkloadRole::Admin, 'blue' => in_array($item->role, [\App\Domain\Workload\WorkloadRole::Ketua, \App\Domain\Workload\WorkloadRole::Sekretaris], true)])>{{ $item->role->label() }}</span></td>
                             <td class="nowrap">{{ $item->range->label() }}</td>
                             <td>
                                 @if ($item->role->countsForConflict() && in_array($item->trainingId, $conflicts, true))
