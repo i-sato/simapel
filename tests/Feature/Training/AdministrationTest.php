@@ -63,7 +63,7 @@ final class AdministrationTest extends TestCase
             'training_start' => '2026-12-15', 'training_end' => '2026-12-17', 'partner_location' => 'Mitra', 'method' => 'daring', 'batch' => 1,
             'syllabus_url' => 'https://drive.example.test/silabus', 'level' => 'dasar', 'certification' => 'industri', 'coc_shows_score' => true,
             'execution' => 'swakelola', 'participant_category' => 'umum', 'zonation' => 'wilayah_kerja', 'lesson_hours' => 32,
-            'participant_target' => 100, 'registration_quota' => 300,
+            'participant_target' => 100, 'registration_quota' => 300, 'region' => 'diy',
         ]);
 
         $this->actingAs($this->superAdmin)->post("/trainings/{$this->training->id}/finalize")->assertSessionHasNoErrors();

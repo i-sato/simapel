@@ -77,6 +77,9 @@ final class TrainingTest extends TestCase
             'registration_quota' => '300',
             'learning_path_id' => '',
             'new_learning_path' => '',
+            'work_region' => 'diy',
+            'registration_closes_at' => '23:59',
+            'partner_name' => '',
         ], $overrides);
     }
 

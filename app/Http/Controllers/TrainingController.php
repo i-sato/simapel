@@ -15,6 +15,8 @@ use App\Domain\Administration\DocumentDeadline;
 use App\Domain\Administration\DocumentType;
 use App\Domain\Organization\TeamRole;
 use App\Domain\Organization\WorkTeamCode;
+use App\Domain\Shared\RegistrationDeadline;
+use App\Domain\Shared\WorkRegion;
 use App\Domain\Training\Certification;
 use App\Domain\Training\ExecutionMode;
 use App\Domain\Training\LearningPathSequence;
@@ -29,6 +31,7 @@ use App\Domain\Training\Zonation;
 use App\Http\Requests\Training\TrainingRequest;
 use App\Models\AdministrativeDocumentRecord;
 use App\Models\LearningPathRecord;
+use App\Models\PartnerRecord;
 use App\Models\TeamMembership;
 use App\Models\TrainingRecord;
 use App\Models\WorkTeam;
@@ -128,7 +131,7 @@ final class TrainingController extends Controller
         TrainingAlertsQuery $alertsQuery,
         DocumentAccess $documentAccess,
     ): View {
-        $training->load(['team', 'learningPath', 'assignments' => fn ($query) => $query->with('user')->orderBy('role')->orderBy('id')]);
+        $training->load(['partner', 'team', 'learningPath', 'assignments' => fn ($query) => $query->with('user')->orderBy('role')->orderBy('id')]);
         $domain = $trainings->find($training->id);
         $sequence = null;
 
@@ -154,6 +157,9 @@ final class TrainingController extends Controller
             'assignments' => $training->assignments,
             'alerts' => $domain === null ? [] : $alertsQuery->for($domain),
             'deadlines' => self::deadlines($domain),
+            'registrationDeadline' => $domain?->details->schedule->registrationEnd === null
+                ? null
+                : RegistrationDeadline::label($domain->details->schedule->registrationEnd, $domain->details->registrationClosesAt, $domain->details->region),
             'documents' => AdministrativeDocumentRecord::query()->where('training_id', $training->id)->with('assignee')->get()
                 ->sortBy(fn (AdministrativeDocumentRecord $document): int => (int) array_search($document->type, DocumentType::cases(), true))->values(),
             'canDelegate' => $documentAccess->canDelegate((int) $request->user()?->getAuthIdentifier(), $training->id),
@@ -260,6 +266,8 @@ final class TrainingController extends Controller
             'participantCategories' => ParticipantCategory::cases(),
             'zonations' => Zonation::cases(),
             'required' => TrainingDetails::REQUIRED_FOR_FINAL,
+            'regions' => WorkRegion::cases(),
+            'partners' => PartnerRecord::query()->orderBy('name')->get(['id', 'name', 'region']),
         ];
     }
 }

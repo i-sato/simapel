@@ -51,7 +51,7 @@
         <header class="topbar">
             <div>
                 <div class="top-title">Sistem Informasi Pengelolaan Pelatihan</div>
-                <div class="top-meta">Wilayah layanan: DIY, Jawa Tengah, dan Bali</div>
+                <div class="top-meta">Wilayah kerja: DIY, Jawa Tengah, dan Bali</div>
             </div>
             <div class="top-meta text-right">
                 {{ now()->translatedFormat('l, d F Y') }}<br><span class="text-accent">{{ $user->name }}</span>
