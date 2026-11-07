@@ -4,6 +4,16 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Ditambahkan (MVP-1 langkah 5)
+
+- Template WA per pelatihan: template default yang dibentuk dari data pelatihan terkini (struktur contoh VBL, info kosong "(menyusul)", learning path, pernyataan gratis), tombol Salin, dan tautan "Buka di WhatsApp" ([docs/perubahan/0011-template-wa.md](docs/perubahan/0011-template-wa.md)).
+- Template kustom maks. 3 per anggota per pelatihan dengan placeholder daftar putih, elemen wajib, reset ke default, dan penggabungan template identik.
+- Akses Template WA untuk Panitia, Ketua tim terkait, Admin yang ditugaskan, dan Super Admin.
+
+### Keamanan
+
+- Isi template tidak pernah diproses sebagai Blade/PHP; risiko injeksi template dan mitigasinya didokumentasikan di `docs/keamanan.md`.
+
 ### Dokumentasi
 
 - Keputusan penugasan K15: Admin ditetapkan ulang per pelatihan tanpa centang otomatis, Admin boleh sekaligus Panitia, dan perubahan tanggal tidak meminta alasan bentrok baru ([docs/perubahan/0010-keputusan-penugasan.md](docs/perubahan/0010-keputusan-penugasan.md)).
