@@ -62,12 +62,17 @@ test('pengaturan dan ketentuan SOP memicu area @pengaturan serta tim kerja yang 
 });
 
 test('pelatihan memicu area @pelatihan; ketentuan SOP juga memicunya karena disalin saat finalisasi', () => {
-    assert.deepEqual(resolveTags(['resources/views/trainings/show.blade.php'], map).tags, ['@pelatihan', '@penugasan']);
-    assert.deepEqual(resolveTags(['app/Domain/Training/Training.php'], map).tags, ['@pelatihan', '@penugasan']);
+    assert.deepEqual(resolveTags(['resources/views/trainings/show.blade.php'], map).tags, ['@pelatihan', '@penugasan', '@template-wa']);
+    assert.deepEqual(resolveTags(['app/Domain/Training/Training.php'], map).tags, ['@pelatihan', '@penugasan', '@template-wa']);
     assert.ok(resolveTags(['app/Domain/Sop/SopProvisionResolver.php'], map).tags.includes('@pelatihan'));
 });
 
 test('penugasan memicu area @penugasan dan pelatihan yang menampilkan ringkasannya', () => {
-    assert.deepEqual(resolveTags(['app/Domain/Assignment/WorkloadConflictDetector.php'], map).tags, ['@pelatihan', '@penugasan']);
+    assert.deepEqual(resolveTags(['app/Domain/Assignment/WorkloadConflictDetector.php'], map).tags, ['@pelatihan', '@penugasan', '@template-wa']);
     assert.deepEqual(resolveTags(['app/Http/Controllers/TrainingAssignmentController.php'], map).tags, ['@penugasan']);
+});
+
+test('template WA memicu area @template-wa', () => {
+    assert.deepEqual(resolveTags(['app/Domain/Messaging/TemplateRenderer.php'], map).tags, ['@template-wa']);
+    assert.ok(resolveTags(['app/Domain/Settings/GlobalSetting.php'], map).tags.includes('@template-wa'));
 });
