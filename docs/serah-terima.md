@@ -12,7 +12,8 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Tema UI referensi, layout, halaman galat | Selesai |
 | Pengujian: 101 PHPUnit, coverage 99%, 16 uji UI Playwright, 8 uji resolver | Selesai |
 | CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
-| Pegawai, tim kerja, pelatihan, penugasan, template WA, administrasi, beban kerja | Belum: langkah 1–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
+| Pegawai, tim kerja, model peran berlapis (langkah 1) | Selesai (PR `feat/peran-pegawai-tim`, ADR 0008) |
+| Pengaturan, pelatihan, penugasan, template WA, administrasi, beban kerja | Belum: langkah 2–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
 | SOP Builder dan alur tahap SOP | Ditunda dari MVP-1 |
 | Assessment & sertifikat | Ditunda (ADR 0007) |
 | Continuous Delivery (deploy) | Menunggu informasi server |
@@ -34,7 +35,7 @@ Tanggal keputusan: 4 November 2026.
    - keamanan OWASP dan kepatuhan UU PDP;
    - CI/CD di GitHub private.
 6. MFA (usulan R6) ditunda karena target saat ini adalah MVP 1 berbentuk prototipe.
-7. Model peran akan berubah mengikuti data dukung. Peran utama yang disiapkan lebih dulu adalah **Super Admin**; peran lain (`admin_regional`, `pegawai`) di enum `Role` bersifat sementara dan akan disesuaikan.
+7. Model peran berlapis diterapkan di langkah 1 (ADR 0008): peran global Super Admin/Pegawai, peran tim Ketua/Sekretaris/Anggota, kapabilitas Admin, dan penugasan per pelatihan.
 
 ## Cara melanjutkan
 

@@ -33,7 +33,7 @@ Playwright berjalan di container resmi `mcr.microsoft.com/playwright` (profil co
 
 Setiap eksekusi `make e2e*` menjalankan langkah berikut:
 1. Membuat kata sandi acak untuk akun E2E. Kata sandi ini tidak pernah disimpan ke file.
-2. Menjalankan `E2eSeeder` (idempoten, ditolak di production). Seeder membuat tiga akun sintetis: Super Admin (`…0001`), akun nonaktif (`…0002`), dan akun wajib ganti kata sandi (`…0003`).
+2. Menjalankan `E2eSeeder` (idempoten, ditolak di production). Seeder membuat empat akun sintetis: Super Admin (`…0001`), akun nonaktif (`…0002`), akun wajib ganti kata sandi (`…0003`), dan pegawai biasa (`…0004`). Data yang dibuat spec (pegawai, keanggotaan) memakai NIP sintetis unik per eksekusi sehingga uji dapat diulang pada database pengembangan.
 3. Menjalankan Playwright. Login dilakukan sekali (`tests/auth.setup.ts`) lalu sesinya dipakai bersama melalui *storage state*.
 
 ### Tag area UI
@@ -46,6 +46,8 @@ Setiap eksekusi `make e2e*` menjalankan langkah berikut:
 | `@layout` | `layout.spec.ts` | Navigasi aktif, tautan lewati konten, tampilan ponsel |
 | `@security` | `security.spec.ts` | Header keamanan, nol pelanggaran CSP, no-store |
 | `@errors` | `errors.spec.ts` | Halaman galat bertema |
+| `@pegawai` | `pegawai.spec.ts` | Daftar pegawai (NIP tersamar), tambah pegawai, impor CSV, akses ditolak untuk pegawai biasa |
+| `@tim-kerja` | `tim-kerja.spec.ts` | Kelola anggota tim (tambah, ubah peran, keluarkan), tampilan baca saja untuk pegawai |
 | `@setup` | `auth.setup.ts` | Selalu ikut dijalankan |
 
 ### Uji UI terdampak saja
