@@ -33,4 +33,11 @@ interface AssignmentRepository
      * @return list<int>
      */
     public function adminTrainingIdsOf(int $employeeId): array;
+
+    /**
+     * Pelatihan tempat pegawai ditugaskan sebagai Panitia.
+     *
+     * @return list<int>
+     */
+    public function panitiaTrainingIdsOf(int $employeeId): array;
 }

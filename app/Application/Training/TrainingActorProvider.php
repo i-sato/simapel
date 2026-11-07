@@ -34,6 +34,7 @@ final readonly class TrainingActorProvider
             isSuperAdmin: $account->role->isSuperAdmin(),
             ledTeamIds: $this->teams->teamIdsLedBy($userId),
             assignedAdminTrainingIds: $this->assignments->adminTrainingIdsOf($userId),
+            assignedPanitiaTrainingIds: $this->assignments->panitiaTrainingIdsOf($userId),
         );
     }
 }

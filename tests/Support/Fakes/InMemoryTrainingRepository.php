@@ -40,6 +40,11 @@ final class InMemoryTrainingRepository implements TrainingRepository
         $this->trainings[(int) $training->id] = $training;
     }
 
+    public function inLearningPath(int $learningPathId): array
+    {
+        return array_values(array_filter($this->trainings, fn (Training $training): bool => $training->learningPathId === $learningPathId));
+    }
+
     public function levelOccupant(int $learningPathId, TrainingLevel $level): ?int
     {
         foreach ($this->trainings as $id => $training) {
