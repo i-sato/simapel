@@ -28,6 +28,7 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\Fakes\FixedClock;
 use Tests\Support\Fakes\ImmediateTransaction;
+use Tests\Support\Fakes\InMemoryAssignmentRepository;
 use Tests\Support\Fakes\InMemoryAuditTrail;
 use Tests\Support\Fakes\InMemoryLearningPathRepository;
 use Tests\Support\Fakes\InMemorySopProvisionRepository;
@@ -85,7 +86,7 @@ final class TrainingUseCasesTest extends TestCase
         $this->kdd = $this->teams->addTeam(WorkTeamCode::Kdd);
         $this->teams->members[$this->dta][$this->ketuaDta] = TeamRole::Ketua;
 
-        $actors = new TrainingActorProvider($users, $this->teams);
+        $actors = new TrainingActorProvider($users, $this->teams, new InMemoryAssignmentRepository($this->trainings, $this->teams));
         $placement = new LearningPathPlacement($this->paths, $this->trainings, $this->audit);
         $resolve = new ResolveSopProvision($this->provisions, $clock);
         $preparation = new TrainingPreparation($resolve, $this->teams, $clock);
