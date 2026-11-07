@@ -49,6 +49,10 @@ Tanggal keputusan: 4 November 2026.
     - Admin ditetapkan ulang oleh Ketua untuk setiap pelatihan, tanpa centang otomatis;
     - satu pegawai boleh menjadi Admin sekaligus Panitia;
     - perubahan tanggal pelatihan setelah penugasan tidak meminta alasan bentrok baru.
+11. Keputusan 7 November 2026 (K16):
+    - Super Admin ikut mengakses Template WA karena dapat bertugas layaknya anggota tim kerja;
+    - kata "gratis" wajib ada di 5 baris berisi terakhir template;
+    - link panduan yang wajib adalah panduan pendaftaran pelatihan tim kerja; panduan DTS opsional.
 
 ## Cara melanjutkan
 
@@ -67,7 +71,6 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 
 | Topik | Pertanyaan | Pemilik |
 |---|---|---|
-| Template WA | Super Admin ikut mengakses Template WA (K1); "bagian akhir" = 5 baris berisi terakhir | Pemilik proyek |
 | Data | Daftar pegawai dan komposisi tim diinput lewat aplikasi (impor CSV), bukan lewat repository | Pemilik proyek |
 | SOP | Tinjau draf ketentuan 2026 di menu Pengaturan: lampirkan link SOP, konfirmasi BAP H+5 dan ST H+6 (KDD) serta ST H+4 (ASN), lalu berlakukan | Pemilik proyek |
 | PDP | Dasar pemrosesan, PPDP, retensi (JRA), teks pemberitahuan privasi | Hukum/PPDP instansi |
