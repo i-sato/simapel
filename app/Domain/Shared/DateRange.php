@@ -14,6 +14,8 @@ final readonly class DateRange
 {
     private const MONTHS = [1 => 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
 
+    private const LONG_MONTHS = [1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
     public DateTimeImmutable $start;
 
     public DateTimeImmutable $end;
@@ -67,5 +69,30 @@ final readonly class DateRange
         return $startDay === $endDay
             ? sprintf('%d %s', $startDay, $startMonth)
             : sprintf('%d–%d %s', $startDay, $endDay, $startMonth);
+    }
+
+    /**
+     * Label lengkap untuk pesan, mis. "1–10 Desember 2026", "28 November–3 Desember 2026".
+     */
+    public function longLabel(): string
+    {
+        $startDay = (int) $this->start->format('j');
+        $endDay = (int) $this->end->format('j');
+        $startMonth = self::LONG_MONTHS[(int) $this->start->format('n')];
+        $endMonth = self::LONG_MONTHS[(int) $this->end->format('n')];
+        $startYear = $this->start->format('Y');
+        $endYear = $this->end->format('Y');
+
+        if ($startYear !== $endYear) {
+            return sprintf('%d %s %s–%d %s %s', $startDay, $startMonth, $startYear, $endDay, $endMonth, $endYear);
+        }
+
+        if ($startMonth !== $endMonth) {
+            return sprintf('%d %s–%d %s %s', $startDay, $startMonth, $endDay, $endMonth, $endYear);
+        }
+
+        return $startDay === $endDay
+            ? sprintf('%d %s %s', $startDay, $startMonth, $endYear)
+            : sprintf('%d–%d %s %s', $startDay, $endDay, $startMonth, $endYear);
     }
 }
