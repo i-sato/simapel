@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Application\Assignment\TrainingWorkload;
 use App\Application\Training\Contracts\TrainingRepository;
 use App\Application\Training\CreateTrainingDraft;
 use App\Application\Training\FinalizeTraining;
@@ -23,6 +24,7 @@ use App\Http\Requests\Training\TrainingRequest;
 use App\Models\LearningPathRecord;
 use App\Models\TrainingRecord;
 use App\Models\WorkTeam;
+use App\View\TeamRoleBadges;
 use App\View\TeamSopStatus;
 use App\View\TrainingPhases;
 use Illuminate\Http\RedirectResponse;
@@ -105,8 +107,10 @@ final class TrainingController extends Controller
         TrainingPreparation $preparation,
         TrainingPhases $phases,
         TeamSopStatus $sopStatus,
+        TrainingWorkload $workload,
+        TeamRoleBadges $teamRoles,
     ): View {
-        $training->load(['team', 'learningPath']);
+        $training->load(['team', 'learningPath', 'assignments' => fn ($query) => $query->with('user')->orderBy('role')->orderBy('id')]);
         $domain = $trainings->find($training->id);
         $sequence = null;
 
@@ -129,6 +133,9 @@ final class TrainingController extends Controller
             'missing' => $domain === null || $domain->isFinal() ? [] : $domain->details->missingForFinal(),
             'sopStatus' => $sopStatus->for($training->team->code),
             'sequence' => $sequence,
+            'assignments' => $training->assignments,
+            'teamRoles' => $teamRoles->forYear($training->team->year),
+            'conflicts' => $domain === null ? [] : $workload->conflictsFor($domain, array_values(array_unique(array_map(intval(...), $training->assignments->pluck('user_id')->all())))),
         ]);
     }
 
