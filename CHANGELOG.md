@@ -4,6 +4,14 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Ditambahkan (MVP-1 langkah 7)
+
+- Halaman Beban Kerja untuk semua pegawai: matriks pegawai × minggu/bulan dengan intensitas warna dan tanda bentrok, filter rentang dan tim kerja, serta daftar penugasan per pegawai ([docs/perubahan/0015-beban-kerja.md](docs/perubahan/0015-beban-kerja.md)).
+
+### Diperbaiki
+
+- Teks pembaca layar di dalam tabel tidak lagi melebarkan halaman di ponsel (`.table-wrap` menjadi acuan posisi).
+
 ### Ditambahkan (K18)
 
 - Wilayah kerja (DIY, Jawa Tengah, Bali) dan jam penutupan pendaftaran per pelatihan (default 23.59 WIB); template WA menampilkan batas pendaftaran sesuai zona waktu wilayah (WIB/WITA) ([docs/perubahan/0014-mitra-wilayah-kerja.md](docs/perubahan/0014-mitra-wilayah-kerja.md), ADR 0011).

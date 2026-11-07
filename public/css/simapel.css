@@ -105,7 +105,8 @@ input[type=checkbox] { width: auto; accent-color: #3b82f6; }
 textarea { min-height: 92px; resize: vertical; }
 .help { color: var(--muted); font-size: 11px; margin-top: 5px; }
 
-.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+.table-wrap { position: relative; overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+/* position: relative menjadikan wadah acuan bagi teks .sr-only di dalam sel, sehingga tidak melebarkan halaman. */
 table { width: 100%; border-collapse: collapse; min-width: 680px; }
 th, td { padding: 12px 13px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
 th { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; background: #172338; color: #b9c8dd; }
@@ -192,6 +193,18 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: non
 .mb-18 { margin-bottom: 18px; }
 .mb-20 { margin-bottom: 20px; }
 .text-right { text-align: right; }
+
+/* --- Beban kerja: intensitas sel matriks (token warna tema) ---------------- */
+.load-legend { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+td.load-cell { text-align: center; font-weight: 700; white-space: nowrap; min-width: 58px; }
+.load-0 { color: var(--muted); font-weight: 400; }
+.load-1 { background: var(--greenbg); color: var(--green); }
+.load-2 { background: var(--yellowbg); color: var(--yellow); }
+.load-3 { background: var(--redbg); color: var(--red); }
+.load-conflict { box-shadow: inset 0 0 0 2px var(--red); }
+.load-swatch { display: inline-block; min-width: 26px; padding: 2px 6px; border-radius: 6px; text-align: center; font-size: 11px; font-weight: 700; }
+th.sticky-col, td.sticky-col { position: sticky; left: 0; z-index: 1; background: var(--panel); }
+th.sticky-col { background: #172338; }
 .text-accent { color: #bfdbfe; }
 .align-start { align-items: start; }
 .align-end { align-items: end; }

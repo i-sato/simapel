@@ -234,7 +234,8 @@
                 "@template-wa",
                 "@administrasi",
                 "@dashboard",
-                "@mitra"
+                "@mitra",
+                "@beban-kerja"
             ]
         },
         {
@@ -246,7 +247,8 @@
                 "@pegawai",
                 "@tim-kerja",
                 "@penugasan",
-                "@mitra"
+                "@mitra",
+                "@beban-kerja"
             ]
         },
         {
@@ -306,7 +308,8 @@
                 "@tim-kerja",
                 "@pelatihan",
                 "@penugasan",
-                "@administrasi"
+                "@administrasi",
+                "@beban-kerja"
             ]
         },
         {
@@ -333,7 +336,8 @@
                 "@tim-kerja",
                 "@pelatihan",
                 "@penugasan",
-                "@administrasi"
+                "@administrasi",
+                "@beban-kerja"
             ]
         },
         {
@@ -485,7 +489,8 @@
                 "@template-wa",
                 "@administrasi",
                 "@dashboard",
-                "@mitra"
+                "@mitra",
+                "@beban-kerja"
             ]
         },
         {
@@ -501,7 +506,8 @@
                 "@pelatihan",
                 "@template-wa",
                 "@administrasi",
-                "@dashboard"
+                "@dashboard",
+                "@beban-kerja"
             ]
         },
         {
@@ -511,7 +517,8 @@
                 "@pelatihan",
                 "@template-wa",
                 "@administrasi",
-                "@dashboard"
+                "@dashboard",
+                "@beban-kerja"
             ]
         },
         {
@@ -525,7 +532,8 @@
             "tags": [
                 "@penugasan",
                 "@pelatihan",
-                "@template-wa"
+                "@template-wa",
+                "@beban-kerja"
             ]
         },
         {
@@ -614,6 +622,30 @@
             "pattern": "resources/views/partners/**",
             "tags": [
                 "@mitra"
+            ]
+        },
+        {
+            "pattern": "app/Domain/Workload/**",
+            "tags": [
+                "@beban-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Application/Workload/**",
+            "tags": [
+                "@beban-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/WorkloadController.php",
+            "tags": [
+                "@beban-kerja"
+            ]
+        },
+        {
+            "pattern": "resources/views/workload/**",
+            "tags": [
+                "@beban-kerja"
             ]
         },
         {

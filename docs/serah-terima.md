@@ -10,7 +10,7 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Clean architecture + uji arsitektur | Selesai |
 | Autentikasi NIP, keamanan akun, audit login | Selesai |
 | Tema UI referensi, layout, halaman galat | Selesai |
-| Pengujian: 399 PHPUnit, coverage 98%, 39 uji UI Playwright, 16 uji resolver | Selesai |
+| Pengujian: 413 PHPUnit, coverage 98%, 41 uji UI Playwright, 17 uji resolver | Selesai |
 | CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
 | Pegawai, tim kerja, model peran berlapis (langkah 1) | Selesai (PR `feat/peran-pegawai-tim`, ADR 0008) |
 | Pengaturan link dan ketentuan SOP berversi (langkah 2) | Selesai (PR `feat/pengaturan`, ADR 0010); draf 2026 menunggu tinjauan Super Admin |
@@ -19,7 +19,8 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Template WA (langkah 5) | Selesai (PR `feat/template-wa`) |
 | Administrasi BAP/SK/ST, peringatan, dashboard (langkah 6) | Selesai (PR `feat/administrasi-peringatan`) |
 | Mitra, wilayah kerja, jam penutupan pendaftaran (K18) | Selesai (PR `feat/mitra-wilayah-kerja`, ADR 0011) |
-| Pemetaan beban kerja, UAT | Belum: langkah 7–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
+| Pemetaan beban kerja (langkah 7) | Selesai (PR `feat/beban-kerja`) |
+| UAT dan rilis MVP-1 | Belum: langkah 8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
 | SOP Builder dan alur tahap SOP | Ditunda dari MVP-1 |
 | Assessment & sertifikat | Ditunda (ADR 0007) |
 | Continuous Delivery (deploy) | Menunggu informasi server |
@@ -81,6 +82,7 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 
 | Topik | Pertanyaan | Pemilik |
 |---|---|---|
+| Beban kerja | Ketua/Sekretaris dihitung beban tanpa bentrok; jumlah per pelatihan; filter tim menampilkan Panitia lintas tim | Pemilik proyek |
 | Data | Daftar pegawai dan komposisi tim diinput lewat aplikasi (impor CSV), bukan lewat repository | Pemilik proyek |
 | SOP | Tinjau draf ketentuan 2026 di menu Pengaturan: lampirkan link SOP, konfirmasi BAP H+5 dan ST H+6 (KDD) serta ST H+4 (ASN), lalu berlakukan | Pemilik proyek |
 | PDP | Dasar pemrosesan, PPDP, retensi (JRA), teks pemberitahuan privasi | Hukum/PPDP instansi |

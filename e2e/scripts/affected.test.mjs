@@ -92,3 +92,9 @@ test('mitra dan wilayah kerja memicu @mitra dan @pelatihan', () => {
     assert.deepEqual(resolveTags(['app/Domain/Partner/Partner.php'], map).tags, ['@mitra', '@pelatihan']);
     assert.deepEqual(resolveTags(['resources/views/partners/index.blade.php'], map).tags, ['@mitra']);
 });
+
+test('beban kerja memicu area @beban-kerja', () => {
+    assert.deepEqual(resolveTags(['app/Domain/Workload/WorkloadMatrix.php'], map).tags, ['@beban-kerja']);
+    assert.deepEqual(resolveTags(['resources/views/workload/index.blade.php'], map).tags, ['@beban-kerja']);
+    assert.ok(resolveTags(['app/Domain/Assignment/WorkloadConflictDetector.php'], map).tags.includes('@beban-kerja'));
+});
