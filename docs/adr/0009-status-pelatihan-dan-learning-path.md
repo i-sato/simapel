@@ -18,7 +18,7 @@ Business story menetapkan bahwa Ketua tim (atau Super Admin) menyusun informasi 
    - Tanggal yang diisi wajib konsisten: awal ≤ akhir, dan pendaftaran ditutup ≤ pelatihan mulai.
    - Angka berupa bilangan bulat 1–100.000, dan link wajib http/https.
    - Finalisasi mewajibkan 18 field lengkap (`TrainingDetails::REQUIRED_FOR_FINAL`). Panitia dan Admin menyusul di langkah 4.
-3. **Pelatihan Final masih dapat dilengkapi** oleh Super Admin (dan Admin yang ditugaskan, langkah 4), misalnya link daftar peserta yang baru tersedia setelah pendaftaran ditutup. Syaratnya:
+3. **Pelatihan Final masih dapat dilengkapi** oleh Super Admin, Ketua tim kerja terkait, dan Admin yang ditunjuk (langkah 4), misalnya link daftar peserta yang baru tersedia setelah pendaftaran ditutup (K13, keputusan 7 November 2026). Syaratnya:
    - data tetap lengkap;
    - tim kerja tidak berubah;
    - salinan ketentuan SOP tidak berubah.
@@ -42,8 +42,9 @@ Business story menetapkan bahwa Ketua tim (atau Super Admin) menyusun informasi 
    | Aksi | Siapa |
    |---|---|
    | Melihat daftar dan detail | Semua pegawai aktif |
-   | Membuat dan mengubah Draft | Ketua tim kerja terkait, Super Admin |
-   | Memfinalisasi, melengkapi Final | Super Admin |
+   | Membuat Draft | Ketua tim kerja terkait, Super Admin |
+   | Mengubah Draft, melengkapi Final | Ketua tim kerja terkait, Super Admin, Admin yang ditunjuk (langkah 4) |
+   | Memfinalisasi | Super Admin, Admin yang ditunjuk (langkah 4) |
 
    Titik perluasan langkah 4: `TrainingActor::$assignedAdminTrainingIds` (Admin yang ditugaskan dapat mengubah, memfinalisasi, dan melengkapi pelatihan tersebut). Saat ini daftarnya selalu kosong.
 
@@ -57,4 +58,4 @@ Business story menetapkan bahwa Ketua tim (atau Super Admin) menyusun informasi 
 
 - Langkah 4 mengisi `assignedAdminTrainingIds` dari penugasan, tanpa mengubah aturan.
 - Langkah 6 memakai kolom `trainings.sop_*` untuk menghitung tenggat BAP/SK/ST.
-- Field wajib finalisasi dan izin melengkapi pelatihan Final perlu dikonfirmasi pemilik proyek (lihat catatan perubahan 0007).
+- Field wajib finalisasi, batch berupa angka, dan izin melengkapi pelatihan Final sudah dikonfirmasi pemilik proyek (K13, catatan perubahan 0008).
