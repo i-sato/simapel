@@ -99,4 +99,16 @@ final class EloquentAssignmentRepository implements AssignmentRepository
 
         return array_values(array_map(intval(...), $ids));
     }
+
+    public function panitiaTrainingIdsOf(int $employeeId): array
+    {
+        $ids = TrainingAssignmentRecord::query()
+            ->where('user_id', $employeeId)
+            ->where('role', AssignmentRole::Panitia)
+            ->orderBy('training_id')
+            ->pluck('training_id')
+            ->all();
+
+        return array_values(array_map(intval(...), $ids));
+    }
 }
