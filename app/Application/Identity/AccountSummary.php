@@ -15,5 +15,6 @@ final readonly class AccountSummary
         public string $name,
         public Role $role,
         public bool $isActive,
+        public bool $canBeAdmin = false,
     ) {}
 }

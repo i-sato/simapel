@@ -11,6 +11,7 @@ use App\Domain\Messaging\MessageValues;
 use App\Domain\Messaging\Placeholder;
 use App\Domain\Settings\GlobalSetting;
 use App\Domain\Shared\DateRange;
+use App\Domain\Shared\RegistrationDeadline;
 use App\Domain\Training\LearningPathSequence;
 use App\Domain\Training\Training;
 use DateTimeImmutable;
@@ -41,6 +42,10 @@ final readonly class TrainingMessageValues
             Placeholder::LinkPendaftaran->value => $details->registrationUrl?->value,
             Placeholder::TanggalPendaftaran->value => self::period($schedule->registrationStart, $schedule->registrationEnd),
             Placeholder::TanggalPelatihan->value => self::period($schedule->trainingStart, $schedule->trainingEnd),
+            Placeholder::BatasPendaftaran->value => $schedule->registrationEnd === null
+                ? null
+                : RegistrationDeadline::label($schedule->registrationEnd, $details->registrationClosesAt, $details->region),
+            Placeholder::WilayahKerja->value => $details->region?->label(),
             Placeholder::LinkDaftarPeserta->value => $details->participantListUrl?->value,
             Placeholder::LinkLoginDigitalent->value => $this->settings->get(GlobalSetting::DigitalentLoginUrl),
             Placeholder::LinkRegistrasiDigitalent->value => $this->settings->get(GlobalSetting::DigitalentRegisterUrl),

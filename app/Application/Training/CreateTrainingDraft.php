@@ -7,6 +7,7 @@ namespace App\Application\Training;
 use App\Application\Audit\Contracts\AuditTrail;
 use App\Application\Organization\Contracts\WorkTeamRepository;
 use App\Application\Organization\Exceptions\WorkTeamNotFound;
+use App\Application\Partner\PartnerResolver;
 use App\Application\Shared\Contracts\Clock;
 use App\Application\Shared\Contracts\Transaction;
 use App\Application\Training\Contracts\TrainingRepository;
@@ -23,6 +24,7 @@ final readonly class CreateTrainingDraft
         private WorkTeamRepository $teams,
         private TrainingActorProvider $actors,
         private LearningPathPlacement $placement,
+        private PartnerResolver $partners,
         private AuditTrail $audit,
         private Transaction $transaction,
         private Clock $clock,
@@ -33,14 +35,18 @@ final readonly class CreateTrainingDraft
      */
     public function handle(int $actorId, int $teamId, TrainingInput $input): int
     {
-        if (! TrainingPermissions::canCreateIn($this->actors->forUser($actorId), $teamId)) {
+        $actor = $this->actors->forUser($actorId);
+
+        if (! TrainingPermissions::canCreateIn($actor, $teamId)) {
             throw new TrainingAccessDenied;
         }
 
         $details = TrainingDetailsFactory::from($input);
 
-        return $this->transaction->run(function () use ($actorId, $teamId, $input, $details): int {
+        return $this->transaction->run(function () use ($actor, $actorId, $teamId, $input, $details): int {
             $this->teams->find($teamId) ?? throw new WorkTeamNotFound;
+            [$partnerId, $region] = $this->partners->resolve($actor, $input->partnerName, $details->region);
+            $details = $details->withPartner($partnerId, $region);
 
             $pathId = $this->placement->place($input, $teamId, $details, null, $actorId);
             $draft = Training::draft($teamId, $details, $pathId, $this->clock->now());
