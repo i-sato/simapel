@@ -29,9 +29,20 @@
             @php($leader = $team->memberships->firstWhere('role', \App\Domain\Organization\TeamRole::Ketua))
             @php($secretary = $team->memberships->firstWhere('role', \App\Domain\Organization\TeamRole::Sekretaris))
             <section class="card" aria-labelledby="team-{{ $team->id }}">
+                @php($sop = $sopStatus[$team->code->value])
                 <div class="between">
                     <h2 id="team-{{ $team->id }}">{{ $team->name }}</h2>
                     <span class="badge blue">{{ $team->code->value }}</span>
+                </div>
+                <div class="pill-row">
+                    @if ($sop['missing'])
+                        <x-sop.missing-badge :team="$team->code->value" />
+                    @else
+                        <a href="{{ $sop['sopUrl'] }}" target="_blank" rel="noopener noreferrer">SOP {{ $sop['sopNumber'] }} ↗</a>
+                        @if ($sop['fallback'] && auth()->user()?->can('manage-organization'))
+                            <x-sop.fallback-badge :year="$sop['year']" :used-year="$sop['resolved']?->provision->fiscalYear" />
+                        @endif
+                    @endif
                 </div>
                 <ul class="list-clean">
                     <li>

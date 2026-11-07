@@ -8,6 +8,19 @@
     <div>
         <h1>{{ $team->name }} <span class="badge blue">{{ $team->code->value }}</span></h1>
         <p>Tahun {{ $team->year }} · {{ $memberships->count() }} anggota</p>
+        <div class="pill-row">
+            @if ($sop['missing'])
+                <x-sop.missing-badge :team="$team->code->value" />
+            @else
+                <a href="{{ $sop['sopUrl'] }}" target="_blank" rel="noopener noreferrer">SOP tim kerja {{ $sop['sopNumber'] }} ↗</a>
+                @if ($sop['fallback'] && $canManage)
+                    <x-sop.fallback-badge :year="$sop['year']" :used-year="$sop['resolved']?->provision->fiscalYear" />
+                @endif
+            @endif
+            @if ($team->registration_guide_url)
+                <a href="{{ $team->registration_guide_url }}" target="_blank" rel="noopener noreferrer">Panduan pendaftaran ↗</a>
+            @endif
+        </div>
     </div>
     <a class="btn btn-outline" href="{{ route('work-teams.index', ['year' => $team->year]) }}">← Kembali</a>
 </div>
