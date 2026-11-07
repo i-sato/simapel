@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Training;
 
 use App\Domain\Shared\HttpUrl;
+use App\Domain\Shared\TimeOfDay;
+use App\Domain\Shared\WorkRegion;
 
 /**
- * Informasi pelatihan (19 dari 21 field business story; panitia dan admin di langkah 4).
+ * Informasi pelatihan (19 dari 21 field business story; panitia dan admin di langkah 4),
+ * ditambah wilayah kerja, jam penutupan pendaftaran (WIB), dan mitra (K18).
  * Semua field opsional selama Draft, kecuali nama.
  */
 final readonly class TrainingDetails
@@ -34,11 +37,15 @@ final readonly class TrainingDetails
         'lesson_hours' => 'jumlah JP',
         'participant_target' => 'target peserta',
         'registration_quota' => 'kuota pendaftar',
+        'work_region' => 'wilayah kerja',
     ];
 
     public string $name;
 
     public ?string $partnerLocation;
+
+    /** Jam penutupan pendaftaran dalam WIB (default 23.59, K18). */
+    public TimeOfDay $registrationClosesAt;
 
     /**
      * @throws InvalidTraining
@@ -61,7 +68,12 @@ final readonly class TrainingDetails
         public ?int $lessonHours = null,
         public ?int $participantTarget = null,
         public ?int $registrationQuota = null,
+        public ?WorkRegion $region = null,
+        ?TimeOfDay $registrationClosesAt = null,
+        public ?int $partnerId = null,
     ) {
+        $this->registrationClosesAt = $registrationClosesAt ?? TimeOfDay::endOfDay();
+
         $name = trim($name);
 
         if ($name === '' || mb_strlen($name) > 255) {
@@ -82,6 +94,35 @@ final readonly class TrainingDetails
 
         $this->name = $name;
         $this->partnerLocation = $partnerLocation === '' ? null : $partnerLocation;
+    }
+
+    /**
+     * Salinan dengan mitra dan wilayah kerja yang sudah ditentukan Application.
+     */
+    public function withPartner(?int $partnerId, ?WorkRegion $region): self
+    {
+        return new self(
+            name: $this->name,
+            schedule: $this->schedule,
+            registrationUrl: $this->registrationUrl,
+            partnerLocation: $this->partnerLocation,
+            participantListUrl: $this->participantListUrl,
+            method: $this->method,
+            batch: $this->batch,
+            syllabusUrl: $this->syllabusUrl,
+            level: $this->level,
+            certification: $this->certification,
+            cocShowsScore: $this->cocShowsScore,
+            execution: $this->execution,
+            participantCategory: $this->participantCategory,
+            zonation: $this->zonation,
+            lessonHours: $this->lessonHours,
+            participantTarget: $this->participantTarget,
+            registrationQuota: $this->registrationQuota,
+            region: $region,
+            registrationClosesAt: $this->registrationClosesAt,
+            partnerId: $partnerId,
+        );
     }
 
     /**
@@ -108,8 +149,16 @@ final readonly class TrainingDetails
             'lesson_hours' => $this->lessonHours,
             'participant_target' => $this->participantTarget,
             'registration_quota' => $this->registrationQuota,
+            'work_region' => $this->region,
         ];
 
-        return array_intersect_key(self::REQUIRED_FOR_FINAL, array_filter($values, fn (mixed $value): bool => $value === null));
+        $missing = array_intersect_key(self::REQUIRED_FOR_FINAL, array_filter($values, fn (mixed $value): bool => $value === null));
+
+        // Pelaksanaan oleh mitra wajib menyebut mitranya (K18).
+        if ($this->execution === ExecutionMode::Mitra && $this->partnerId === null) {
+            $missing['partner_name'] = 'mitra';
+        }
+
+        return $missing;
     }
 }

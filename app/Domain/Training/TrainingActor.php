@@ -13,6 +13,7 @@ final readonly class TrainingActor
      * @param  list<int>  $ledTeamIds  tim kerja tempat pengguna menjadi Ketua
      * @param  list<int>  $assignedAdminTrainingIds  pelatihan tempat pengguna ditugaskan sebagai Admin (langkah 4)
      * @param  list<int>  $assignedPanitiaTrainingIds  pelatihan tempat pengguna ditugaskan sebagai Panitia
+     * @param  bool  $canBeAdmin  pegawai bertanda "dapat menjadi Admin"
      */
     public function __construct(
         public int $userId,
@@ -21,6 +22,7 @@ final readonly class TrainingActor
         public array $ledTeamIds = [],
         public array $assignedAdminTrainingIds = [],
         public array $assignedPanitiaTrainingIds = [],
+        public bool $canBeAdmin = false,
     ) {}
 
     public function leads(int $teamId): bool
