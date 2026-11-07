@@ -8,8 +8,6 @@ const nextYear = new Date().getFullYear() + 1;
 test.describe('Pengaturan', { tag: '@pengaturan' }, () => {
     test.describe('dengan sesi Super Admin', () => {
         test.use({ storageState: adminStorageState });
-        // Sesi admin dipakai bersama; pesan flash dapat tertukar bila uji berjalan paralel.
-        test.describe.configure({ mode: 'serial' });
 
         test('menyimpan link panduan tim dan menampilkannya di halaman tim kerja', async ({ page }) => {
             const url = `https://drive.example.test/panduan-dta-${uniqueSuffix()}`;
