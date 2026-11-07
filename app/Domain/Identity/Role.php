@@ -5,29 +5,28 @@ declare(strict_types=1);
 namespace App\Domain\Identity;
 
 /**
- * Peran global akun.
+ * Peran global akun (ADR 0008).
  *
- * Peran Ketua Pelatihan dan Anggota Tim bersifat kontekstual per pelatihan
- * (TOR 2.1) sehingga tidak termasuk di sini.
+ * Peran di tim kerja (Ketua/Sekretaris/Anggota) ada di App\Domain\Organization,
+ * kapabilitas Admin berupa tanda pada pegawai, dan Admin/Panitia adalah
+ * penugasan per pelatihan. Semuanya bukan peran global.
  */
 enum Role: string
 {
-    case SuperAdminRegional = 'super_admin_regional';
-    case AdminRegional = 'admin_regional';
+    case SuperAdmin = 'super_admin';
     case Pegawai = 'pegawai';
 
     public function label(): string
     {
         return match ($this) {
-            self::SuperAdminRegional => 'Super Admin Regional',
-            self::AdminRegional => 'Admin Regional',
+            self::SuperAdmin => 'Super Admin',
             self::Pegawai => 'Pegawai',
         };
     }
 
-    public function isAdministrator(): bool
+    public function isSuperAdmin(): bool
     {
-        return $this === self::SuperAdminRegional || $this === self::AdminRegional;
+        return $this === self::SuperAdmin;
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Application\Identity\Exceptions\NipAlreadyRegistered;
 use App\Application\Identity\NewUserAccount;
 use App\Domain\Audit\AuditEvent;
 use App\Domain\Audit\AuditEventType;
+use App\Domain\Identity\EmployeeProfile;
 use App\Domain\Identity\Nip;
 use App\Domain\Identity\Role;
 use App\Infrastructure\Persistence\EloquentAuditTrail;
@@ -25,7 +26,7 @@ final class PersistenceTest extends TestCase
 
     private function newAccount(string $nip, ?string $email): NewUserAccount
     {
-        return new NewUserAccount(Nip::fromString($nip), 'Pengguna Uji', $email, Role::Pegawai, bcrypt('Sandi-Uji-2026!'), false);
+        return new NewUserAccount(Nip::fromString($nip), EmployeeProfile::fromInput('Pengguna Uji', $email, null, null), Role::Pegawai, false, bcrypt('Sandi-Uji-2026!'), false);
     }
 
     public function test_repository_maps_unique_nip_race_to_business_error(): void

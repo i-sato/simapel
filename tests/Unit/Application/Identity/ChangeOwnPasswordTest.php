@@ -7,11 +7,8 @@ use App\Application\Identity\ChangeOwnPasswordInput;
 use App\Application\Identity\Exceptions\CurrentPasswordIncorrect;
 use App\Application\Identity\Exceptions\NewPasswordMustDiffer;
 use App\Application\Identity\Exceptions\UserAccountNotFound;
-use App\Application\Identity\NewUserAccount;
 use App\Domain\Audit\AuditEventType;
-use App\Domain\Identity\Nip;
 use App\Domain\Identity\PasswordPolicy;
-use App\Domain\Identity\Role;
 use App\Domain\Identity\WeakPassword;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
@@ -53,14 +50,8 @@ final class ChangeOwnPasswordTest extends TestCase
             new FixedClock(new DateTimeImmutable('2026-11-04 10:30:00')),
         );
 
-        $this->userId = $this->users->create(new NewUserAccount(
-            nip: Nip::fromString('999900000000000003'),
-            name: 'Pegawai Uji',
-            email: null,
-            role: Role::Pegawai,
-            passwordHash: 'hashed:'.self::CURRENT,
-            passwordChangeRequired: true,
-        ));
+        $this->userId = $this->users->seed('999900000000000003');
+        $this->users->setTemporaryPassword($this->userId, 'hashed:'.self::CURRENT);
     }
 
     private function change(string $current = self::CURRENT, string $new = self::NEW, ?int $userId = null): void

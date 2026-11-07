@@ -26,7 +26,7 @@ final class CreateUserCommand extends Command
         {--nip= : NIP 18 digit}
         {--name= : Nama lengkap}
         {--email= : Email (opsional)}
-        {--role= : super_admin_regional | admin_regional | pegawai}
+        {--role= : super_admin | pegawai}
         {--permanent-password : Tidak mewajibkan ganti kata sandi saat login pertama}';
 
     protected $description = 'Membuat akun pengguna SIMAPEL (kata sandi diminta secara tersembunyi)';

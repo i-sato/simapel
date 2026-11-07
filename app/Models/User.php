@@ -9,6 +9,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
@@ -20,13 +21,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $name
  * @property string|null $email
  * @property Role $role
+ * @property string|null $pangkat_golongan
+ * @property string|null $jabatan
+ * @property bool $can_be_admin
  * @property bool $is_active
  * @property bool $password_change_required
  * @property CarbonImmutable|null $password_changed_at
  * @property CarbonImmutable|null $last_login_at
  */
 #[Fillable([
-    'nip', 'name', 'email', 'role', 'is_active', 'password',
+    'nip', 'name', 'email', 'pangkat_golongan', 'jabatan', 'role', 'can_be_admin', 'is_active', 'password',
     'password_change_required', 'password_changed_at', 'last_login_at',
 ])]
 #[Hidden(['password', 'remember_token'])]
@@ -43,6 +47,9 @@ class User extends Authenticatable
      */
     protected $attributes = [
         'is_active' => true,
+        'can_be_admin' => false,
+        'pangkat_golongan' => null,
+        'jabatan' => null,
         'password_change_required' => false,
         'password_changed_at' => null,
         'last_login_at' => null,
@@ -57,11 +64,20 @@ class User extends Authenticatable
         return [
             'role' => Role::class,
             'is_active' => 'boolean',
+            'can_be_admin' => 'boolean',
             'password' => 'hashed',
             'password_change_required' => 'boolean',
             'password_changed_at' => 'immutable_datetime',
             'last_login_at' => 'immutable_datetime',
         ];
+    }
+
+    /**
+     * @return HasMany<TeamMembership, $this>
+     */
+    public function teamMemberships(): HasMany
+    {
+        return $this->hasMany(TeamMembership::class);
     }
 
     public function nipValue(): Nip

@@ -12,7 +12,7 @@ use RuntimeException;
  * Akun sintetis untuk uji UI (Playwright). Idempoten: aman dijalankan berulang
  * dan tidak menghapus data lain. Ditolak di luar lingkungan local/testing/e2e.
  *
- * NIP dasar (E2E_NIP) harus berakhiran 1; akun turunan memakai akhiran 2 dan 3.
+ * NIP dasar (E2E_NIP) harus berakhiran 1; akun turunan memakai akhiran 2, 3, dan 4.
  */
 final class E2eSeeder extends Seeder
 {
@@ -36,9 +36,10 @@ final class E2eSeeder extends Seeder
         $prefix = substr($baseNip, 0, 17);
 
         $accounts = [
-            ['nip' => $baseNip, 'name' => 'Pengguna E2E', 'role' => Role::SuperAdminRegional, 'is_active' => true, 'password_change_required' => false],
+            ['nip' => $baseNip, 'name' => 'Pengguna E2E', 'role' => Role::SuperAdmin, 'is_active' => true, 'password_change_required' => false],
             ['nip' => $prefix.'2', 'name' => 'Pengguna E2E Nonaktif', 'role' => Role::Pegawai, 'is_active' => false, 'password_change_required' => false],
             ['nip' => $prefix.'3', 'name' => 'Pengguna E2E Ganti Sandi', 'role' => Role::Pegawai, 'is_active' => true, 'password_change_required' => true],
+            ['nip' => $prefix.'4', 'name' => 'Pengguna E2E Pegawai', 'role' => Role::Pegawai, 'is_active' => true, 'password_change_required' => false],
         ];
 
         foreach ($accounts as $account) {

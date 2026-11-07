@@ -4,6 +4,18 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Ditambahkan (MVP-1 langkah 1)
+
+- Model peran berlapis (ADR 0008): peran global Super Admin/Pegawai, tim kerja KDD/ASN/DTA per tahun dengan Ketua/Sekretaris/Anggota, kapabilitas Admin pada pegawai ([docs/perubahan/0004-peran-pegawai-tim.md](docs/perubahan/0004-peran-pegawai-tim.md)).
+- Halaman Pegawai untuk Super Admin: daftar dengan pencarian dan NIP tersamar, tambah/ubah, aktifkan/nonaktifkan (sesi langsung diakhiri), reset kata sandi sementara, impor CSV semua-atau-tidak.
+- Halaman Tim Kerja yang dapat dilihat semua pegawai; Super Admin mengatur anggota dan perannya.
+- Data tiga tim kerja 2026 lewat migrasi.
+
+### Diubah
+
+- Peran `super_admin_regional` menjadi `super_admin`; `admin_regional` dihapus dan dipetakan menjadi `pegawai` dengan kapabilitas Admin.
+- Image MySQL lokal dikembalikan ke 8.4 LTS (sesuai ADR 0002 dan CI) setelah pembaruan Dependabot ke 26.7; Dependabot tidak lagi mengusulkan seri mayor MySQL.
+
 ### Dokumentasi
 
 - Ketentuan tenggat administratif berubah menjadi ketentuan SOP berversi per tim kerja per tahun anggaran, dengan salinan pada pelatihan ([docs/perubahan/0003-ketentuan-sop-berversi.md](docs/perubahan/0003-ketentuan-sop-berversi.md)).

@@ -28,7 +28,7 @@
         <button type="submit" class="btn auth-submit">Masuk</button>
 
         <div class="auth-helper" id="login-help">
-            Gunakan NIP terverifikasi. Hubungi Super Admin Regional bila belum memiliki akun. Peserta pelatihan tidak memiliki akun login.
+            Gunakan NIP terverifikasi. Hubungi Super Admin bila belum memiliki akun. Peserta pelatihan tidak memiliki akun login.
         </div>
         <p class="footnote mt-12">Untuk keamanan sistem, SIMAPEL mencatat waktu akses, alamat IP, dan perangkat yang digunakan saat masuk.</p>
     </form>

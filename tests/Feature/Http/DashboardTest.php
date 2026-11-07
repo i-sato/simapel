@@ -13,7 +13,7 @@ final class DashboardTest extends TestCase
 
     public function test_dashboard_shows_account_summary_with_masked_nip_only(): void
     {
-        $user = User::factory()->role(Role::AdminRegional)->create(['nip' => '999900000000004321', 'name' => 'Ratna Uji']);
+        $user = User::factory()->role(Role::Pegawai)->create(['nip' => '999900000000004321', 'name' => 'Ratna Uji']);
 
         $this->actingAs($user)
             ->get('/dashboard')
@@ -21,7 +21,7 @@ final class DashboardTest extends TestCase
             ->assertSee('Ratna Uji')
             ->assertSee('9999**********4321')
             ->assertDontSee('999900000000004321')
-            ->assertSee('Admin Regional');
+            ->assertSee('Pegawai');
     }
 
     public function test_layout_renders_navigation_with_active_item(): void

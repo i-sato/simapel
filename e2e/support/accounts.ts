@@ -10,7 +10,17 @@ export const accounts = {
     admin: baseNip,
     inactive: `${baseNip.slice(0, 17)}2`,
     mustChangePassword: `${baseNip.slice(0, 17)}3`,
+    employee: `${baseNip.slice(0, 17)}4`,
 } as const;
+
+/** Data sintetis unik per eksekusi (NIP diawali 9999) agar uji dapat diulang pada database yang sama. */
+export function uniqueSuffix(): string {
+    return `${Date.now()}${Math.floor(Math.random() * 1000)}`.slice(-10).padStart(10, '0');
+}
+
+export function syntheticNip(suffix: string = uniqueSuffix()): string {
+    return `9999${suffix.padStart(14, '0').slice(-14)}`;
+}
 
 export function e2ePassword(): string {
     const password = process.env.E2E_PASSWORD;

@@ -36,6 +36,8 @@ Rujukan pasal di bawah perlu diverifikasi tim hukum.
 | Data | Lokasi | Tujuan | Retensi | Kontrol |
 |---|---|---|---|---|
 | NIP, nama, email (opsional), peran | `users` | Autentikasi & otorisasi | Selama akun dibutuhkan + masa arsip (**JRA**) | NIP tersamar di tampilan & audit; tidak bisa dipakai lewat email |
+| Pangkat/golongan ruang, jabatan, kapabilitas Admin | `users` | Identifikasi pegawai saat penugasan tim dan pelatihan (template daftar pegawai) | Selama akun dibutuhkan + masa arsip (**JRA**) | Hanya Super Admin yang mengubah; daftar tim untuk semua pegawai hanya menampilkan nama, jabatan, dan peran (tanpa NIP) |
+| Keanggotaan tim kerja (tim, tahun, peran) | `team_memberships` | Pembagian kerja dan transparansi beban kerja | Selama tahun anggaran + masa arsip (**JRA**) | Perubahan tercatat di audit log; dilihat semua pegawai sesuai keputusan K9 |
 | Hash kata sandi | `users.password` | Autentikasi | Selama akun ada | bcrypt; tidak pernah ditampilkan, di-log, atau di-flash |
 | Alamat IP, user agent, waktu akses | `sessions`, `audit_logs` | Keamanan & jejak audit | Sesi: maks. lama sesi. Audit: **JRA** (usulan 2 tahun) | Audit append-only; akses dibatasi Super Admin (modul audit direncanakan) |
 | Data peserta pelatihan | Belum ada | Administrasi pelatihan | — | Menunggu data dukung & penilaian dampak |
@@ -47,6 +49,7 @@ Rujukan pasal di bawah perlu diverifikasi tim hukum.
 3. **Data pribadi baru wajib didokumentasikan** di tabel inventaris (tujuan, dasar, retensi, kontrol) dalam PR yang sama.
 4. **Log dan audit memakai nilai tersamar.** Konteks audit menolak kunci `password`, `token`, `secret`, `nip`, dan `nik` secara otomatis.
 5. **Minimalkan tampilan.** Daftar dan ekspor hanya memuat kolom yang dibutuhkan peran pengguna.
+6. **Impor data pegawai** dilakukan langsung di aplikasi oleh Super Admin. Berkas CSV tidak disimpan setelah diproses, dan akun hasil impor belum dapat login sampai kata sandi sementara ditetapkan.
 
 ## Keputusan yang dibutuhkan dari instansi
 

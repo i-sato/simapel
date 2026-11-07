@@ -22,7 +22,7 @@ test('view halaman masuk hanya memicu area @auth', () => {
 
 test('beberapa perubahan menggabungkan tag tanpa duplikat', () => {
     const result = resolveTags(['app/Http/Controllers/Account/PasswordController.php', 'app/Application/Identity/ChangeOwnPassword.php'], map);
-    assert.deepEqual(result.tags, ['@account', '@auth']);
+    assert.deepEqual(result.tags, ['@account', '@auth', '@pegawai']);
 });
 
 test('layout, CSS, middleware, dan migrasi memicu semua uji', () => {
@@ -43,4 +43,13 @@ test('kode aplikasi yang belum dipetakan memicu semua uji dan dilaporkan', () =>
 
 test('penanda ALL menjalankan semua uji', () => {
     assert.equal(resolveTags(['ALL'], map).mode, 'all');
+});
+
+test('file yang dipetakan dengan tag kosong tidak memicu uji UI', () => {
+    assert.deepEqual(resolveTags(['app/Console/Commands/CreateUserCommand.php', 'database/factories/UserFactory.php'], map), { mode: 'none', tags: [], unmapped: [] });
+});
+
+test('halaman pegawai dan tim kerja memicu area masing-masing', () => {
+    assert.deepEqual(resolveTags(['resources/views/employees/index.blade.php'], map).tags, ['@pegawai']);
+    assert.deepEqual(resolveTags(['app/Domain/Organization/TeamComposition.php'], map).tags, ['@tim-kerja']);
 });

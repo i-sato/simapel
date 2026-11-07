@@ -32,7 +32,7 @@ Aturan ini **ditegakkan otomatis** oleh `tests/Architecture/LayerDependencyTest.
 | Referensi (`reference-simapel`) | SIMAPEL refactor |
 |---|---|
 | `app/Services/*Service` (logika + query + transaksi bercampur) | Use case di `app/Application/<Modul>`; aturan murni di `app/Domain/<Modul>` |
-| String peran tersebar (`'Super Admin Regional'`, `'admin_pelatihan'`) | Enum `App\Domain\Identity\Role` |
+| String peran tersebar (`'Super Admin Regional'`, `'admin_pelatihan'`) | Enum `Role` (global), `TeamRole` (tim kerja), kapabilitas `can_be_admin` (ADR 0008) |
 | Cek hak akses ditulis ulang di Blade | Policy/middleware di backend; view hanya menerima flag |
 | Filter "pelatihan terlihat" disalin di 4 controller | Satu query scope/repository per modul (direncanakan) |
 | Query langsung di controller untuk mutasi | Mutasi selalu lewat use case; controller boleh membaca untuk tampilan |

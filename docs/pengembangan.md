@@ -41,7 +41,7 @@ docker compose exec app php artisan simapel:user:create
 
 ```sh
 docker compose exec app php artisan simapel:user:create \
-  --nip=199001012020121001 --name="Nama Lengkap" --role=super_admin_regional
+  --nip=999900000000000001 --name="Nama Lengkap" --role=super_admin
 ```
 
 Kata sandi selalu ditanyakan secara tersembunyi, tidak pernah lewat opsi, agar tidak tersimpan di riwayat shell. Secara default akun wajib mengganti kata sandi saat login pertama. Gunakan `--permanent-password` untuk akun yang kata sandinya ditentukan sendiri oleh pemiliknya.

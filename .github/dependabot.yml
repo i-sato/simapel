@@ -35,6 +35,9 @@ updates:
       # Versi image Playwright harus sama dengan @playwright/test di e2e/package.json;
       # perbarui keduanya bersamaan secara manual.
       - dependency-name: "mcr.microsoft.com/playwright"
+      # ADR 0002: MySQL 8.4 LTS (sama dengan CI). Upgrade seri mayor diputuskan lewat ADR baru.
+      - dependency-name: "mysql"
+        versions: [">= 9"]
 
   - package-ecosystem: github-actions
     directory: /

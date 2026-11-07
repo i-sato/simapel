@@ -5,9 +5,9 @@ namespace Tests\Unit\Application\Identity;
 use App\Application\Identity\CreateUserAccount;
 use App\Application\Identity\CreateUserAccountInput;
 use App\Application\Identity\Exceptions\EmailAlreadyRegistered;
-use App\Application\Identity\Exceptions\InvalidUserAccountData;
 use App\Application\Identity\Exceptions\NipAlreadyRegistered;
 use App\Domain\Audit\AuditEventType;
+use App\Domain\Identity\InvalidEmployeeProfile;
 use App\Domain\Identity\InvalidNip;
 use App\Domain\Identity\PasswordPolicy;
 use App\Domain\Identity\Role;
@@ -51,7 +51,10 @@ final class CreateUserAccountTest extends TestCase
             'nip' => '999900000000000001',
             'name' => 'Admin Regional Uji',
             'email' => 'admin.uji@example.test',
-            'role' => Role::AdminRegional,
+            'role' => Role::Pegawai,
+            'pangkatGolongan' => '  Penata Muda -  III/a ',
+            'jabatan' => 'Pranata Komputer',
+            'canBeAdmin' => true,
             'password' => 'Pelatihan-2026!',
             'passwordChangeRequired' => true,
         ], $overrides);
@@ -64,8 +67,11 @@ final class CreateUserAccountTest extends TestCase
         $id = $this->useCase->handle($this->input(), actorId: 7);
 
         $record = $this->users->accounts[$id];
-        $this->assertSame('999900000000000001', $record['account']->nip->value);
-        $this->assertSame(Role::AdminRegional, $record['account']->role);
+        $this->assertSame('999900000000000001', $record['nip']->value);
+        $this->assertSame(Role::Pegawai, $record['role']);
+        $this->assertTrue($record['canBeAdmin']);
+        $this->assertSame('Penata Muda - III/a', $record['profile']->pangkatGolongan);
+        $this->assertSame('Pranata Komputer', $record['profile']->jabatan);
         $this->assertSame('hashed:Pelatihan-2026!', $record['passwordHash']);
         $this->assertTrue($record['passwordChangeRequired']);
         $this->assertSame(1, $this->transaction->runs);
@@ -89,8 +95,8 @@ final class CreateUserAccountTest extends TestCase
         $first = $this->useCase->handle($this->input(['email' => '  Admin.Uji@Example.TEST ']));
         $second = $this->useCase->handle($this->input(['nip' => '999900000000000002', 'email' => '   ']));
 
-        $this->assertSame('admin.uji@example.test', $this->users->accounts[$first]['account']->email);
-        $this->assertNull($this->users->accounts[$second]['account']->email);
+        $this->assertSame('admin.uji@example.test', $this->users->accounts[$first]['profile']->email);
+        $this->assertNull($this->users->accounts[$second]['profile']->email);
     }
 
     public function test_rejects_duplicate_nip_without_side_effects(): void
@@ -130,7 +136,7 @@ final class CreateUserAccountTest extends TestCase
 
     public function test_rejects_blank_name(): void
     {
-        $this->expectException(InvalidUserAccountData::class);
+        $this->expectException(InvalidEmployeeProfile::class);
         $this->useCase->handle($this->input(['name' => '   ']));
     }
 
@@ -138,8 +144,8 @@ final class CreateUserAccountTest extends TestCase
     {
         try {
             $this->useCase->handle($this->input(['email' => 'bukan-email']));
-            $this->fail('InvalidUserAccountData seharusnya dilempar.');
-        } catch (InvalidUserAccountData $exception) {
+            $this->fail('InvalidEmployeeProfile seharusnya dilempar.');
+        } catch (InvalidEmployeeProfile $exception) {
             $this->assertSame('email', $exception->field());
         }
 

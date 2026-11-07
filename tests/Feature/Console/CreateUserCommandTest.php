@@ -33,7 +33,7 @@ final class CreateUserCommandTest extends TestCase
             '--nip' => '999900000000000010',
             '--name' => 'Super Admin Pertama',
             '--email' => 'Super.Admin@Example.TEST',
-            '--role' => Role::SuperAdminRegional->value,
+            '--role' => Role::SuperAdmin->value,
         ])
             ->expectsQuestion('Kata sandi awal', self::PASSWORD)
             ->expectsQuestion('Ulangi kata sandi', self::PASSWORD)
@@ -41,7 +41,7 @@ final class CreateUserCommandTest extends TestCase
             ->assertSuccessful();
 
         $user = User::query()->where('nip', '999900000000000010')->sole();
-        $this->assertSame(Role::SuperAdminRegional, $user->role);
+        $this->assertSame(Role::SuperAdmin, $user->role);
         $this->assertSame('super.admin@example.test', $user->email);
         $this->assertTrue($user->password_change_required);
         $this->assertTrue(Hash::check(self::PASSWORD, $user->password));
