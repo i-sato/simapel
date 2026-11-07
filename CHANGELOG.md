@@ -4,6 +4,10 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Dokumentasi
+
+- Dokumentasi teknis lengkap: spesifikasi teknis, ERD dan kamus data, use case, matriks hak akses, alur dan diagram status, panduan operasional, dan glosarium ([docs/perubahan/0018-dokumentasi-teknis.md](docs/perubahan/0018-dokumentasi-teknis.md)).
+
 ## [0.1.0] - 2026-11-07
 
 MVP-1: prototipe siap UAT. Langkah 1–8 di [docs/mvp-1/panduan.md](docs/mvp-1/panduan.md).
