@@ -4,6 +4,10 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Diubah (K19)
+
+- Bentrok di Beban Kerja: Ketua dikecualikan; Sekretaris kini dinilai bentrok bila tugasnya beririsan dengan tugas Admin/Panitia di pelatihan lain, tetapi tidak antartugas Sekretaris di timnya sendiri ([docs/perubahan/0016-keputusan-beban-kerja.md](docs/perubahan/0016-keputusan-beban-kerja.md)).
+
 ### Ditambahkan (MVP-1 langkah 7)
 
 - Halaman Beban Kerja untuk semua pegawai: matriks pegawai × minggu/bulan dengan intensitas warna dan tanda bentrok, filter rentang dan tim kerja, serta daftar penugasan per pegawai ([docs/perubahan/0015-beban-kerja.md](docs/perubahan/0015-beban-kerja.md)).
