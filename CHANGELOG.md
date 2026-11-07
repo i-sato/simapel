@@ -4,6 +4,10 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Dokumentasi
+
+- Keputusan Template WA K16: Super Admin ikut mengakses, "gratis" di 5 baris berisi terakhir, dan link panduan pelatihan tim kerja sebagai panduan wajib ([docs/perubahan/0012-keputusan-template-wa.md](docs/perubahan/0012-keputusan-template-wa.md)).
+
 ### Ditambahkan (MVP-1 langkah 5)
 
 - Template WA per pelatihan: template default yang dibentuk dari data pelatihan terkini (struktur contoh VBL, info kosong "(menyusul)", learning path, pernyataan gratis), tombol Salin, dan tautan "Buka di WhatsApp" ([docs/perubahan/0011-template-wa.md](docs/perubahan/0011-template-wa.md)).
