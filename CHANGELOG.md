@@ -14,6 +14,7 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 ### Diubah (MVP-1 langkah 2)
 
 - `make setup` menjalankan `db:seed` setelah migrasi.
+- Playwright berjalan dengan satu worker agar uji yang berbagi sesi Super Admin tidak saling bertukar pesan flash.
 
 ### Ditambahkan (MVP-1 langkah 1)
 

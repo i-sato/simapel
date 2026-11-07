@@ -51,6 +51,8 @@ Setiap eksekusi `make e2e*` menjalankan langkah berikut:
 | `@pengaturan` | `pengaturan.spec.ts` | Link panduan tim, penolakan link non-http(s), siklus draf ketentuan SOP (buat, validasi, ubah, hapus), badge peringatan, 403 untuk pegawai biasa |
 | `@setup` | `auth.setup.ts` | Selalu ikut dijalankan |
 
+Uji berjalan dengan **satu worker**. Uji Super Admin berbagi satu sesi dari `auth.setup.ts` (login dibatasi per IP), sehingga eksekusi paralel membuat pesan flash dan error formulir tertukar antaruji.
+
 ### Uji UI terdampak saja
 
 `make e2e-affected` membandingkan perubahan terhadap `BASE_REF` (default `origin/main`, atau `main` bila belum ada remote), termasuk file yang belum di-commit. Pemetaan dilakukan oleh `e2e/impact-map.json`:

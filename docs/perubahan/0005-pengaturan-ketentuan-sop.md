@@ -27,7 +27,7 @@ Halaman **Pengaturan** khusus Super Admin, berisi:
 | Infrastructure | `EloquentSettingsRepository`, `EloquentSopProvisionRepository` (kunci baris per tim), model `Setting`, `SopProvisionRecord` |
 | Database | Migrasi `create_settings_and_sop_provisions_tables` (tabel `settings`, `sop_provisions`, kolom `work_teams.registration_guide_url`); seeder `SopProvisionDraftSeeder` dipanggil `DatabaseSeeder` |
 | Presentation | `SettingsController`, `SopProvisionController`, Form Request, menu ADMINISTRASI › Pengaturan, komponen Blade `<x-sop.missing-badge>` dan `<x-sop.fallback-badge>`, `View\TeamSopStatus`, halaman Tim Kerja menampilkan link SOP, link panduan, dan badge |
-| Lingkungan | `make setup` menjalankan `db:seed` setelah migrasi |
+| Lingkungan | `make setup` menjalankan `db:seed` setelah migrasi; Playwright memakai satu worker (lihat catatan reviewer) |
 
 ## Keputusan implementasi
 
@@ -60,7 +60,7 @@ Uji manual:
 | PHPUnit 13 (MySQL 8.4) | 220 tes lulus |
 | Coverage baris | 98,29% (ambang 80%) |
 | Larastan level 8, Pint | Bersih |
-| Playwright | 27/27 lulus (semua area karena route dan migrasi berubah) |
+| Playwright | 27/27 lulus, satu worker, ±24 detik (semua area karena route dan migrasi berubah) |
 | Resolver area terdampak | 11/11 lulus |
 
 ## Area UI terdampak
@@ -79,4 +79,4 @@ Uji manual:
 
 - **Dependabot #8** (image Playwright v1.65.0) jangan di-merge sendiri. Versi image harus sama dengan `@playwright/test` di `e2e/package.json` (saat ini 1.64.1); naikkan keduanya dalam satu PR.
 - **Dependabot #9** (PHPUnit 13.4.6) adalah patch dan aman di-merge setelah CI hijau.
-- **Uji UI berbagi satu sesi Super Admin.** Pesan flash dapat tertukar antara uji paralel yang memakai sesi tersebut, dan sekali terlihat pada `pegawai.spec.ts` (lulus saat diulang). Spec `@pengaturan` dibuat serial. Perbaikan menyeluruh, misalnya project Playwright khusus sesi admin dengan `workers: 1`, diusulkan sebagai PR terpisah.
+- **Playwright kini berjalan dengan satu worker.** Uji Super Admin berbagi satu sesi (`auth.setup.ts`) karena login dibatasi 20 kali per menit per IP. Saat uji berjalan paralel, pesan flash dan error formulir tertukar antaruji: terlihat di `pegawai.spec.ts` secara lokal dan di `tim-kerja.spec.ts` pada CI run pertama PR ini. Retry di CI juga gagal karena perubahan dari percobaan pertama sudah tersimpan. Dengan satu worker, semua uji tetap selesai sekitar 24 detik (27 uji).

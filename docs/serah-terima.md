@@ -68,7 +68,7 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 
 - MFA belum tersedia (usulan R6, ditunda untuk MVP 1).
 - Pemeriksaan "ketentuan sudah dirujuk pelatihan" (`isReferenced`) selalu `false` sampai relasi pelatihan dibuat di langkah 3.
-- Uji UI berbagi satu sesi Super Admin, sehingga pesan flash dapat tertukar antara uji paralel (sesekali gagal, lulus saat diulang). Usulan perbaikan: project Playwright khusus sesi admin dengan `workers: 1`.
+- Uji UI berjalan dengan satu worker karena uji Super Admin berbagi satu sesi. Bila jumlah uji membuat waktu tunggu terlalu lama, pertimbangkan sesi admin per worker (perlu menyesuaikan batas login per IP di lingkungan e2e).
 - Alarm otomatis untuk event keamanan belum tersedia.
 - Ukuran image production sekitar 590 MB (Debian). Optimasi ke Alpine dapat dikaji bila diperlukan.
 - `make` membutuhkan lingkungan Unix (macOS, Linux, WSL2). Perintah `docker compose` setara tercantum di [pengembangan.md](pengembangan.md).
