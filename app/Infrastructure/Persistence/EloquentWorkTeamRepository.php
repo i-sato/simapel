@@ -17,7 +17,7 @@ final class EloquentWorkTeamRepository implements WorkTeamRepository
     {
         $team = WorkTeam::query()->find($teamId);
 
-        return $team === null ? null : new WorkTeamSummary($team->id, $team->code, $team->name, $team->year);
+        return $team === null ? null : new WorkTeamSummary($team->id, $team->code, $team->name, $team->year, $team->registration_guide_url);
     }
 
     public function compositionForUpdate(int $teamId): TeamComposition
@@ -48,5 +48,10 @@ final class EloquentWorkTeamRepository implements WorkTeamRepository
             ->where('work_team_id', $teamId)
             ->where('user_id', $employeeId)
             ->delete();
+    }
+
+    public function setRegistrationGuideUrl(int $teamId, ?string $url): void
+    {
+        WorkTeam::query()->whereKey($teamId)->update(['registration_guide_url' => $url]);
     }
 }

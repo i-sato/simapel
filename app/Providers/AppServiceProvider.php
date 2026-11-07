@@ -7,11 +7,15 @@ use App\Application\Identity\Contracts\PasswordHasher;
 use App\Application\Identity\Contracts\SessionTerminator;
 use App\Application\Identity\Contracts\UserAccountRepository;
 use App\Application\Organization\Contracts\WorkTeamRepository;
+use App\Application\Settings\Contracts\SettingsRepository;
 use App\Application\Shared\Contracts\Clock;
 use App\Application\Shared\Contracts\Transaction;
+use App\Application\Sop\Contracts\SopProvisionRepository;
 use App\Domain\Identity\PasswordPolicy;
 use App\Infrastructure\Persistence\DatabaseTransaction;
 use App\Infrastructure\Persistence\EloquentAuditTrail;
+use App\Infrastructure\Persistence\EloquentSettingsRepository;
+use App\Infrastructure\Persistence\EloquentSopProvisionRepository;
 use App\Infrastructure\Persistence\EloquentUserAccountRepository;
 use App\Infrastructure\Persistence\EloquentWorkTeamRepository;
 use App\Infrastructure\Security\LaravelPasswordHasher;
@@ -41,6 +45,8 @@ class AppServiceProvider extends ServiceProvider
     public array $bindings = [
         UserAccountRepository::class => EloquentUserAccountRepository::class,
         WorkTeamRepository::class => EloquentWorkTeamRepository::class,
+        SettingsRepository::class => EloquentSettingsRepository::class,
+        SopProvisionRepository::class => EloquentSopProvisionRepository::class,
         AuditTrail::class => EloquentAuditTrail::class,
         PasswordHasher::class => LaravelPasswordHasher::class,
         SessionTerminator::class => DatabaseSessionTerminator::class,
