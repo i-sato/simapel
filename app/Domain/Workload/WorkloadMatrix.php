@@ -11,9 +11,10 @@ use App\Domain\Shared\DateRange;
  *
  * - Jumlah per sel = banyaknya pelatihan berbeda yang rentangnya beririsan dengan periode
  *   (satu pegawai yang menjadi Admin sekaligus Panitia pada pelatihan yang sama dihitung satu).
- * - Bentrok = dua penugasan Admin/Panitia pada pelatihan berbeda saling beririsan, dan
- *   irisannya jatuh di dalam periode. Peran Ketua/Sekretaris menambah beban tetapi tidak
- *   dinilai bentrok, karena Ketua memang membawahi beberapa pelatihan tim sekaligus.
+ * - Bentrok = dua peran pada pelatihan berbeda saling beririsan dan irisannya jatuh di dalam
+ *   periode, menurut WorkloadRole::conflictsWith() (K19): Ketua tidak pernah bentrok;
+ *   Sekretaris bentrok dengan Admin/Panitia di pelatihan lain, tetapi tidak dengan tugas
+ *   Sekretaris lain di timnya sendiri.
  */
 final class WorkloadMatrix
 {
@@ -65,7 +66,7 @@ final class WorkloadMatrix
     }
 
     /**
-     * Pelatihan seorang pegawai yang bentrok dengan pelatihan lain (Admin/Panitia).
+     * Pelatihan seorang pegawai yang bentrok dengan pelatihan lain.
      *
      * @param  list<WorkloadItem>  $items  milik satu pegawai
      * @return list<int>
@@ -77,7 +78,7 @@ final class WorkloadMatrix
 
         foreach ($candidates as $i => $a) {
             foreach (array_slice($candidates, $i + 1) as $b) {
-                if ($a->trainingId !== $b->trainingId && $a->range->overlaps($b->range)) {
+                if ($a->trainingId !== $b->trainingId && $a->role->conflictsWith($b->role) && $a->range->overlaps($b->range)) {
                     $ids[$a->trainingId] = $a->trainingId;
                     $ids[$b->trainingId] = $b->trainingId;
                 }
@@ -90,7 +91,7 @@ final class WorkloadMatrix
     }
 
     /**
-     * Rentang irisan antarpenugasan Admin/Panitia yang bentrok.
+     * Rentang irisan antarperan yang bentrok.
      *
      * @param  list<WorkloadItem>  $items
      * @return list<DateRange>
@@ -102,7 +103,7 @@ final class WorkloadMatrix
 
         foreach ($candidates as $i => $a) {
             foreach (array_slice($candidates, $i + 1) as $b) {
-                if ($a->trainingId !== $b->trainingId && $a->range->overlaps($b->range)) {
+                if ($a->trainingId !== $b->trainingId && $a->role->conflictsWith($b->role) && $a->range->overlaps($b->range)) {
                     $overlaps[] = new DateRange(max($a->range->start, $b->range->start), min($a->range->end, $b->range->end));
                 }
             }

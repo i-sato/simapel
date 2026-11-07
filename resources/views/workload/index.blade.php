@@ -54,7 +54,7 @@
             <span class="load-swatch load-1">1</span> 1 pelatihan
             <span class="load-swatch load-2">2</span> 2 pelatihan
             <span class="load-swatch load-3">3+</span> 3 atau lebih
-            <span class="load-swatch load-conflict">⚠</span> bentrok Admin/Panitia
+            <span class="load-swatch load-conflict">⚠</span> bentrok penugasan (Admin, Panitia, Sekretaris)
         </div>
     </div>
     @if ($rows === [])
@@ -78,7 +78,7 @@
                             <th scope="row" class="sticky-col">
                                 <a href="{{ route('workload.show', ['employee' => $row['employee']->id] + $query) }}">{{ $row['employee']->name }}</a>
                                 @if ($row['conflict'])
-                                    <span class="badge warning" title="Ada penugasan Admin/Panitia yang beririsan pada rentang ini">⚠ Bentrok</span>
+                                    <span class="badge warning" title="Ada penugasan (Admin, Panitia, atau Sekretaris) yang beririsan pada rentang ini">⚠ Bentrok</span>
                                 @endif
                                 @if ($row['employee']->jabatan)
                                     <div class="muted">{{ $row['employee']->jabatan }}</div>

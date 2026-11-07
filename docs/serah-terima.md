@@ -10,7 +10,7 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Clean architecture + uji arsitektur | Selesai |
 | Autentikasi NIP, keamanan akun, audit login | Selesai |
 | Tema UI referensi, layout, halaman galat | Selesai |
-| Pengujian: 413 PHPUnit, coverage 98%, 41 uji UI Playwright, 17 uji resolver | Selesai |
+| Pengujian: 415 PHPUnit, coverage 98%, 41 uji UI Playwright, 17 uji resolver | Selesai |
 | CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
 | Pegawai, tim kerja, model peran berlapis (langkah 1) | Selesai (PR `feat/peran-pegawai-tim`, ADR 0008) |
 | Pengaturan link dan ketentuan SOP berversi (langkah 2) | Selesai (PR `feat/pengaturan`, ADR 0010); draf 2026 menunggu tinjauan Super Admin |
@@ -64,6 +64,10 @@ Tanggal keputusan: 4 November 2026.
     - wilayah kerja per pelatihan menentukan zona waktu, dan jam penutupan pendaftaran per pelatihan (default 23.59 WIB) ditampilkan di template WA sesuai zona waktunya;
     - tabel mitra dengan autocomplete; mitra baru dapat ditambahkan Ketua, Super Admin, dan semua pegawai bertanda Admin;
     - data lama tidak dipetakan otomatis.
+14. Keputusan 7 November 2026 (K19):
+    - beban kerja dihitung per pelatihan, dan filter tim menampilkan Panitia lintas tim;
+    - bentrok beban kerja mengecualikan Ketua;
+    - Sekretaris dinilai bentrok bila beririsan dengan tugas Admin/Panitia di pelatihan lain.
 
 ## Cara melanjutkan
 
@@ -82,7 +86,6 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 
 | Topik | Pertanyaan | Pemilik |
 |---|---|---|
-| Beban kerja | Ketua/Sekretaris dihitung beban tanpa bentrok; jumlah per pelatihan; filter tim menampilkan Panitia lintas tim | Pemilik proyek |
 | Data | Daftar pegawai dan komposisi tim diinput lewat aplikasi (impor CSV), bukan lewat repository | Pemilik proyek |
 | SOP | Tinjau draf ketentuan 2026 di menu Pengaturan: lampirkan link SOP, konfirmasi BAP H+5 dan ST H+6 (KDD) serta ST H+4 (ASN), lalu berlakukan | Pemilik proyek |
 | PDP | Dasar pemrosesan, PPDP, retensi (JRA), teks pemberitahuan privasi | Hukum/PPDP instansi |

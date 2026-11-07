@@ -25,9 +25,21 @@ enum WorkloadRole: string
         };
     }
 
-    /** Hanya penugasan per pelatihan yang dinilai bentrok (aturan langkah 4). */
+    /** Ketua tidak pernah dinilai bentrok karena membawahi seluruh pelatihan timnya (K19). */
     public function countsForConflict(): bool
     {
-        return $this === self::Admin || $this === self::Panitia;
+        return $this !== self::Ketua;
+    }
+
+    /**
+     * Dua peran pada pelatihan berbeda yang beririsan dinilai bentrok bila keduanya bukan
+     * Ketua dan tidak keduanya Sekretaris (K19): administrasi tim sendiri relatif ringan,
+     * tetapi Sekretaris yang juga bertugas sebagai Admin/Panitia di pelatihan lain dinilai bentrok.
+     */
+    public function conflictsWith(self $other): bool
+    {
+        return $this->countsForConflict()
+            && $other->countsForConflict()
+            && ! ($this === self::Sekretaris && $other === self::Sekretaris);
     }
 }

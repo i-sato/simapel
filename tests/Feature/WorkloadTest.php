@@ -86,6 +86,24 @@ final class WorkloadTest extends TestCase
         $this->get('/dashboard')->assertSee('href="'.route('workload.index').'"', false);
     }
 
+    public function test_secretary_with_crew_duty_in_other_team_is_flagged(): void
+    {
+        $sekretaris = User::factory()->create(['name' => 'Sekretaris DTA']);
+        $this->team('DTA')->memberships()->create(['user_id' => $sekretaris->id, 'role' => TeamRole::Sekretaris]);
+        $this->training('DTA', 'Pelatihan DTA A', '2026-11-02', '2026-11-12');
+        $this->training('DTA', 'Pelatihan DTA B', '2026-11-05', '2026-11-14');
+
+        // Dua tugas Sekretaris di tim sendiri: bukan bentrok (K19).
+        $this->actingAs($sekretaris)->get("/workload/{$sekretaris->id}?from=2026-11-01&to=2026-11-30")
+            ->assertSee('Sekretaris tim')->assertDontSee('⚠ Bentrok', false);
+
+        $kdd = $this->training('KDD', 'Pelatihan KDD', '2026-11-10', '2026-11-20');
+        $this->assign($kdd, $sekretaris->id, 'panitia');
+
+        $this->get("/workload/{$sekretaris->id}?from=2026-11-01&to=2026-11-30")->assertSee('⚠ Bentrok', false);
+        $this->get('/workload?from=2026-11-01&to=2026-11-30&granularity=bulan')->assertSee('load-cell load-3 load-conflict', false);
+    }
+
     public function test_guests_are_redirected(): void
     {
         $this->get('/workload')->assertRedirect('/login');
