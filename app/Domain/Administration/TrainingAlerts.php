@@ -8,7 +8,8 @@ use DateTimeImmutable;
 
 /**
  * Peringatan per pelatihan (langkah 6). Semua perhitungan per tanggal (inklusif) dan
- * memakai "hari ini" dari port Clock yang diteruskan pemanggil.
+ * memakai "hari ini" dari port Clock yang diteruskan pemanggil (zona waktu aplikasi,
+ * Asia/Jakarta): hari tenggat berlaku 00.00–23.59 WIB (K17).
  *
  * - Dokumen BAP/SK/ST (pelatihan Final): tenggat = akhir pendaftaran + H+n dari salinan
  *   ketentuan pada pelatihan. Hari tenggat = "mendekati tenggat"; sesudahnya = "lewat tenggat".

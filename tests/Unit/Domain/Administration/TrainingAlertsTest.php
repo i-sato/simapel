@@ -80,9 +80,11 @@ final class TrainingAlertsTest extends TestCase
     public static function documentTimeline(): iterable
     {
         yield 'sebelum tenggat (hari akhir pendaftaran)' => ['2026-12-10 23:00', []];
-        yield 'hari tenggat BAP' => ['2026-12-11 00:00', ['mendekati_tenggat:bap']];
-        yield 'BAP lewat, hari tenggat SK/ST' => ['2026-12-12', ['lewat_tenggat:bap', 'mendekati_tenggat:sk', 'mendekati_tenggat:st']];
+        yield 'hari tenggat BAP, 00.00 WIB' => ['2026-12-11 00:00', ['mendekati_tenggat:bap']];
+        yield 'hari tenggat BAP, 23.59 WIB' => ['2026-12-11 23:59:59', ['mendekati_tenggat:bap']];
+        yield 'BAP lewat mulai 00.00 WIB, hari tenggat SK/ST' => ['2026-12-12 00:00', ['lewat_tenggat:bap', 'mendekati_tenggat:sk', 'mendekati_tenggat:st']];
         yield 'hari tenggat administrasi siap (belum kritis)' => ['2026-12-13', ['lewat_tenggat:bap', 'lewat_tenggat:sk', 'lewat_tenggat:st']];
+        yield 'hari administrasi siap 23.59 WIB (belum kritis)' => ['2026-12-13 23:59:59', ['lewat_tenggat:bap', 'lewat_tenggat:sk', 'lewat_tenggat:st']];
         yield 'sehari setelah administrasi siap (kritis)' => ['2026-12-14', ['kritis', 'lewat_tenggat:bap', 'lewat_tenggat:sk', 'lewat_tenggat:st']];
     }
 
