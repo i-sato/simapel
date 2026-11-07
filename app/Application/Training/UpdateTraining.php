@@ -17,7 +17,8 @@ use App\Domain\Audit\AuditEventType;
 use App\Domain\Training\TrainingPermissions;
 
 /**
- * Mengubah Draft (Ketua tim terkait/Super Admin) atau melengkapi pelatihan Final (Super Admin).
+ * Mengubah Draft atau melengkapi pelatihan Final oleh Super Admin, Ketua tim terkait,
+ * atau Admin yang ditunjuk (langkah 4).
  */
 final readonly class UpdateTraining
 {

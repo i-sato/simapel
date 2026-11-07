@@ -11,7 +11,7 @@ Acuan kebutuhan: "Simapel Business Story" + "Additional Features V.1" dan "V.2" 
 | K1 | Peran utama | **Super Admin** dapat mengakses seluruh fitur. Peran lain MVP-1: Ketua Tim, Admin, Panitia |
 | K2 | Tim kerja | 2026: KDD (Keterampilan Digital Dasar), ASN Digital, Talenta Digital (DTA). Tiap tim: Ketua, Sekretaris, Anggota |
 | K3 | Sekretaris | Membuat administrasi (BAP, SK, ST) dan dapat ditetapkan sebagai anggota tim kepesertaan (panitia) |
-| K4 | Admin | Super Admin memberi tanda "dapat menjadi Admin" pada pegawai. Admin ditugaskan per pelatihan (admin yang ditunjuk Ketua tercentang otomatis). Hanya Admin yang ditugaskan dan Super Admin yang dapat memfinalisasi draft dan mengubah link daftar peserta |
+| K4 | Admin | Super Admin memberi tanda "dapat menjadi Admin" pada pegawai. Admin ditugaskan per pelatihan (admin yang ditunjuk Ketua tercentang otomatis). Hanya Admin yang ditugaskan dan Super Admin yang dapat memfinalisasi draft. Link daftar peserta dan data pelatihan Final dapat dilengkapi juga oleh Ketua tim kerja terkait (K13) |
 | K5 | Alur pelatihan | Ketua atau Super Admin membuat **draft**; Admin melengkapi dan **memfinalisasi** |
 | K6 | Pelatihan berjenjang | Seperti *learning path*: tiap level adalah pelatihan sendiri dengan link sendiri, saling terhubung. Level 1/2/3 = Dasar/Menengah/Mahir |
 | K7 | Link | Link umum (login/registrasi Digitalent, panduan DTS) disimpan di **pengaturan**. Link panduan pelatihan diatur **per tim kerja** |
@@ -20,6 +20,8 @@ Acuan kebutuhan: "Simapel Business Story" + "Additional Features V.1" dan "V.2" 
 | K10 | Ditunda dari MVP-1 | MFA, assessment dan sertifikat, alur tahap SOP/SOP Builder, integrasi Google Sheets/WhatsApp otomatis, notifikasi email |
 | K11 | Link SOP tim kerja | Link SOP yang berlaku disimpan pada ketentuan SOP tim kerja (K12) sebagai panduan dan bahan literasi (V.2 nomor 1). Bila belum ada, tampil badge peringatan dengan keterangan saat kursor diarahkan, di setiap titik akses: membuat pelatihan, melihat informasi pelatihan, dan sejenisnya |
 | K12 | Durasi kritis administratif | Diatur sebagai **ketentuan berversi per tim kerja per tahun anggaran** (tahun anggaran = tahun kalender), karena tiap tim punya SOP sendiri dan SOP berlaku minimal satu tahun anggaran (V.2 nomor 2, keputusan 8 November 2026). Ketentuan memuat acuan SOP (nomor, tanggal efektif, link) dan tenggat BAP, SK, ST, serta administrasi siap dalam hari setelah pendaftaran ditutup. Pelatihan **menyimpan salinan** ketentuan saat difinalisasi. Revisi SOP di tengah tahun dibuat sebagai versi baru dengan tanggal mulai berlaku. Versi yang sudah dipakai pelatihan dikunci |
+| K13 | Melengkapi pelatihan Final | Keputusan 7 November 2026: Super Admin, **Ketua tim kerja terkait**, dan **Admin yang ditunjuk** dapat melengkapi pelatihan Final (mis. link daftar peserta). Data tetap harus lengkap; tim kerja dan salinan ketentuan SOP tidak berubah. Field wajib finalisasi: semua field kecuali link daftar peserta (serta panitia/admin yang diatur di langkah 4). Batch berupa angka |
+| K14 | Akses link daftar peserta | Keputusan 7 November 2026: SIMAPEL hanya menyimpan tautan. Hak akses Sheet/berkas mengikuti aturan platform penyedia dan diatur oleh pemilik berkas |
 
 ## Ringkasan langkah
 
@@ -176,6 +178,7 @@ Panitia dan admin dikerjakan di langkah 4.
 - Hak akses:
   - Ketua tim dan Super Admin membuat draft.
   - Admin yang ditugaskan dan Super Admin memfinalisasi.
+  - Super Admin, Ketua tim terkait, dan Admin yang ditugaskan melengkapi pelatihan Final (K13).
   - Semua pegawai dapat melihat.
 
 **Kriteria selesai:**

@@ -24,7 +24,11 @@ final class TrainingPermissionsAndGapTest extends TestCase
         $this->assertTrue(TrainingPermissions::canEdit($ketua, $draft));
         $this->assertFalse(TrainingPermissions::canEdit($ketua, $otherTeam));
         $this->assertFalse(TrainingPermissions::canFinalize($ketua, $draft));
-        $this->assertFalse(TrainingPermissions::canEdit($ketua, $draft->finalize(null, new DateTimeImmutable('2026-11-04'))));
+
+        // Ketua melengkapi pelatihan Final timnya sendiri, tetapi tidak milik tim lain.
+        $now = new DateTimeImmutable('2026-11-04');
+        $this->assertTrue(TrainingPermissions::canEdit($ketua, $draft->finalize(null, $now)));
+        $this->assertFalse(TrainingPermissions::canEdit($ketua, $otherTeam->finalize(null, $now)));
     }
 
     public function test_super_admin_finalizes_and_completes_final_trainings(): void

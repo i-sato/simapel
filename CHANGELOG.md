@@ -4,6 +4,11 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Diubah (keputusan langkah 3)
+
+- Ketua tim kerja terkait dan Admin yang ditunjuk dapat melengkapi pelatihan Final; finalisasi tetap oleh Super Admin dan Admin yang ditunjuk ([docs/perubahan/0008-melengkapi-pelatihan-final.md](docs/perubahan/0008-melengkapi-pelatihan-final.md), K13).
+- Keputusan field wajib finalisasi, batch berupa angka, dan akses link daftar peserta dicatat (K13, K14).
+
 ### Ditambahkan (MVP-1 langkah 3)
 
 - Menu Pelatihan: daftar dengan filter tim/status/periode, form draft per bagian, detail, dan finalisasi dengan konfirmasi ([docs/perubahan/0007-pelatihan.md](docs/perubahan/0007-pelatihan.md), ADR 0009).

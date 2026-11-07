@@ -251,9 +251,14 @@ final class TrainingUseCasesTest extends TestCase
         $this->assertSame($provisionId, $event->context['sop_provision_id']);
         $this->assertSame(5, $event->context['preparation_days']);
 
-        // Ketua tidak lagi dapat mengubah pelatihan Final; Super Admin dapat melengkapinya.
-        $this->assertFalse($this->access->canEdit($this->ketuaDta, $id));
+        // Ketua tim terkait dan Super Admin dapat melengkapi pelatihan Final; pegawai lain tidak.
+        $this->assertTrue($this->access->canEdit($this->ketuaDta, $id));
         $this->assertTrue($this->access->canEdit($this->superAdmin, $id));
+        $this->assertFalse($this->access->canEdit($this->employee, $id));
+
+        $this->assertTrue($this->update->handle($this->ketuaDta, $id, $this->dta, TrainingBuilder::input(['lessonHours' => 40])));
+        $this->assertTrue($this->trainings->trainings[$id]->isFinal());
+        $this->assertSame($provisionId, $this->trainings->trainings[$id]->sopSnapshot?->provisionId);
     }
 
     public function test_finalize_warns_about_short_gap_and_missing_provision(): void

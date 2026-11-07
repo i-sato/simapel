@@ -39,6 +39,10 @@ Tanggal keputusan: 4 November 2026.
 6. MFA (usulan R6) ditunda karena target saat ini adalah MVP 1 berbentuk prototipe.
 7. Model peran berlapis diterapkan di langkah 1 (ADR 0008): peran global Super Admin/Pegawai, peran tim Ketua/Sekretaris/Anggota, kapabilitas Admin, dan penugasan per pelatihan.
 8. Ketentuan SOP berversi per tim kerja per tahun anggaran diterapkan di langkah 2 (ADR 0010). Pelatihan menyimpan salinannya saat difinalisasi (langkah 3, ADR 0009).
+9. Keputusan 7 November 2026 (K13, K14):
+   - semua field kecuali link daftar peserta wajib saat finalisasi, dan batch berupa angka;
+   - Ketua tim kerja terkait dan Admin yang ditunjuk ikut melengkapi pelatihan Final;
+   - hak akses link daftar peserta mengikuti aturan platform penyedia.
 
 ## Cara melanjutkan
 
@@ -59,8 +63,6 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 |---|---|---|
 | Data | Daftar pegawai dan komposisi tim diinput lewat aplikasi (impor CSV), bukan lewat repository | Pemilik proyek |
 | SOP | Tinjau draf ketentuan 2026 di menu Pengaturan: lampirkan link SOP, konfirmasi BAP H+5 dan ST H+6 (KDD) serta ST H+4 (ASN), lalu berlakukan | Pemilik proyek |
-| Data peserta | Pembatasan akses Google Sheet peserta yang saat ini terbuka untuk siapa saja yang memiliki tautan | Pemilik proyek |
-| Pelatihan | Field wajib finalisasi (link silabus, mitra/lokasi), siapa yang boleh melengkapi pelatihan Final, batch berupa angka | Pemilik proyek |
 | PDP | Dasar pemrosesan, PPDP, retensi (JRA), teks pemberitahuan privasi | Hukum/PPDP instansi |
 | GitHub | Paket akun (fitur protected branch di repo private butuh Pro/Team) | Pemilik proyek |
 | Deploy | Lokasi server (di Indonesia), akses jaringan, HTTPS, backup | Tim infrastruktur |
@@ -69,7 +71,7 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 ## Batasan yang diketahui
 
 - MFA belum tersedia (usulan R6, ditunda untuk MVP 1).
-- Admin yang ditugaskan per pelatihan belum ada (langkah 4); sampai saat itu hanya Super Admin yang memfinalisasi dan melengkapi pelatihan Final.
+- Admin yang ditugaskan per pelatihan belum ada (langkah 4). Sampai saat itu, Super Admin memfinalisasi, sedangkan Super Admin dan Ketua tim kerja terkait melengkapi pelatihan Final.
 - Uji UI berjalan dengan satu worker karena uji Super Admin berbagi satu sesi. Bila jumlah uji membuat waktu tunggu terlalu lama, pertimbangkan sesi admin per worker (perlu menyesuaikan batas login per IP di lingkungan e2e).
 - Alarm otomatis untuk event keamanan belum tersedia.
 - Ukuran image production sekitar 590 MB (Debian). Optimasi ke Alpine dapat dikaji bila diperlukan.

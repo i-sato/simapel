@@ -7,11 +7,16 @@ namespace App\Domain\Training;
 /**
  * Hak akses pelatihan (K5, K9):
  * - semua pegawai aktif melihat daftar dan detail;
- * - Ketua tim terkait dan Super Admin membuat dan mengubah Draft;
- * - Super Admin memfinalisasi dan melengkapi pelatihan Final.
+ * - Ketua tim terkait dan Super Admin membuat Draft;
+ * - Super Admin, Ketua tim terkait, dan Admin yang ditunjuk mengubah Draft dan
+ *   melengkapi pelatihan Final (keputusan pemilik proyek 7 November 2026);
+ * - Super Admin dan Admin yang ditunjuk memfinalisasi (K5).
  *
- * Titik perluasan langkah 4: Admin yang ditugaskan pada pelatihan tersebut
- * (TrainingActor::$assignedAdminTrainingIds) ikut memfinalisasi dan melengkapi.
+ * Batasan isi pelatihan Final (tetap lengkap, tim dan salinan ketentuan SOP tidak
+ * berubah) ditegakkan di Training::revise(), bukan di sini.
+ *
+ * Titik perluasan langkah 4: Admin yang ditunjuk pada pelatihan tersebut
+ * (TrainingActor::$assignedAdminTrainingIds).
  */
 final class TrainingPermissions
 {
@@ -32,15 +37,8 @@ final class TrainingPermissions
 
     public static function canEdit(TrainingActor $actor, Training $training): bool
     {
-        if (! $actor->isActive) {
-            return false;
-        }
-
-        if ($training->isFinal()) {
-            return $actor->isSuperAdmin || $actor->isAssignedAdminOf($training->id);
-        }
-
-        return $actor->isSuperAdmin || $actor->leads($training->teamId) || $actor->isAssignedAdminOf($training->id);
+        return $actor->isActive
+            && ($actor->isSuperAdmin || $actor->leads($training->teamId) || $actor->isAssignedAdminOf($training->id));
     }
 
     public static function canFinalize(TrainingActor $actor, Training $training): bool
