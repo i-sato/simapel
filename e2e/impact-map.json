@@ -193,7 +193,8 @@
                 "@dashboard",
                 "@pegawai",
                 "@tim-kerja",
-                "@penugasan"
+                "@penugasan",
+                "@mitra"
             ]
         },
         {
@@ -201,7 +202,8 @@
             "tags": [
                 "@account",
                 "@auth",
-                "@pegawai"
+                "@pegawai",
+                "@mitra"
             ]
         },
         {
@@ -215,7 +217,8 @@
                 "@pelatihan",
                 "@penugasan",
                 "@template-wa",
-                "@administrasi"
+                "@administrasi",
+                "@mitra"
             ]
         },
         {
@@ -230,7 +233,8 @@
                 "@penugasan",
                 "@template-wa",
                 "@administrasi",
-                "@dashboard"
+                "@dashboard",
+                "@mitra"
             ]
         },
         {
@@ -241,7 +245,8 @@
                 "@dashboard",
                 "@pegawai",
                 "@tim-kerja",
-                "@penugasan"
+                "@penugasan",
+                "@mitra"
             ]
         },
         {
@@ -427,7 +432,8 @@
                 "@pelatihan",
                 "@penugasan",
                 "@template-wa",
-                "@administrasi"
+                "@administrasi",
+                "@mitra"
             ]
         },
         {
@@ -435,7 +441,8 @@
             "tags": [
                 "@pelatihan",
                 "@penugasan",
-                "@administrasi"
+                "@administrasi",
+                "@mitra"
             ]
         },
         {
@@ -444,7 +451,8 @@
                 "@pelatihan",
                 "@penugasan",
                 "@template-wa",
-                "@administrasi"
+                "@administrasi",
+                "@mitra"
             ]
         },
         {
@@ -454,7 +462,8 @@
                 "@penugasan",
                 "@template-wa",
                 "@administrasi",
-                "@dashboard"
+                "@dashboard",
+                "@mitra"
             ]
         },
         {
@@ -464,7 +473,8 @@
                 "@penugasan",
                 "@template-wa",
                 "@administrasi",
-                "@dashboard"
+                "@dashboard",
+                "@mitra"
             ]
         },
         {
@@ -474,7 +484,8 @@
                 "@penugasan",
                 "@template-wa",
                 "@administrasi",
-                "@dashboard"
+                "@dashboard",
+                "@mitra"
             ]
         },
         {
@@ -520,13 +531,15 @@
         {
             "pattern": "app/Domain/Messaging/**",
             "tags": [
-                "@template-wa"
+                "@template-wa",
+                "@mitra"
             ]
         },
         {
             "pattern": "app/Application/Messaging/**",
             "tags": [
-                "@template-wa"
+                "@template-wa",
+                "@mitra"
             ]
         },
         {
@@ -568,6 +581,39 @@
             "tags": [
                 "@administrasi",
                 "@dashboard"
+            ]
+        },
+        {
+            "pattern": "app/Domain/Partner/**",
+            "tags": [
+                "@mitra",
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "app/Application/Partner/**",
+            "tags": [
+                "@mitra",
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/PartnerController.php",
+            "tags": [
+                "@mitra"
+            ]
+        },
+        {
+            "pattern": "app/Models/PartnerRecord.php",
+            "tags": [
+                "@mitra",
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "resources/views/partners/**",
+            "tags": [
+                "@mitra"
             ]
         },
         {

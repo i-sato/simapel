@@ -17,8 +17,9 @@ export async function createCompleteTraining(page: Page, name: string, team = 'D
     const value = await page.locator('#work_team_id option', { hasText: `(${team})` }).first().getAttribute('value');
     await page.selectOption('#work_team_id', value ?? '');
     await page.getByLabel(/^Batch/).fill('1');
-    await page.getByLabel(/^Mitra\/lokasi/).fill('Mitra E2E, Yogyakarta');
+    await page.getByLabel(/^Lokasi/).fill('Aula E2E, Yogyakarta');
     await page.getByLabel(/^Metode/).selectOption('daring');
+    await page.getByLabel(/^Wilayah kerja/).selectOption('diy');
     await page.getByLabel(/^Awal pendaftaran/).fill(day(offsets[0]));
     await page.getByLabel(/^Akhir pendaftaran/).fill(day(offsets[1]));
     await page.getByLabel(/^Awal pelatihan/).fill(day(offsets[2]));

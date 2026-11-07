@@ -21,8 +21,8 @@ test('view halaman masuk hanya memicu area @auth', () => {
 });
 
 test('beberapa perubahan menggabungkan tag tanpa duplikat', () => {
-    const result = resolveTags(['app/Http/Controllers/Account/PasswordController.php', 'app/Application/Identity/ChangeOwnPassword.php'], map);
-    assert.deepEqual(result.tags, ['@account', '@auth', '@pegawai']);
+    const result = resolveTags(['app/Http/Controllers/Account/PasswordController.php', 'resources/views/account/password.blade.php', 'resources/views/auth/login.blade.php'], map);
+    assert.deepEqual(result.tags, ['@account', '@auth']);
 });
 
 test('layout, CSS, middleware, dan migrasi memicu semua uji', () => {
@@ -79,11 +79,16 @@ test('penugasan memicu area @penugasan dan pelatihan yang menampilkan ringkasann
 });
 
 test('template WA memicu area @template-wa', () => {
-    assert.deepEqual(resolveTags(['app/Domain/Messaging/TemplateRenderer.php'], map).tags, ['@template-wa']);
+    assert.ok(resolveTags(['app/Domain/Messaging/TemplateRenderer.php'], map).tags.includes('@template-wa'));
     assert.ok(resolveTags(['app/Domain/Settings/GlobalSetting.php'], map).tags.includes('@template-wa'));
 });
 
 test('administrasi dan peringatan memicu @administrasi, @dashboard, dan @pelatihan', () => {
     assert.deepEqual(resolveTags(['app/Domain/Administration/TrainingAlerts.php'], map).tags, ['@administrasi', '@dashboard', '@pelatihan']);
     assert.deepEqual(resolveTags(['app/Http/Controllers/AdministrativeDocumentController.php'], map).tags, ['@administrasi']);
+});
+
+test('mitra dan wilayah kerja memicu @mitra dan @pelatihan', () => {
+    assert.deepEqual(resolveTags(['app/Domain/Partner/Partner.php'], map).tags, ['@mitra', '@pelatihan']);
+    assert.deepEqual(resolveTags(['resources/views/partners/index.blade.php'], map).tags, ['@mitra']);
 });

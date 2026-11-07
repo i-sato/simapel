@@ -36,8 +36,9 @@ test.describe('Pelatihan', { tag: '@pelatihan' }, () => {
 
             await page.getByRole('link', { name: 'Ubah draft' }).click();
             await page.getByLabel(/^Batch/).fill('1');
-            await page.getByLabel(/^Mitra\/lokasi/).fill('Mitra E2E, Yogyakarta');
+            await page.getByLabel(/^Lokasi/).fill('Aula E2E, Yogyakarta');
             await page.getByLabel(/^Metode/).selectOption('daring');
+            await page.getByLabel(/^Wilayah kerja/).selectOption('diy');
             await page.getByLabel(/^Awal pendaftaran/).fill(day(30));
             await page.getByLabel(/^Akhir pendaftaran/).fill(day(40));
             await page.getByLabel(/^Awal pelatihan/).fill(day(39));
