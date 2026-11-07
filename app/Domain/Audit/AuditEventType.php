@@ -28,6 +28,10 @@ enum AuditEventType: string
     case SopProvisionDeleted = 'sop_provision.deleted';
     case SopProvisionActivated = 'sop_provision.activated';
     case SopProvisionSuperseded = 'sop_provision.superseded';
+    case TrainingDrafted = 'training.drafted';
+    case TrainingUpdated = 'training.updated';
+    case TrainingFinalized = 'training.finalized';
+    case LearningPathCreated = 'learning_path.created';
 
     public function label(): string
     {
@@ -54,6 +58,10 @@ enum AuditEventType: string
             self::SopProvisionDeleted => 'Draf ketentuan SOP dihapus',
             self::SopProvisionActivated => 'Ketentuan SOP diberlakukan',
             self::SopProvisionSuperseded => 'Ketentuan SOP diganti',
+            self::TrainingDrafted => 'Draft pelatihan dibuat',
+            self::TrainingUpdated => 'Pelatihan diubah',
+            self::TrainingFinalized => 'Pelatihan difinalisasi',
+            self::LearningPathCreated => 'Learning path dibuat',
         };
     }
 }
