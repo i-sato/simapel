@@ -4,6 +4,12 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Ditambahkan (MVP-1 langkah 4)
+
+- Penugasan Admin/Panitia per pelatihan: daftar centang pegawai dengan badge peran tim, "Admin", dan bentrok ([docs/perubahan/0009-penugasan.md](docs/perubahan/0009-penugasan.md)).
+- Deteksi bentrok beban kerja lintas tim kerja (awal pendaftaran sampai akhir pelatihan, inklusif); penugasan yang bentrok wajib disertai alasan force yang tercatat di audit log.
+- Admin yang ditugaskan dapat memfinalisasi Draft dan melengkapi pelatihan, termasuk link daftar peserta.
+
 ### Diubah (keputusan langkah 3)
 
 - Ketua tim kerja terkait dan Admin yang ditunjuk dapat melengkapi pelatihan Final; finalisasi tetap oleh Super Admin dan Admin yang ditunjuk ([docs/perubahan/0008-melengkapi-pelatihan-final.md](docs/perubahan/0008-melengkapi-pelatihan-final.md), K13).
