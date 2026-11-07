@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $work_team_id
  * @property int $user_id
  * @property TeamRole $role
+ * @property-read WorkTeam $team
  */
 #[Fillable(['work_team_id', 'user_id', 'role'])]
 class TeamMembership extends Model
