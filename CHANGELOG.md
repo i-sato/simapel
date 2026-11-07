@@ -4,6 +4,10 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Dokumentasi
+
+- Panduan langkah MVP-1 beserta keputusan pemilik proyek dan prompt per langkah ([docs/mvp-1/panduan.md](docs/mvp-1/panduan.md)).
+
 ### Ditambahkan
 
 - Starter project refactor SIMAPEL di atas Laravel 13 (PHP 8.5) dan MySQL 8.4 LTS ([docs/perubahan/0001-starter-project.md](docs/perubahan/0001-starter-project.md)).

@@ -3,6 +3,7 @@
 | Dokumen | Isi |
 |---|---|
 | [serah-terima.md](serah-terima.md) | Status proyek, cara melanjutkan, keputusan terbuka (mulai dari sini) |
+| [mvp-1/panduan.md](mvp-1/panduan.md) | Langkah menuju MVP-1, keputusan pemilik proyek, dan prompt per langkah |
 | [arsitektur.md](arsitektur.md) | Clean architecture, aturan dependensi, cara menambah fitur |
 | [pengembangan.md](pengembangan.md) | Lingkungan Docker, perintah harian, pemecahan masalah |
 | [pengujian.md](pengujian.md) | Unit/feature/arsitektur test, coverage, Playwright, uji UI terdampak |
