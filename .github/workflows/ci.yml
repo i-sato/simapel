@@ -140,6 +140,9 @@ jobs:
           fi
           echo "File berubah:"; cat e2e/.changed-files
 
+      - name: Periksa versi Playwright (image = paket npm)
+        run: ./scripts/check-playwright-version.sh
+
       - name: Build & jalankan stack Docker
         run: |
           docker compose build app

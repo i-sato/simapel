@@ -17,6 +17,11 @@ updates:
       interval: weekly
       day: monday
       timezone: Asia/Jakarta
+    ignore:
+      # Harus sama dengan image Docker Playwright; perbarui keduanya bersamaan secara manual
+      # (diperiksa oleh scripts/check-playwright-version.sh).
+      - dependency-name: "@playwright/test"
+      - dependency-name: "playwright"
 
   - package-ecosystem: docker
     directory: /docker/php
@@ -33,7 +38,9 @@ updates:
       timezone: Asia/Jakarta
     ignore:
       # Versi image Playwright harus sama dengan @playwright/test di e2e/package.json;
-      # perbarui keduanya bersamaan secara manual.
+      # perbarui keduanya bersamaan secara manual. Dependabot menamai image ini "playwright"
+      # (PR #8 tetap terbuka karena aturan lama hanya memakai nama lengkap).
+      - dependency-name: "playwright"
       - dependency-name: "mcr.microsoft.com/playwright"
       # ADR 0002: MySQL 8.4 LTS (sama dengan CI). Upgrade seri mayor diputuskan lewat ADR baru.
       - dependency-name: "mysql"

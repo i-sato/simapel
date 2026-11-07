@@ -4,6 +4,10 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Diperbaiki
+
+- Uji UI kembali berjalan setelah image Playwright naik ke v1.65.0: `@playwright/test` disamakan ke 1.65.0, pemeriksa versi ditambahkan di `make e2e*` dan CI, dan aturan Dependabot untuk Playwright diperbaiki ([docs/perubahan/0006-playwright-1-65.md](docs/perubahan/0006-playwright-1-65.md)).
+
 ### Ditambahkan (MVP-1 langkah 2)
 
 - Halaman Pengaturan khusus Super Admin: link login/registrasi Digitalent, link panduan pendaftaran DTS, ambang "segera berakhir" (default 7 hari), dan link panduan pendaftaran per tim kerja ([docs/perubahan/0005-pengaturan-ketentuan-sop.md](docs/perubahan/0005-pengaturan-ketentuan-sop.md)).

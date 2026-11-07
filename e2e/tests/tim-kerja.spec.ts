@@ -21,6 +21,15 @@ test.describe('Tim kerja', { tag: '@tim-kerja' }, () => {
             await page.getByRole('link', { name: 'Lihat anggota Talenta Digital' }).click();
             await expect(page.getByRole('heading', { name: /Talenta Digital/, level: 1 })).toBeVisible();
 
+            // Keluarkan sisa anggota sintetis dari eksekusi sebelumnya yang gagal,
+            // agar kursi Ketua/Sekretaris tidak terisi dan uji dapat diulang.
+            const leftovers = page.getByRole('row', { name: /E2E Anggota / });
+            while ((await leftovers.count()) > 0) {
+                page.once('dialog', (dialog) => dialog.accept());
+                await leftovers.first().getByRole('button', { name: 'Keluarkan' }).click();
+                await expect(page.getByRole('status').filter({ hasText: 'Anggota dikeluarkan' })).toBeVisible();
+            }
+
             await page.getByLabel('Pegawai', { exact: true }).selectOption({ label: name });
             await page.getByLabel('Peran di tim', { exact: true }).selectOption('anggota');
             await page.getByRole('button', { name: 'Tambah ke tim' }).click();

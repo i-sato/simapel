@@ -103,6 +103,7 @@ e2e-affected: ## Uji UI hanya untuk area yang terdampak perubahan terhadap BASE_
 	@$(MAKE) --no-print-directory _e2e-run
 
 _e2e-run:
+	@./scripts/check-playwright-version.sh
 	@password="$$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 24)Aa1!"; \
 	$(COMPOSE) up -d --wait && \
 	$(COMPOSE) exec -T -e E2E_NIP=$(E2E_NIP) -e E2E_PASSWORD="$$password" app php artisan db:seed --class=E2eSeeder --force && \

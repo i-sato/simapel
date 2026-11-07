@@ -31,6 +31,15 @@ Feature test memakai MySQL yang sama dengan production, tetapi pada database ter
 
 Playwright berjalan di container resmi `mcr.microsoft.com/playwright` (profil compose `e2e`) dan mengakses aplikasi lewat service `web`. Browser tidak perlu dipasang di host.
 
+Versi image di `compose.yaml` **wajib sama** dengan `@playwright/test` di `e2e/package.json`. Bila berbeda, browser di image tidak cocok dan semua uji UI gagal. `scripts/check-playwright-version.sh` memeriksanya di awal `make e2e*` dan di CI. Dependabot tidak mengusulkan pembaruan Playwright; naikkan keduanya bersamaan secara manual:
+
+```sh
+# 1. ubah tag image di compose.yaml (mis. v1.66.0-noble), lalu:
+docker compose --profile e2e run --rm --no-deps playwright \
+  npm install --save-exact --no-audit --no-fund @playwright/test@1.66.0
+./scripts/check-playwright-version.sh
+```
+
 Setiap eksekusi `make e2e*` menjalankan langkah berikut:
 1. Membuat kata sandi acak untuk akun E2E. Kata sandi ini tidak pernah disimpan ke file.
 2. Menjalankan `E2eSeeder` (idempoten, ditolak di production). Seeder membuat empat akun sintetis: Super Admin (`…0001`), akun nonaktif (`…0002`), akun wajib ganti kata sandi (`…0003`), dan pegawai biasa (`…0004`). Data yang dibuat spec (pegawai, keanggotaan) memakai NIP sintetis unik per eksekusi sehingga uji dapat diulang pada database pengembangan.
