@@ -1,5 +1,6 @@
 <?php
 
+use App\Application\Training\Exceptions\TrainingAccessDenied;
 use App\Domain\Shared\BusinessRuleViolation;
 use App\Http\Middleware\EnsureAccountIsActive;
 use App\Http\Middleware\RequirePasswordChange;
@@ -27,6 +28,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+        // Use case menolak aksi pelatihan yang tidak berhak: tampilkan sebagai 403 biasa.
+        $exceptions->render(fn (TrainingAccessDenied $denied) => abort(403));
 
         // Pelanggaran aturan bisnis adalah kesalahan input pengguna: tampilkan di formulir, jangan dilaporkan sebagai error.
         $exceptions->dontReport(BusinessRuleViolation::class);

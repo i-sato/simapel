@@ -11,16 +11,22 @@ use App\Application\Settings\Contracts\SettingsRepository;
 use App\Application\Shared\Contracts\Clock;
 use App\Application\Shared\Contracts\Transaction;
 use App\Application\Sop\Contracts\SopProvisionRepository;
+use App\Application\Training\Contracts\LearningPathRepository;
+use App\Application\Training\Contracts\TrainingRepository;
+use App\Application\Training\TrainingAccess;
 use App\Domain\Identity\PasswordPolicy;
 use App\Infrastructure\Persistence\DatabaseTransaction;
 use App\Infrastructure\Persistence\EloquentAuditTrail;
+use App\Infrastructure\Persistence\EloquentLearningPathRepository;
 use App\Infrastructure\Persistence\EloquentSettingsRepository;
 use App\Infrastructure\Persistence\EloquentSopProvisionRepository;
+use App\Infrastructure\Persistence\EloquentTrainingRepository;
 use App\Infrastructure\Persistence\EloquentUserAccountRepository;
 use App\Infrastructure\Persistence\EloquentWorkTeamRepository;
 use App\Infrastructure\Security\LaravelPasswordHasher;
 use App\Infrastructure\Session\DatabaseSessionTerminator;
 use App\Infrastructure\Time\SystemClock;
+use App\Models\TrainingRecord;
 use App\Models\User;
 use App\View\Composers\NavigationComposer;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -47,6 +53,8 @@ class AppServiceProvider extends ServiceProvider
         WorkTeamRepository::class => EloquentWorkTeamRepository::class,
         SettingsRepository::class => EloquentSettingsRepository::class,
         SopProvisionRepository::class => EloquentSopProvisionRepository::class,
+        TrainingRepository::class => EloquentTrainingRepository::class,
+        LearningPathRepository::class => EloquentLearningPathRepository::class,
         AuditTrail::class => EloquentAuditTrail::class,
         PasswordHasher::class => LaravelPasswordHasher::class,
         SessionTerminator::class => DatabaseSessionTerminator::class,
@@ -90,6 +98,11 @@ class AppServiceProvider extends ServiceProvider
 
         // Pengelolaan pegawai, tim kerja, dan pengaturan: hanya Super Admin aktif.
         Gate::define('manage-organization', fn (User $user): bool => $user->isActive() && $user->role->isSuperAdmin());
+
+        // Pelatihan (ADR 0009): aturan ada di App\Domain\Training\TrainingPermissions; use case menegakkan aturan yang sama.
+        Gate::define('create-training', fn (User $user): bool => $this->app->make(TrainingAccess::class)->canCreateAny($user->id));
+        Gate::define('update-training', fn (User $user, TrainingRecord $training): bool => $this->app->make(TrainingAccess::class)->canEdit($user->id, $training->id));
+        Gate::define('finalize-training', fn (User $user, TrainingRecord $training): bool => $this->app->make(TrainingAccess::class)->canFinalize($user->id, $training->id));
 
         View::composer('layouts.app', NavigationComposer::class);
     }
