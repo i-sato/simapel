@@ -14,6 +14,7 @@ use App\Http\Controllers\MessageTemplateController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\TrainingAssignmentController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\WorkloadController;
 use App\Http\Controllers\WorkTeamController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +61,10 @@ Route::middleware(['auth', 'password.change-required'])->group(function (): void
     Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
     Route::post('/partners', [PartnerController::class, 'store'])->middleware('can:manage-partners')->name('partners.store');
     Route::put('/partners/{partner}', [PartnerController::class, 'update'])->middleware('can:manage-partners')->name('partners.update');
+
+    // Beban kerja: terbuka untuk semua pegawai (K9).
+    Route::get('/workload', [WorkloadController::class, 'index'])->name('workload.index');
+    Route::get('/workload/{employee}', [WorkloadController::class, 'show'])->name('workload.show');
 
     // Khusus Super Admin.
     Route::middleware('can:manage-organization')->group(function (): void {
