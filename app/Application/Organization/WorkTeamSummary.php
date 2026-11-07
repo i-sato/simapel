@@ -13,6 +13,7 @@ final readonly class WorkTeamSummary
         public WorkTeamCode $code,
         public string $name,
         public int $year,
+        public ?string $registrationGuideUrl = null,
     ) {}
 
     public function label(): string
