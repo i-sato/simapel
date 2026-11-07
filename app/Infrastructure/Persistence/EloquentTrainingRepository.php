@@ -68,6 +68,22 @@ final class EloquentTrainingRepository implements TrainingRepository
             ->all());
     }
 
+    public function running(\DateTimeImmutable $on): array
+    {
+        $today = $on->format('Y-m-d');
+
+        return array_values(TrainingRecord::query()
+            ->whereNotNull('registration_start')
+            ->whereNotNull('training_end')
+            ->where('registration_start', '<=', $today)
+            ->where('training_end', '>=', $today)
+            ->orderBy('training_start')
+            ->orderBy('id')
+            ->get()
+            ->map(fn (TrainingRecord $record): Training => $this->toDomain($record))
+            ->all());
+    }
+
     public function levelOccupant(int $learningPathId, TrainingLevel $level): ?int
     {
         $id = TrainingRecord::query()->where('learning_path_id', $learningPathId)->where('level', $level)->value('id');

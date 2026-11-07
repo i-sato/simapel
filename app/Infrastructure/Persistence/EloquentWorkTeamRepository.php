@@ -66,4 +66,9 @@ final class EloquentWorkTeamRepository implements WorkTeamRepository
 
         return array_values(array_map(intval(...), $ids));
     }
+
+    public function roleOf(int $teamId, int $employeeId): ?TeamRole
+    {
+        return TeamMembership::query()->where('work_team_id', $teamId)->where('user_id', $employeeId)->first()?->role;
+    }
 }
