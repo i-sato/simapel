@@ -16,6 +16,9 @@
             <x-training.status-badges :training="$training" :phase="$phase" />
             <x-sop.team-link :sop="$sopStatus" :team="$training->team->code->value" :show-fallback="auth()->user()?->can('manage-organization')" />
         </div>
+        @if ($alerts !== [])
+            <div class="pill-row mt-8" aria-label="Peringatan"><x-training.alert-badges :alerts="$alerts" /></div>
+        @endif
     </div>
     <div class="row">
         @can('update-training', $training)
@@ -74,6 +77,73 @@
         </dl>
     </section>
 </div>
+
+@if ($isFinal)
+    @php($hasDeadlines = $deadlines !== [])
+    <section class="card" aria-labelledby="administration-heading">
+        <div class="between">
+            <h2 id="administration-heading">Administrasi</h2>
+            <span @class(['badge', 'success' => $documents->where('status', \App\Domain\Administration\DocumentStatus::Selesai)->count() === 3])>{{ $documents->where('status', \App\Domain\Administration\DocumentStatus::Selesai)->count() }}/3 selesai</span>
+        </div>
+        @if ($hasDeadlines)
+            <p class="muted">
+                Acuan: SOP {{ $training->team->code->value }} {{ $training->sop_fiscal_year }} versi {{ $training->sop_version }}
+                @if ($training->sop_url)
+                    (<a href="{{ $training->sop_url }}" target="_blank" rel="noopener noreferrer">{{ $training->sop_number ?? 'buka SOP' }} ↗</a>)
+                @endif
+                · tenggat dihitung dari akhir pendaftaran {{ $training->registration_end?->format('d-m-Y') }} · administrasi siap {{ $deadlines['ready']->format('d-m-Y') }} (H+{{ $training->sop_ready_days }}).
+            </p>
+        @else
+            <p><span class="badge warning" title="Pelatihan tidak memiliki salinan ketentuan SOP saat finalisasi.">⚠ Tenggat belum ditetapkan<span class="sr-only">. Pelatihan tidak memiliki salinan ketentuan SOP saat finalisasi.</span></span></p>
+        @endif
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Dokumen</th><th>Tenggat</th><th>Status</th><th>Nomor · tanggal</th><th>Penanggung jawab</th><th><span class="sr-only">Aksi</span></th></tr></thead>
+                <tbody>
+                    @foreach ($documents as $document)
+                        @php($days = match ($document->type) { \App\Domain\Administration\DocumentType::Bap => $training->sop_bap_days, \App\Domain\Administration\DocumentType::Sk => $training->sop_sk_days, \App\Domain\Administration\DocumentType::St => $training->sop_st_days })
+                        <tr>
+                            <td>{{ $document->type->fullLabel() }}</td>
+                            <td class="nowrap">{{ $hasDeadlines ? $deadlines[$document->type->value]->format('d-m-Y').' (H+'.$days.')' : '—' }}</td>
+                            <td><span @class(['badge', 'success' => $document->status === \App\Domain\Administration\DocumentStatus::Selesai, 'warning' => $document->status === \App\Domain\Administration\DocumentStatus::DalamProses])>{{ $document->status->label() }}</span></td>
+                            <td>
+                                {{ $document->number ?? '—' }} · {{ $document->document_date?->format('d-m-Y') ?? '—' }}
+                                @if ($document->file_url)
+                                    <div><a href="{{ $document->file_url }}" target="_blank" rel="noopener noreferrer">Buka berkas ↗</a></div>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($canDelegate)
+                                    <form method="POST" action="{{ route('trainings.documents.delegate', [$training, $document]) }}" class="row">
+                                        @csrf
+                                        <label for="assignee-{{ $document->id }}" class="sr-only">Penanggung jawab {{ $document->type->label() }}</label>
+                                        <select id="assignee-{{ $document->id }}" name="assignee_id">
+                                            <option value="">— Belum didelegasikan —</option>
+                                            @foreach ($secretaries as $secretary)
+                                                <option value="{{ $secretary->user_id }}" @selected($document->assignee_id === $secretary->user_id)>{{ $secretary->user->name }} (Sekretaris)</option>
+                                            @endforeach
+                                        </select>
+                                        <button type="submit" class="btn btn-outline btn-sm">Delegasikan<span class="sr-only"> {{ $document->type->label() }}</span></button>
+                                    </form>
+                                    @if ($secretaries->isEmpty())
+                                        <p class="help">Tim belum memiliki Sekretaris.</p>
+                                    @endif
+                                @else
+                                    {{ $document->assignee?->name ?? 'Belum didelegasikan' }}
+                                @endif
+                            </td>
+                            <td>
+                                @if ($updatable[$document->id] ?? false)
+                                    <a class="btn btn-outline btn-sm" href="{{ route('trainings.documents.edit', [$training, $document]) }}">Perbarui<span class="sr-only"> {{ $document->type->label() }}</span></a>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </section>
+@endif
 
 <section class="card" aria-labelledby="assignment-heading">
     <div class="between">

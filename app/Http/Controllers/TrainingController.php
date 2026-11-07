@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Application\Administration\DocumentAccess;
+use App\Application\Administration\TrainingAlertsQuery;
 use App\Application\Assignment\TrainingWorkload;
 use App\Application\Training\Contracts\TrainingRepository;
 use App\Application\Training\CreateTrainingDraft;
@@ -9,11 +11,15 @@ use App\Application\Training\FinalizeTraining;
 use App\Application\Training\TrainingAccess;
 use App\Application\Training\TrainingPreparation;
 use App\Application\Training\UpdateTraining;
+use App\Domain\Administration\DocumentDeadline;
+use App\Domain\Administration\DocumentType;
+use App\Domain\Organization\TeamRole;
 use App\Domain\Organization\WorkTeamCode;
 use App\Domain\Training\Certification;
 use App\Domain\Training\ExecutionMode;
 use App\Domain\Training\LearningPathSequence;
 use App\Domain\Training\ParticipantCategory;
+use App\Domain\Training\Training;
 use App\Domain\Training\TrainingDetails;
 use App\Domain\Training\TrainingLevel;
 use App\Domain\Training\TrainingMethod;
@@ -21,7 +27,9 @@ use App\Domain\Training\TrainingPhase;
 use App\Domain\Training\TrainingStatus;
 use App\Domain\Training\Zonation;
 use App\Http\Requests\Training\TrainingRequest;
+use App\Models\AdministrativeDocumentRecord;
 use App\Models\LearningPathRecord;
+use App\Models\TeamMembership;
 use App\Models\TrainingRecord;
 use App\Models\WorkTeam;
 use App\View\TeamRoleBadges;
@@ -34,7 +42,7 @@ use Illuminate\View\View;
 
 final class TrainingController extends Controller
 {
-    public function index(Request $request, TrainingPhases $phases, TeamSopStatus $sopStatus): View
+    public function index(Request $request, TrainingPhases $phases, TeamSopStatus $sopStatus, TrainingRepository $repository, TrainingAlertsQuery $alertsQuery): View
     {
         $filters = $request->validate([
             'team' => ['nullable', 'string', 'in:'.implode(',', array_column(WorkTeamCode::cases(), 'value'))],
@@ -73,8 +81,16 @@ final class TrainingController extends Controller
             ->paginate(20)
             ->withQueryString();
 
+        $alerts = [];
+
+        foreach ($trainings as $record) {
+            $domain = $repository->find($record->id);
+            $alerts[$record->id] = $domain === null ? [] : $alertsQuery->for($domain);
+        }
+
         return view('trainings.index', [
             'trainings' => $trainings,
+            'alerts' => $alerts,
             'phases' => $phases,
             'filters' => $filters,
             'teamCodes' => WorkTeamCode::cases(),
@@ -109,6 +125,8 @@ final class TrainingController extends Controller
         TeamSopStatus $sopStatus,
         TrainingWorkload $workload,
         TeamRoleBadges $teamRoles,
+        TrainingAlertsQuery $alertsQuery,
+        DocumentAccess $documentAccess,
     ): View {
         $training->load(['team', 'learningPath', 'assignments' => fn ($query) => $query->with('user')->orderBy('role')->orderBy('id')]);
         $domain = $trainings->find($training->id);
@@ -134,6 +152,13 @@ final class TrainingController extends Controller
             'sopStatus' => $sopStatus->for($training->team->code),
             'sequence' => $sequence,
             'assignments' => $training->assignments,
+            'alerts' => $domain === null ? [] : $alertsQuery->for($domain),
+            'deadlines' => self::deadlines($domain),
+            'documents' => AdministrativeDocumentRecord::query()->where('training_id', $training->id)->with('assignee')->get()
+                ->sortBy(fn (AdministrativeDocumentRecord $document): int => (int) array_search($document->type, DocumentType::cases(), true))->values(),
+            'canDelegate' => $documentAccess->canDelegate((int) $request->user()?->getAuthIdentifier(), $training->id),
+            'updatable' => $documentAccess->updatableIn((int) $request->user()?->getAuthIdentifier(), $training->id),
+            'secretaries' => TeamMembership::query()->where('work_team_id', $training->work_team_id)->where('role', TeamRole::Sekretaris)->with('user')->get(),
             'teamRoles' => $teamRoles->forYear($training->team->year),
             'conflicts' => $domain === null ? [] : $workload->conflictsFor($domain, array_values(array_unique(array_map(intval(...), $training->assignments->pluck('user_id')->all())))),
         ]);
@@ -165,6 +190,29 @@ final class TrainingController extends Controller
         $response = redirect()->route('trainings.show', $training)->with('success', 'Pelatihan difinalisasi. Salinan ketentuan SOP tim kerja disimpan.');
 
         return $warnings === [] ? $response : $response->with('warning', 'Peringatan: '.implode(' ', $warnings));
+    }
+
+    /**
+     * Tenggat tiap dokumen dan administrasi siap dari salinan ketentuan pada pelatihan.
+     *
+     * @return array<string, \DateTimeImmutable>
+     */
+    private static function deadlines(?Training $training): array
+    {
+        $registrationEnd = $training?->details->schedule->registrationEnd;
+        $deadlines = $training?->sopSnapshot?->deadlines;
+
+        if ($registrationEnd === null || $deadlines === null) {
+            return [];
+        }
+
+        $result = ['ready' => DocumentDeadline::ready($registrationEnd, $deadlines)];
+
+        foreach (DocumentType::cases() as $type) {
+            $result[$type->value] = DocumentDeadline::for($type, $registrationEnd, $deadlines);
+        }
+
+        return $result;
     }
 
     /**
