@@ -7,7 +7,7 @@ COVERAGE_MIN ?= 80
 E2E_NIP ?= 999900000000000001
 
 .DEFAULT_GOAL := help
-.PHONY: help setup up down restart build ps logs shell tools migrate fresh user \
+.PHONY: help setup up down restart build ps logs shell tools migrate fresh demo user \
         test test-unit test-feature test-arch coverage lint fix stan audit \
         e2e e2e-affected e2e-report ci
 
@@ -57,6 +57,12 @@ migrate: ## Jalankan migrasi
 
 fresh: ## HAPUS semua data lokal lalu migrasi ulang (lokal saja)
 	$(APP) php artisan migrate:fresh
+
+demo: ## HAPUS semua data lokal lalu isi data demo SINTETIS untuk UAT (lokal saja)
+	@echo "Peringatan: seluruh data database lokal akan dihapus."
+	$(APP) php artisan migrate:fresh --force
+	$(APP) php artisan db:seed --force
+	$(APP) php artisan db:seed --class=DemoSeeder --force
 
 user: ## Buat akun pengguna (interaktif)
 	$(COMPOSE) exec app php artisan simapel:user:create
