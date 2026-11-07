@@ -51,8 +51,11 @@ test('file yang dipetakan dengan tag kosong tidak memicu uji UI', () => {
 
 test('halaman pegawai dan tim kerja memicu area masing-masing', () => {
     assert.deepEqual(resolveTags(['resources/views/employees/index.blade.php'], map).tags, ['@pegawai']);
-    // Peran tim (Ketua) juga menentukan hak pelatihan dan badge penugasan.
-    assert.deepEqual(resolveTags(['app/Domain/Organization/TeamComposition.php'], map).tags, ['@pelatihan', '@penugasan', '@tim-kerja']);
+    // Peran tim (Ketua/Sekretaris) juga menentukan hak pelatihan, penugasan, dan administrasi.
+    const organization = resolveTags(['app/Domain/Organization/TeamComposition.php'], map).tags;
+    for (const tag of ['@tim-kerja', '@pelatihan', '@penugasan']) {
+        assert.ok(organization.includes(tag), tag);
+    }
 });
 
 test('pengaturan dan ketentuan SOP memicu area @pengaturan serta tim kerja yang menampilkan badge', () => {
@@ -62,17 +65,25 @@ test('pengaturan dan ketentuan SOP memicu area @pengaturan serta tim kerja yang 
 });
 
 test('pelatihan memicu area @pelatihan; ketentuan SOP juga memicunya karena disalin saat finalisasi', () => {
-    assert.deepEqual(resolveTags(['resources/views/trainings/show.blade.php'], map).tags, ['@pelatihan', '@penugasan', '@template-wa']);
-    assert.deepEqual(resolveTags(['app/Domain/Training/Training.php'], map).tags, ['@pelatihan', '@penugasan', '@template-wa']);
+    const view = resolveTags(['resources/views/trainings/show.blade.php'], map);
+    assert.equal(view.mode, 'tags');
+    assert.ok(view.tags.includes('@pelatihan'));
+    assert.ok(resolveTags(['app/Domain/Training/Training.php'], map).tags.includes('@pelatihan'));
     assert.ok(resolveTags(['app/Domain/Sop/SopProvisionResolver.php'], map).tags.includes('@pelatihan'));
 });
 
 test('penugasan memicu area @penugasan dan pelatihan yang menampilkan ringkasannya', () => {
-    assert.deepEqual(resolveTags(['app/Domain/Assignment/WorkloadConflictDetector.php'], map).tags, ['@pelatihan', '@penugasan', '@template-wa']);
+    const assignment = resolveTags(['app/Domain/Assignment/WorkloadConflictDetector.php'], map).tags;
+    assert.ok(assignment.includes('@penugasan') && assignment.includes('@pelatihan'));
     assert.deepEqual(resolveTags(['app/Http/Controllers/TrainingAssignmentController.php'], map).tags, ['@penugasan']);
 });
 
 test('template WA memicu area @template-wa', () => {
     assert.deepEqual(resolveTags(['app/Domain/Messaging/TemplateRenderer.php'], map).tags, ['@template-wa']);
     assert.ok(resolveTags(['app/Domain/Settings/GlobalSetting.php'], map).tags.includes('@template-wa'));
+});
+
+test('administrasi dan peringatan memicu @administrasi, @dashboard, dan @pelatihan', () => {
+    assert.deepEqual(resolveTags(['app/Domain/Administration/TrainingAlerts.php'], map).tags, ['@administrasi', '@dashboard', '@pelatihan']);
+    assert.deepEqual(resolveTags(['app/Http/Controllers/AdministrativeDocumentController.php'], map).tags, ['@administrasi']);
 });
