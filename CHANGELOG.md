@@ -4,6 +4,12 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Ditambahkan (MVP-1 langkah 6)
+
+- Dokumen administrasi BAP/SK/ST yang dibuat otomatis saat pelatihan difinalisasi: status Belum/Dalam proses/Selesai, nomor, tanggal, link berkas, dan delegasi dari Ketua ke Sekretaris tim ([docs/perubahan/0013-administrasi-peringatan.md](docs/perubahan/0013-administrasi-peringatan.md)).
+- Peringatan per pelatihan berbasis salinan ketentuan SOP: mendekati/lewat tenggat, administrasi kritis, tenggat belum ditetapkan, link peserta kosong, segera berakhir, dan bentrok penugasan; tampil di daftar, detail, dan dashboard.
+- Dashboard: kartu ringkasan, "Perlu tindakan saya", dan ringkasan pelatihan berjalan untuk semua pegawai.
+
 ### Dokumentasi
 
 - Keputusan Template WA K16: Super Admin ikut mengakses, "gratis" di 5 baris berisi terakhir, dan link panduan pelatihan tim kerja sebagai panduan wajib ([docs/perubahan/0012-keputusan-template-wa.md](docs/perubahan/0012-keputusan-template-wa.md)).
