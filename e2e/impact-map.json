@@ -170,7 +170,9 @@
             "pattern": "app/View/**",
             "tags": [
                 "@layout",
-                "@dashboard"
+                "@dashboard",
+                "@tim-kerja",
+                "@pengaturan"
             ]
         },
         {
@@ -203,7 +205,8 @@
                 "@account",
                 "@auth",
                 "@pegawai",
-                "@tim-kerja"
+                "@tim-kerja",
+                "@pengaturan"
             ]
         },
         {
@@ -212,7 +215,8 @@
                 "@account",
                 "@auth",
                 "@pegawai",
-                "@tim-kerja"
+                "@tim-kerja",
+                "@pengaturan"
             ]
         },
         {
@@ -254,7 +258,8 @@
             "pattern": "app/Http/Requests/Admin/**",
             "tags": [
                 "@pegawai",
-                "@tim-kerja"
+                "@tim-kerja",
+                "@pengaturan"
             ]
         },
         {
@@ -284,13 +289,15 @@
         {
             "pattern": "app/Application/Organization/**",
             "tags": [
-                "@tim-kerja"
+                "@tim-kerja",
+                "@pengaturan"
             ]
         },
         {
             "pattern": "app/Models/WorkTeam.php",
             "tags": [
-                "@tim-kerja"
+                "@tim-kerja",
+                "@pengaturan"
             ]
         },
         {
@@ -298,6 +305,84 @@
             "tags": [
                 "@tim-kerja"
             ]
+        },
+        {
+            "pattern": "resources/views/settings/**",
+            "tags": [
+                "@pengaturan"
+            ]
+        },
+        {
+            "pattern": "resources/views/components/**",
+            "tags": [
+                "@pengaturan",
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/Admin/SettingsController.php",
+            "tags": [
+                "@pengaturan"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/Admin/SopProvisionController.php",
+            "tags": [
+                "@pengaturan"
+            ]
+        },
+        {
+            "pattern": "app/Domain/Shared/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "app/Domain/Settings/**",
+            "tags": [
+                "@pengaturan"
+            ]
+        },
+        {
+            "pattern": "app/Domain/Sop/**",
+            "tags": [
+                "@pengaturan",
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Application/Settings/**",
+            "tags": [
+                "@pengaturan"
+            ]
+        },
+        {
+            "pattern": "app/Application/Sop/**",
+            "tags": [
+                "@pengaturan",
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Models/Setting.php",
+            "tags": [
+                "@pengaturan"
+            ]
+        },
+        {
+            "pattern": "app/Models/SopProvisionRecord.php",
+            "tags": [
+                "@pengaturan",
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "database/seeders/SopProvisionDraftSeeder.php",
+            "tags": []
+        },
+        {
+            "pattern": "database/seeders/DatabaseSeeder.php",
+            "tags": []
         },
         {
             "pattern": "app/Console/**",
