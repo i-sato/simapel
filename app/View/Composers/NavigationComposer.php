@@ -64,6 +64,10 @@ final readonly class NavigationComposer
         return [
             'MENU UTAMA' => [
                 ['label' => 'Dashboard', 'route' => 'dashboard', 'icon' => '▦', 'pattern' => 'dashboard', 'roles' => null],
+                ['label' => 'Tim Kerja', 'route' => 'work-teams.index', 'icon' => '◫', 'pattern' => 'work-teams.*', 'roles' => null],
+            ],
+            'ADMINISTRASI' => [
+                ['label' => 'Pegawai', 'route' => 'employees.index', 'icon' => '♙', 'pattern' => 'employees.*', 'roles' => [Role::SuperAdmin]],
             ],
             'AKUN' => [
                 ['label' => 'Keamanan Akun', 'route' => 'account.password.edit', 'icon' => '◇', 'pattern' => 'account.*', 'roles' => null],

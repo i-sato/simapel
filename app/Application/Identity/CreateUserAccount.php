@@ -8,11 +8,11 @@ use App\Application\Audit\Contracts\AuditTrail;
 use App\Application\Identity\Contracts\PasswordHasher;
 use App\Application\Identity\Contracts\UserAccountRepository;
 use App\Application\Identity\Exceptions\EmailAlreadyRegistered;
-use App\Application\Identity\Exceptions\InvalidUserAccountData;
 use App\Application\Identity\Exceptions\NipAlreadyRegistered;
 use App\Application\Shared\Contracts\Transaction;
 use App\Domain\Audit\AuditEvent;
 use App\Domain\Audit\AuditEventType;
+use App\Domain\Identity\EmployeeProfile;
 use App\Domain\Identity\Nip;
 use App\Domain\Identity\PasswordPolicy;
 
@@ -32,12 +32,7 @@ final readonly class CreateUserAccount
     public function handle(CreateUserAccountInput $input, ?int $actorId = null): int
     {
         $nip = Nip::fromString($input->nip);
-        $name = trim($input->name);
-        $email = $this->normalizeEmail($input->email);
-
-        if ($name === '' || mb_strlen($name) > 255) {
-            throw new InvalidUserAccountData('Nama wajib diisi dan maksimal 255 karakter.', 'name');
-        }
+        $profile = EmployeeProfile::fromInput($input->name, $input->email, $input->pangkatGolongan, $input->jabatan);
 
         $this->passwordPolicy->assertSatisfiedBy($input->password);
 
@@ -45,15 +40,15 @@ final readonly class CreateUserAccount
             throw new NipAlreadyRegistered;
         }
 
-        if ($email !== null && $this->users->emailExists($email)) {
+        if ($profile->email !== null && $this->users->emailExists($profile->email)) {
             throw new EmailAlreadyRegistered;
         }
 
         $account = new NewUserAccount(
             nip: $nip,
-            name: $name,
-            email: $email,
+            profile: $profile,
             role: $input->role,
+            canBeAdmin: $input->canBeAdmin,
             passwordHash: $this->hasher->hash($input->password),
             passwordChangeRequired: $input->passwordChangeRequired,
         );
@@ -72,20 +67,5 @@ final readonly class CreateUserAccount
 
             return $userId;
         });
-    }
-
-    private function normalizeEmail(?string $email): ?string
-    {
-        if ($email === null || trim($email) === '') {
-            return null;
-        }
-
-        $email = mb_strtolower(trim($email));
-
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-            throw new InvalidUserAccountData('Format email tidak valid.', 'email');
-        }
-
-        return $email;
     }
 }

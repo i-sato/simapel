@@ -41,7 +41,7 @@ class UserFactory extends Factory
 
     public function superAdmin(): static
     {
-        return $this->role(Role::SuperAdminRegional);
+        return $this->role(Role::SuperAdmin);
     }
 
     public function inactive(): static

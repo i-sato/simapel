@@ -36,7 +36,7 @@ final readonly class EnsureAccountIsActive
             $request->session()->regenerateToken();
 
             return redirect()->route('login')
-                ->withErrors(['nip' => 'Akun Anda tidak aktif. Hubungi Super Admin Regional.']);
+                ->withErrors(['nip' => 'Akun Anda tidak aktif. Hubungi Super Admin.']);
         }
 
         return $next($request);

@@ -18,7 +18,7 @@ Prasyarat: Docker Desktop (atau Docker Engine + Compose v2), `make`, dan `git`. 
 
 ```sh
 make setup   # .env dengan kata sandi acak, build image, composer install, APP_KEY, migrasi
-make user    # buat akun pertama (Super Admin Regional), kata sandi diminta tersembunyi
+make user    # buat akun pertama (Super Admin), kata sandi diminta tersembunyi
 ```
 
 Buka <http://localhost:8080> lalu masuk dengan NIP dan kata sandi akun tersebut.

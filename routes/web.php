@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\Account\PasswordController;
+use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\EmployeeImportController;
+use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\WorkTeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dashboard');
@@ -19,4 +23,26 @@ Route::middleware(['auth', 'password.change-required'])->group(function (): void
 
     Route::get('/account/password', [PasswordController::class, 'edit'])->name('account.password.edit');
     Route::put('/account/password', [PasswordController::class, 'update'])->name('account.password.update');
+
+    // Tim kerja: terbuka untuk semua pegawai (read-only).
+    Route::get('/work-teams', [WorkTeamController::class, 'index'])->name('work-teams.index');
+    Route::get('/work-teams/{team}', [WorkTeamController::class, 'show'])->name('work-teams.show');
+
+    // Khusus Super Admin.
+    Route::middleware('can:manage-organization')->group(function (): void {
+        Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+        Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
+        Route::post('/employees', [EmployeeController::class, 'store'])->name('employees.store');
+        Route::get('/employees/import', [EmployeeImportController::class, 'create'])->name('employees.import.create');
+        Route::post('/employees/import', [EmployeeImportController::class, 'store'])->name('employees.import.store');
+        Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
+        Route::put('/employees/{employee}', [EmployeeController::class, 'update'])->name('employees.update');
+        Route::post('/employees/{employee}/activate', [EmployeeController::class, 'activate'])->name('employees.activate');
+        Route::post('/employees/{employee}/deactivate', [EmployeeController::class, 'deactivate'])->name('employees.deactivate');
+        Route::post('/employees/{employee}/password', [EmployeeController::class, 'resetPassword'])->name('employees.password');
+
+        Route::post('/work-teams/{team}/members', [TeamMemberController::class, 'store'])->name('work-teams.members.store');
+        Route::put('/work-teams/{team}/members/{employee}', [TeamMemberController::class, 'update'])->name('work-teams.members.update');
+        Route::delete('/work-teams/{team}/members/{employee}', [TeamMemberController::class, 'destroy'])->name('work-teams.members.destroy');
+    });
 });

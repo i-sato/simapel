@@ -6,21 +6,25 @@ use App\Application\Audit\Contracts\AuditTrail;
 use App\Application\Identity\Contracts\PasswordHasher;
 use App\Application\Identity\Contracts\SessionTerminator;
 use App\Application\Identity\Contracts\UserAccountRepository;
+use App\Application\Organization\Contracts\WorkTeamRepository;
 use App\Application\Shared\Contracts\Clock;
 use App\Application\Shared\Contracts\Transaction;
 use App\Domain\Identity\PasswordPolicy;
 use App\Infrastructure\Persistence\DatabaseTransaction;
 use App\Infrastructure\Persistence\EloquentAuditTrail;
 use App\Infrastructure\Persistence\EloquentUserAccountRepository;
+use App\Infrastructure\Persistence\EloquentWorkTeamRepository;
 use App\Infrastructure\Security\LaravelPasswordHasher;
 use App\Infrastructure\Session\DatabaseSessionTerminator;
 use App\Infrastructure\Time\SystemClock;
+use App\Models\User;
 use App\View\Composers\NavigationComposer;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Middleware\TrustProxies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
@@ -36,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public array $bindings = [
         UserAccountRepository::class => EloquentUserAccountRepository::class,
+        WorkTeamRepository::class => EloquentWorkTeamRepository::class,
         AuditTrail::class => EloquentAuditTrail::class,
         PasswordHasher::class => LaravelPasswordHasher::class,
         SessionTerminator::class => DatabaseSessionTerminator::class,
@@ -76,6 +81,9 @@ class AppServiceProvider extends ServiceProvider
         if (is_string($trustedProxies) && trim($trustedProxies) !== '') {
             TrustProxies::at(array_map(trim(...), explode(',', $trustedProxies)));
         }
+
+        // Pengelolaan pegawai, tim kerja, dan pengaturan: hanya Super Admin aktif.
+        Gate::define('manage-organization', fn (User $user): bool => $user->isActive() && $user->role->isSuperAdmin());
 
         View::composer('layouts.app', NavigationComposer::class);
     }

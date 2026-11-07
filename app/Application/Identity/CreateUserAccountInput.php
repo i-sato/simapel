@@ -15,5 +15,8 @@ final readonly class CreateUserAccountInput
         public Role $role,
         #[\SensitiveParameter] public string $password,
         public bool $passwordChangeRequired = true,
+        public ?string $pangkatGolongan = null,
+        public ?string $jabatan = null,
+        public bool $canBeAdmin = false,
     ) {}
 }
