@@ -4,6 +4,16 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+## [0.1.0] - 2026-11-07
+
+MVP-1: prototipe siap UAT. Langkah 1–8 di [docs/mvp-1/panduan.md](docs/mvp-1/panduan.md).
+
+### Ditambahkan (MVP-1 langkah 8)
+
+- `DemoSeeder` dan `make demo`: data demo sintetis untuk UAT (hanya local/testing; kata sandi acak ditampilkan sekali) ([docs/perubahan/0017-uat-rilis-mvp-1.md](docs/perubahan/0017-uat-rilis-mvp-1.md)).
+- Checklist UAT per peran ([docs/mvp-1/uat.md](docs/mvp-1/uat.md)) dan panduan pengguna ([docs/mvp-1/panduan-pengguna.md](docs/mvp-1/panduan-pengguna.md)).
+- Tinjauan akhir checklist keamanan dan PDP beserta daftar butir yang belum terpenuhi.
+
 ### Diubah (K19)
 
 - Bentrok di Beban Kerja: Ketua dikecualikan; Sekretaris kini dinilai bentrok bila tugasnya beririsan dengan tugas Admin/Panitia di pelatihan lain, tetapi tidak antartugas Sekretaris di timnya sendiri ([docs/perubahan/0016-keputusan-beban-kerja.md](docs/perubahan/0016-keputusan-beban-kerja.md)).
