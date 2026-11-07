@@ -48,6 +48,8 @@ Aturan ini **ditegakkan otomatis** oleh `tests/Architecture/LayerDependencyTest.
 
 ## Menambah fitur (contoh: modul Pelatihan)
 
+Modul Pelatihan (ADR 0009) adalah contoh lengkap pola di bawah ini, termasuk hak akses di Domain (`TrainingPermissions`) yang dipakai gate sekaligus ditegakkan ulang oleh use case.
+
 1. **Domain**: `app/Domain/Training/` berisi value object, enum status, dan aturan tanpa framework (mis. penghitung tenggat), beserta unit test di `tests/Unit/Domain/Training`.
 2. **Application**: use case `CreateTraining` dengan input DTO, port `TrainingRepository` di `Contracts`, serta unit test memakai fake di `tests/Support/Fakes`.
 3. **Infrastructure**: model Eloquent dan migrasi, `EloquentTrainingRepository`, binding di `AppServiceProvider::$bindings`, dan feature test persistensi.
