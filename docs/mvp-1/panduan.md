@@ -18,19 +18,19 @@ Acuan kebutuhan: "Simapel Business Story" + "Additional Features V.1" dan "V.2" 
 | K8 | Bentrok jadwal | Dihitung dari **awal pendaftaran hingga akhir pelatihan**. Hanya peringatan; dapat di-force dengan alasan (tercatat di audit log) |
 | K9 | Hak lihat | Semua pegawai melihat pelatihan berjalan dan beban kerja secara transparan. Template WA hanya diakses panitia pelatihan tersebut; tiap orang dapat memakai default atau template sendiri |
 | K10 | Ditunda dari MVP-1 | MFA, assessment dan sertifikat, alur tahap SOP/SOP Builder, integrasi Google Sheets/WhatsApp otomatis, notifikasi email |
-| K11 | Link SOP tim kerja | Setiap tim kerja menyimpan link SOP yang berlaku sebagai panduan dan bahan literasi (V.2 nomor 1). Bila belum dilampirkan, tampil badge peringatan dengan keterangan saat kursor diarahkan, di setiap titik akses: membuat pelatihan, melihat informasi pelatihan, dan sejenisnya |
-| K12 | Durasi kritis administratif | Diisi secara **global** di pengaturan dengan mengacu pada SOP yang berlaku (V.2 nomor 2). Default mengikuti contoh SOP TalDig (No. 437/BLSDM.34/OT.02.02/07/2026): BAP paling lambat **H+1**, SK dan ST paling lambat **H+2**, dan administrasi siap **H+3** setelah pendaftaran ditutup |
+| K11 | Link SOP tim kerja | Link SOP yang berlaku disimpan pada ketentuan SOP tim kerja (K12) sebagai panduan dan bahan literasi (V.2 nomor 1). Bila belum ada, tampil badge peringatan dengan keterangan saat kursor diarahkan, di setiap titik akses: membuat pelatihan, melihat informasi pelatihan, dan sejenisnya |
+| K12 | Durasi kritis administratif | Diatur sebagai **ketentuan berversi per tim kerja per tahun anggaran** (tahun anggaran = tahun kalender), karena tiap tim punya SOP sendiri dan SOP berlaku minimal satu tahun anggaran (V.2 nomor 2, keputusan 8 November 2026). Ketentuan memuat acuan SOP (nomor, tanggal efektif, link) dan tenggat BAP, SK, ST, serta administrasi siap dalam hari setelah pendaftaran ditutup. Pelatihan **menyimpan salinan** ketentuan saat difinalisasi. Revisi SOP di tengah tahun dibuat sebagai versi baru dengan tanggal mulai berlaku. Versi yang sudah dipakai pelatihan dikunci |
 
 ## Ringkasan langkah
 
 | Langkah | Branch | Isi | Ukuran |
 |---|---|---|---|
 | 1 | `feat/peran-pegawai-tim` | Model peran baru, data pegawai, tim kerja dan keanggotaan | Sedang |
-| 2 | `feat/pengaturan` | Pengaturan link umum, link panduan dan SOP per tim kerja, durasi kritis administratif | Kecil |
+| 2 | `feat/pengaturan` | Pengaturan link umum, link panduan per tim kerja, ketentuan SOP dan tenggat berversi per tim kerja per tahun | Sedang |
 | 3 | `feat/pelatihan` | Pelatihan draft → final (21 field), learning path | Besar |
 | 4 | `feat/penugasan` | Penugasan Admin/Panitia, badge peran, deteksi bentrok, force | Sedang |
 | 5 | `feat/template-wa` | Template WA default dinamis dan kustom | Sedang |
-| 6 | `feat/administrasi-peringatan` | BAP/SK/ST dengan tenggat dari durasi kritis, link pemantauan peserta, peringatan, dashboard | Sedang |
+| 6 | `feat/administrasi-peringatan` | BAP/SK/ST dengan tenggat dari salinan ketentuan pelatihan, link pemantauan peserta, peringatan, dashboard | Sedang |
 | 7 | `feat/beban-kerja` | Pemetaan beban kerja pegawai dan tim | Sedang |
 | 8 | `chore/uat-mvp-1` | Uji menyeluruh, data contoh, dokumentasi UAT, rilis `v0.1.0` | Kecil |
 
@@ -90,47 +90,66 @@ Jalankan make ci, lalu commit di branch feat/peran-pegawai-tim, push, dan buka P
 
 ---
 
-## Langkah 2 — Pengaturan link, SOP, dan durasi kritis
+## Langkah 2 — Pengaturan link dan ketentuan SOP per tim kerja
 
 **Tujuan:** sesuai K7, K11, dan K12.
 
 **Cakupan:**
 - Pengaturan global oleh Super Admin: link login Digitalent, link registrasi Digitalent, link panduan pendaftaran DTS.
-- Link panduan pendaftaran pelatihan dan **link SOP per tim kerja**.
-- **Durasi kritis administratif global** (dalam hari setelah pendaftaran ditutup) beserta acuan SOP-nya:
+- Link panduan pendaftaran pelatihan **per tim kerja**.
+- Ambang "segera berakhir" (global, default 7 hari sebelum akhir pelatihan; berasal dari business story, bukan SOP).
+- **Ketentuan SOP per tim kerja per tahun anggaran (berversi):**
+  - isi: acuan SOP (nomor, tanggal efektif, link), tenggat BAP, SK, ST, dan administrasi siap dalam hari setelah pendaftaran ditutup, tanggal mulai berlaku;
+  - status **Draf → Berlaku → Diganti**. Hanya ketentuan Berlaku yang dipakai pelatihan. Versi yang sudah dipakai pelatihan tidak dapat diubah, sehingga revisi dibuat sebagai versi baru;
+  - fitur "salin dari tahun sebelumnya" untuk menyiapkan tahun anggaran baru;
+  - bila tahun berjalan belum punya ketentuan Berlaku, sistem memakai ketentuan terakhir dan menampilkan badge "Ketentuan 20XX belum ditetapkan" kepada Super Admin.
+- **Draf awal 2026** diisi dari transkripsi tiga SOP (lihat `docs/proses-bisnis/analisis-referensi.md`). Super Admin wajib meninjau dan mengubahnya menjadi Berlaku:
 
-  | Pengaturan | Default | Acuan (SOP TalDig) |
-  |---|---|---|
-  | Tenggat BAP penetapan peserta | H+1 | Tahap 6, 1 hari |
-  | Tenggat SK dan ST peserta | H+2 | Tahap 7, 1 hari |
-  | Administrasi siap (data peserta) | H+3 | Tahap 8, 1 hari |
-  | Ambang "segera berakhir" | 7 hari sebelum akhir pelatihan | Business story |
+  | Tim kerja (SOP) | BAP | SK | ST | Administrasi siap | Dasar |
+  |---|---|---|---|---|---|
+  | DTA (TalDig, 437/BLSDM.34/OT.02.02/07/2026) | H+1 | H+2 | H+2 | H+3 | Tahap 6 (seleksi + BA, 1 hari), 7 (SK & ST, 1 hari), 8 (data peserta, 1 hari) |
+  | KDD (KeDaS, 438/BLSDM.32/OT.02.02/05/2026) | H+5 * | H+6 | H+6 * | H+9 | Tahap 6 (seleksi, 5 hari), 7 (SK peserta, 1 hari), 8 (olah data, 3 hari) |
+  | ASN Digital (Aparatur, 439/BLSDM.32/OT.02.02/05/2026) | H+4 | H+4 | H+4 * | H+6 | Tahap 7 (seleksi, 3 hari), 8 (BAP, SK, pengumuman, 1 hari), 9 (olah data, 2 hari) |
 
-- Badge peringatan "SOP belum dilampirkan" (dengan keterangan saat kursor diarahkan) sebagai komponen yang dipakai ulang di langkah 3 dan seterusnya.
+  \* Dokumen tidak disebut sebagai output pada SOP tim tersebut; tenggat mengikuti tahap terdekat dan **perlu konfirmasi**.
+
+- Badge peringatan "SOP belum dilampirkan" (dengan keterangan saat kursor diarahkan) tampil bila tim kerja belum punya ketentuan Berlaku yang memuat link SOP. Komponen ini dipakai ulang di langkah 3 dan seterusnya.
 - Semua link wajib http/https.
 
-**Kriteria selesai:** nilai tersimpan dan dipakai lewat port Application (bukan dibaca langsung dari view); perubahan tercatat di audit log.
+**Kriteria selesai:**
+- [ ] Pemilihan ketentuan (tim, tanggal) dan aturan versi ada di Domain dengan unit test, termasuk pergantian tahun dan revisi di tengah tahun.
+- [ ] Ketentuan yang sudah dipakai pelatihan tidak dapat diubah (feature test, setelah langkah 3).
+- [ ] Nilai dipakai lewat port Application (bukan dibaca langsung dari view); perubahan tercatat di audit log.
 
 <details>
 <summary>Prompt langkah 2</summary>
 
 ```text
-Kerjakan Langkah 2 di docs/mvp-1/panduan.md (pengaturan link, SOP, dan durasi kritis). Ikuti AGENTS.md.
+Kerjakan Langkah 2 di docs/mvp-1/panduan.md (pengaturan link dan ketentuan SOP per tim kerja). Ikuti AGENTS.md.
 
 Kebutuhan:
 1. Pengaturan global yang dikelola Super Admin: link login Digitalent, link registrasi Digitalent, link panduan pendaftaran DTS. Simpan di tabel settings (key/value tervalidasi) dengan port Application SettingsRepository.
-2. Per tim kerja (diatur Super Admin): link panduan pendaftaran pelatihan dan link SOP yang berlaku (nomor SOP dan tanggal efektif opsional).
-3. Durasi kritis administratif global, dalam hari setelah pendaftaran ditutup, dengan teks acuan SOP:
-   - BAP H+1, SK dan ST H+2, administrasi siap H+3 (default dari SOP TalDig No. 437/BLSDM.34/OT.02.02/07/2026 tahap 6–8);
-   - ambang "segera berakhir" 7 hari;
-   - validasi: bilangan bulat 0–60 dan urutan BAP ≤ SK/ST ≤ siap.
-   Simpan sebagai value object Domain AdministrativeDeadlinePolicy agar dipakai langkah 3 dan 6.
-4. Komponen Blade badge "SOP belum dilampirkan" (badge warning + atribut title berisi keterangan dan teks yang bisa dibaca screen reader, tanpa script/style inline) untuk dipakai ulang.
-5. Validasi URL hanya http/https, maks. 2048 karakter.
-6. Halaman "Pengaturan" khusus Super Admin dengan tema yang ada; pegawai lain mendapat 403.
-7. Audit log untuk setiap perubahan (simpan nilai lama dan baru, karena link dan durasi bukan data pribadi).
-8. Tes: unit test validasi dan AdministrativeDeadlinePolicy, feature test akses, spec Playwright @pengaturan, entri impact-map.json.
-9. Dokumentasi: CHANGELOG, docs/perubahan/NNNN-*.md (nomor berikutnya).
+2. Per tim kerja (diatur Super Admin): link panduan pendaftaran pelatihan. Ambang "segera berakhir" global (default 7 hari).
+3. Domain SopProvision (ketentuan SOP berversi) per tim kerja per tahun anggaran (tahun kalender):
+   - field: tim kerja, tahun anggaran, nomor versi, nomor SOP, tanggal efektif SOP, link SOP, tanggal mulai berlaku, tenggat BAP/SK/ST/administrasi siap dalam hari setelah pendaftaran ditutup;
+   - validasi: bilangan bulat 0–60; administrasi siap ≥ tenggat dokumen mana pun; link http/https;
+   - status Draf → Berlaku → Diganti; mengaktifkan versi baru otomatis menandai versi sebelumnya di tahun yang sama sebagai Diganti mulai tanggal berlaku versi baru;
+   - ketentuan yang sudah dirujuk pelatihan tidak dapat diubah/dihapus (siapkan pemeriksaannya; relasi dibuat di langkah 3);
+   - resolver: untuk (tim, tanggal) pilih ketentuan Berlaku dengan tanggal mulai berlaku terakhir ≤ tanggal pada tahun itu; bila tidak ada, pakai ketentuan Berlaku terakhir dari tahun sebelumnya dan tandai "fallback";
+   - aksi "salin dari tahun sebelumnya" menghasilkan Draf untuk tahun baru.
+4. Seeder idempoten Draf 2026 untuk tiga tim sesuai tabel di panduan (DTA H+1/H+2/H+2/H+3, KDD H+5/H+6/H+6/H+9, ASN H+4/H+4/H+4/H+6), dengan catatan "perlu konfirmasi" untuk nilai bertanda bintang. Jangan aktifkan otomatis; Super Admin yang mengubah ke Berlaku.
+5. Komponen Blade:
+   - badge "SOP belum dilampirkan" (tim belum punya ketentuan Berlaku dengan link SOP);
+   - badge "Ketentuan 20XX belum ditetapkan" (resolver memakai fallback) untuk Super Admin;
+   - badge warning + atribut title berisi keterangan dan teks yang bisa dibaca screen reader, tanpa script/style inline.
+6. Halaman "Pengaturan" khusus Super Admin dengan tema yang ada: link umum, link panduan per tim, daftar ketentuan per tim dan tahun (riwayat versi), form Draf, aktivasi dengan konfirmasi. Pegawai lain mendapat 403.
+7. Audit log untuk setiap perubahan (nilai lama dan baru; link dan durasi bukan data pribadi).
+8. Tes:
+   - unit test validasi, transisi status, resolver (awal/akhir tahun, revisi tengah tahun, fallback tahun baru, tanpa ketentuan);
+   - feature test akses dan aktivasi;
+   - spec Playwright @pengaturan;
+   - entri impact-map.json.
+9. Dokumentasi: ADR 0010 (ketentuan SOP berversi per tim kerja per tahun anggaran dan salinan pada pelatihan), CHANGELOG, docs/perubahan/NNNN-*.md (nomor berikutnya).
 
 Jalankan make ci, lalu commit di branch feat/pengaturan, push, dan buka PR ke main.
 ```
@@ -152,7 +171,8 @@ Panitia dan admin dikerjakan di langkah 4.
 - Status waktu turunan dari tanggal: Akan dibuka, Pendaftaran, Penetapan peserta, Pelaksanaan, Selesai.
 - Learning path: rangkaian pelatihan per level (Dasar → Menengah → Mahir), tiap level dengan link dan jadwal sendiri.
 - Badge "SOP belum dilampirkan" pada form dan detail pelatihan bila tim kerjanya belum punya link SOP; bila ada, tampil tautan "SOP tim kerja".
-- Peringatan (bukan blokir) bila jeda antara akhir pendaftaran dan awal pelatihan lebih pendek dari durasi kritis "administrasi siap" (default 3 hari).
+- Saat finalisasi, pelatihan **menyimpan salinan** ketentuan SOP tim kerjanya yang berlaku pada tanggal finalisasi (nomor versi, acuan SOP, dan semua tenggat). Perubahan ketentuan sesudahnya tidak menggeser pelatihan ini.
+- Peringatan (bukan blokir) bila jeda antara akhir pendaftaran dan awal pelatihan lebih pendek dari "administrasi siap" pada ketentuan tim tersebut (mis. 3 hari untuk DTA, 9 hari untuk KDD bila draf 2026 disetujui).
 - Hak akses:
   - Ketua tim dan Super Admin membuat draft.
   - Admin yang ditugaskan dan Super Admin memfinalisasi.
@@ -174,7 +194,8 @@ Kebutuhan:
    - Status Draft → Final. Draft boleh parsial. Finalisasi memvalidasi kelengkapan dan konsistensi tanggal (awal ≤ akhir; akhir pendaftaran ≤ mulai pelatihan) dan mengunci status.
    - Status waktu turunan dari tanggal lewat port Clock: Akan dibuka, Pendaftaran, Penetapan peserta, Pelaksanaan, Selesai.
    - Link daftar peserta baru bisa diisi setelah periode pendaftaran berakhir.
-   - Peringatan bila jeda akhir pendaftaran → mulai pelatihan lebih pendek dari durasi "administrasi siap" (AdministrativeDeadlinePolicy dari langkah 2). Peringatan tidak memblokir finalisasi.
+   - Saat finalisasi, simpan salinan ketentuan SOP yang di-resolve untuk (tim kerja, tanggal finalisasi) dari langkah 2: id versi, nomor SOP, link, dan tenggat BAP/SK/ST/administrasi siap. Bila tim belum punya ketentuan Berlaku sama sekali, finalisasi tetap boleh dengan peringatan dan tenggat kosong.
+   - Peringatan bila jeda akhir pendaftaran → mulai pelatihan lebih pendek dari "administrasi siap" ketentuan tersebut. Peringatan tidak memblokir finalisasi.
 2. LearningPath:
    - rangkaian pelatihan dalam satu tim kerja, tiap pelatihan menempati satu level (Dasar = Level 1, Menengah = Level 2, Mahir = Level 3);
    - satu level satu pelatihan per path;
@@ -319,7 +340,7 @@ Jalankan make ci, lalu commit di branch feat/template-wa, push, dan buka PR ke m
 **Cakupan:**
 - Per pelatihan final, tiga dokumen BAP, SK, dan ST. Ketua mendelegasikan ke Sekretaris tim. Isian: status (Belum/Dalam proses/Selesai), nomor dan tanggal dokumen, link berkas di penyimpanan kantor. Tanpa upload.
 - Peringatan (badge di daftar dan detail pelatihan):
-  - dokumen lewat tenggat durasi kritis (BAP H+1, SK/ST H+2 setelah pendaftaran ditutup), dan **kritis** bila administrasi belum lengkap melewati H+3 atau pelatihan sudah dimulai;
+  - dokumen lewat tenggat sesuai **salinan ketentuan pada pelatihan** (mis. DTA: BAP H+1, SK/ST H+2), dan **kritis** bila administrasi belum lengkap melewati tenggat "administrasi siap" atau pelatihan sudah dimulai;
   - link daftar peserta belum diisi setelah pendaftaran ditutup;
   - pelatihan segera berakhir (≤ 7 hari, dapat diatur di pengaturan);
   - bentrok penugasan.
@@ -341,8 +362,9 @@ Kebutuhan:
    - Sekretaris yang ditugaskan, Ketua, dan Super Admin dapat memperbarui;
    - status Selesai mewajibkan nomor, tanggal, dan link.
 2. Domain TrainingAlerts (murni, memakai Clock) menghasilkan daftar peringatan per pelatihan:
-   - tiap dokumen punya tenggat dari AdministrativeDeadlinePolicy (langkah 2): BAP H+1, SK dan ST H+2 setelah akhir pendaftaran;
-   - status peringatan: "mendekati tenggat" (hari tenggat), "lewat tenggat" (melewati tenggat), "kritis" (administrasi belum lengkap setelah H+3 atau saat pelatihan sudah dimulai);
+   - tenggat tiap dokumen dihitung dari salinan ketentuan yang tersimpan pada pelatihan (langkah 3), bukan dari pengaturan terkini: akhir pendaftaran + hari tenggat BAP/SK/ST;
+   - status peringatan: "mendekati tenggat" (hari tenggat), "lewat tenggat" (melewati tenggat), "kritis" (administrasi belum lengkap setelah tenggat "administrasi siap" atau saat pelatihan sudah dimulai);
+   - pelatihan tanpa salinan ketentuan menampilkan badge "Tenggat belum ditetapkan";
    - link daftar peserta kosong setelah pendaftaran ditutup;
    - segera berakhir bila akhir pelatihan ≤ N hari (pengaturan langkah 2, default 7);
    - bentrok penugasan (dari langkah 4).
@@ -426,7 +448,7 @@ Kerjakan Langkah 8 di docs/mvp-1/panduan.md (UAT dan rilis MVP-1). Ikuti AGENTS.
 Kebutuhan:
 1. DemoSeeder:
    - hanya local/testing (tolak production);
-   - data sintetis (NIP diawali 9999): tiga tim kerja 2026 dengan Ketua/Sekretaris/Anggota, sekitar 20 pegawai, sekitar 8 pelatihan (draft, final, berbagai status waktu), satu learning path tiga level, beberapa bentrok penugasan, dan dokumen administrasi dengan status beragam;
+   - data sintetis (NIP diawali 9999): tiga tim kerja 2026 dengan Ketua/Sekretaris/Anggota, sekitar 20 pegawai, sekitar 8 pelatihan (draft, final, berbagai status waktu), satu learning path tiga level, ketentuan SOP Berlaku per tim (salah satunya dengan revisi tengah tahun), beberapa bentrok penugasan, dan dokumen administrasi dengan status beragam;
    - kata sandi demo dibuat acak dan ditampilkan sekali di terminal.
 2. Jalankan make e2e (semua uji UI) dan perbaiki kegagalan.
 3. Dokumen docs/mvp-1/uat.md: skenario uji per peran (Super Admin, Ketua, Sekretaris, Admin, Panitia, Pegawai), langkah, dan hasil yang diharapkan, sebagai checklist untuk pengguna.
@@ -446,6 +468,6 @@ Jalankan make ci, lalu commit di branch chore/uat-mvp-1, push, dan buka PR ke ma
 | Kapan | Masukan |
 |---|---|
 | Sebelum langkah 1 | Daftar pegawai dan komposisi tim **diinput langsung di aplikasi** (impor CSV), bukan dikirim ke repository, karena berisi data pribadi |
-| Setelah langkah 2 | Link SOP tiap tim kerja (KDD, ASN Digital, DTA) diisi Super Admin di halaman Pengaturan; konfirmasi bila durasi kritis default (H+1/H+2/H+3 dari SOP TalDig) perlu diubah |
+| Setelah langkah 2 | Super Admin meninjau draf ketentuan 2026 tiap tim (link SOP dan tenggat), mengonfirmasi nilai bertanda bintang, lalu mengubahnya menjadi Berlaku |
 | Sebelum langkah 8 | Daftar penguji UAT per peran dan jadwal UAT |
 | Kapan saja | Pembatasan akses Google Sheet peserta (saat ini dapat dibuka siapa saja yang memiliki tautan) |
