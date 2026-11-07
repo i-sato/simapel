@@ -4,6 +4,10 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Dokumentasi
+
+- Keputusan penugasan K15: Admin ditetapkan ulang per pelatihan tanpa centang otomatis, Admin boleh sekaligus Panitia, dan perubahan tanggal tidak meminta alasan bentrok baru ([docs/perubahan/0010-keputusan-penugasan.md](docs/perubahan/0010-keputusan-penugasan.md)).
+
 ### Ditambahkan (MVP-1 langkah 4)
 
 - Penugasan Admin/Panitia per pelatihan: daftar centang pegawai dengan badge peran tim, "Admin", dan bentrok ([docs/perubahan/0009-penugasan.md](docs/perubahan/0009-penugasan.md)).

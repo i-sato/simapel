@@ -11,7 +11,7 @@ Acuan kebutuhan: "Simapel Business Story" + "Additional Features V.1" dan "V.2" 
 | K1 | Peran utama | **Super Admin** dapat mengakses seluruh fitur. Peran lain MVP-1: Ketua Tim, Admin, Panitia |
 | K2 | Tim kerja | 2026: KDD (Keterampilan Digital Dasar), ASN Digital, Talenta Digital (DTA). Tiap tim: Ketua, Sekretaris, Anggota |
 | K3 | Sekretaris | Membuat administrasi (BAP, SK, ST) dan dapat ditetapkan sebagai anggota tim kepesertaan (panitia) |
-| K4 | Admin | Super Admin memberi tanda "dapat menjadi Admin" pada pegawai. Admin ditugaskan per pelatihan (admin yang ditunjuk Ketua tercentang otomatis). Hanya Admin yang ditugaskan dan Super Admin yang dapat memfinalisasi draft. Link daftar peserta dan data pelatihan Final dapat dilengkapi juga oleh Ketua tim kerja terkait (K13) |
+| K4 | Admin | Super Admin memberi tanda "dapat menjadi Admin" pada pegawai. Admin ditugaskan ulang oleh Ketua untuk setiap pelatihan; pelatihan baru tidak otomatis mencentang Admin (K15). Hanya Admin yang ditugaskan dan Super Admin yang dapat memfinalisasi draft. Link daftar peserta dan data pelatihan Final dapat dilengkapi juga oleh Ketua tim kerja terkait (K13) |
 | K5 | Alur pelatihan | Ketua atau Super Admin membuat **draft**; Admin melengkapi dan **memfinalisasi** |
 | K6 | Pelatihan berjenjang | Seperti *learning path*: tiap level adalah pelatihan sendiri dengan link sendiri, saling terhubung. Level 1/2/3 = Dasar/Menengah/Mahir |
 | K7 | Link | Link umum (login/registrasi Digitalent, panduan DTS) disimpan di **pengaturan**. Link panduan pelatihan diatur **per tim kerja** |
@@ -22,6 +22,7 @@ Acuan kebutuhan: "Simapel Business Story" + "Additional Features V.1" dan "V.2" 
 | K12 | Durasi kritis administratif | Diatur sebagai **ketentuan berversi per tim kerja per tahun anggaran** (tahun anggaran = tahun kalender), karena tiap tim punya SOP sendiri dan SOP berlaku minimal satu tahun anggaran (V.2 nomor 2, keputusan 8 November 2026). Ketentuan memuat acuan SOP (nomor, tanggal efektif, link) dan tenggat BAP, SK, ST, serta administrasi siap dalam hari setelah pendaftaran ditutup. Pelatihan **menyimpan salinan** ketentuan saat difinalisasi. Revisi SOP di tengah tahun dibuat sebagai versi baru dengan tanggal mulai berlaku. Versi yang sudah dipakai pelatihan dikunci |
 | K13 | Melengkapi pelatihan Final | Keputusan 7 November 2026: Super Admin, **Ketua tim kerja terkait**, dan **Admin yang ditunjuk** dapat melengkapi pelatihan Final (mis. link daftar peserta). Data tetap harus lengkap; tim kerja dan salinan ketentuan SOP tidak berubah. Field wajib finalisasi: semua field kecuali link daftar peserta (serta panitia/admin yang diatur di langkah 4). Batch berupa angka |
 | K14 | Akses link daftar peserta | Keputusan 7 November 2026: SIMAPEL hanya menyimpan tautan. Hak akses Sheet/berkas mengikuti aturan platform penyedia dan diatur oleh pemilik berkas |
+| K15 | Penugasan | Keputusan 7 November 2026: (1) Admin ditetapkan ulang oleh Ketua untuk setiap pelatihan baru, tanpa centang otomatis; yang tampil tercentang hanya penugasan yang sudah disimpan. (2) Satu pegawai boleh menjadi Admin sekaligus Panitia pada pelatihan yang sama. (3) Bentrok diperiksa saat penugasan dibuat; perubahan tanggal pelatihan sesudahnya tidak meminta alasan baru, cukup badge bentrok |
 
 ## Ringkasan langkah
 
@@ -234,7 +235,7 @@ Jalankan make ci, lalu commit di branch feat/pelatihan, push, dan buka PR ke mai
 
 **Cakupan:**
 - Pilihan Admin dan Panitia dari daftar pegawai, lintas tim kerja, termasuk Ketua dan Sekretaris tim lain.
-- Admin hanya dari pegawai bertanda "dapat menjadi Admin". Admin yang ditunjuk Ketua tercentang otomatis.
+- Admin hanya dari pegawai bertanda "dapat menjadi Admin". Admin ditetapkan ulang oleh Ketua untuk setiap pelatihan (K15).
 - Badge di setiap nama: peran tim (mis. "Ketua Tim DTA", "Sekretaris Tim KDD"), "Admin", dan penugasan yang beririsan (mis. "Panitia DTA · 1–9 Nov").
 - Irisan dihitung dari awal pendaftaran sampai akhir pelatihan, baik untuk pelatihan yang dibuat maupun pelatihan lain.
 - Penugasan yang bentrok tetap boleh dengan **force + alasan**; alasan tercatat di audit log.
@@ -260,7 +261,7 @@ Kebutuhan:
    - Penugasan yang bentrok wajib menyertakan alasan (force); tanpa alasan ditolak dengan pesan yang menyebut bentroknya.
 3. UI pada form/detail pelatihan:
    - daftar centang pegawai dengan badge peran tim (mis. "Ketua Tim DTA"), badge "Admin", dan badge bentrok (mis. "Panitia DTA · 1–9 Nov");
-   - admin yang ditunjuk Ketua tercentang otomatis;
+   - admin yang ditunjuk Ketua tercentang otomatis (diputuskan kemudian, K15: tanpa centang otomatis untuk pelatihan baru);
    - kotak peringatan + isian alasan saat ada bentrok.
 4. Hak akses:
    - Ketua tim terkait dan Super Admin mengatur penugasan;
