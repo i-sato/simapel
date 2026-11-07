@@ -36,9 +36,9 @@ test('perubahan spec hanya menjalankan spec tersebut', () => {
 });
 
 test('kode aplikasi yang belum dipetakan memicu semua uji dan dilaporkan', () => {
-    const result = resolveTags(['app/Http/Controllers/TrainingController.php'], map);
+    const result = resolveTags(['app/Http/Controllers/ModulBaruController.php'], map);
     assert.equal(result.mode, 'all');
-    assert.deepEqual(result.unmapped, ['app/Http/Controllers/TrainingController.php']);
+    assert.deepEqual(result.unmapped, ['app/Http/Controllers/ModulBaruController.php']);
 });
 
 test('penanda ALL menjalankan semua uji', () => {
@@ -51,11 +51,18 @@ test('file yang dipetakan dengan tag kosong tidak memicu uji UI', () => {
 
 test('halaman pegawai dan tim kerja memicu area masing-masing', () => {
     assert.deepEqual(resolveTags(['resources/views/employees/index.blade.php'], map).tags, ['@pegawai']);
-    assert.deepEqual(resolveTags(['app/Domain/Organization/TeamComposition.php'], map).tags, ['@tim-kerja']);
+    // Peran tim (Ketua) juga menentukan hak membuat draft pelatihan.
+    assert.deepEqual(resolveTags(['app/Domain/Organization/TeamComposition.php'], map).tags, ['@pelatihan', '@tim-kerja']);
 });
 
 test('pengaturan dan ketentuan SOP memicu area @pengaturan serta tim kerja yang menampilkan badge', () => {
     assert.deepEqual(resolveTags(['resources/views/settings/index.blade.php'], map).tags, ['@pengaturan']);
-    assert.deepEqual(resolveTags(['app/Domain/Sop/SopProvisionResolver.php'], map).tags, ['@pengaturan', '@tim-kerja']);
+    assert.deepEqual(resolveTags(['app/Domain/Sop/SopProvisionResolver.php'], map).tags, ['@pelatihan', '@pengaturan', '@tim-kerja']);
     assert.deepEqual(resolveTags(['database/seeders/SopProvisionDraftSeeder.php'], map).tags, []);
+});
+
+test('pelatihan memicu area @pelatihan; ketentuan SOP juga memicunya karena disalin saat finalisasi', () => {
+    assert.deepEqual(resolveTags(['resources/views/trainings/show.blade.php'], map).tags, ['@pelatihan']);
+    assert.deepEqual(resolveTags(['app/Domain/Training/Training.php'], map).tags, ['@pelatihan']);
+    assert.ok(resolveTags(['app/Domain/Sop/SopProvisionResolver.php'], map).tags.includes('@pelatihan'));
 });
