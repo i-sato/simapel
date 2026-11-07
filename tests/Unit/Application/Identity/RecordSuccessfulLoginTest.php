@@ -2,11 +2,8 @@
 
 namespace Tests\Unit\Application\Identity;
 
-use App\Application\Identity\NewUserAccount;
 use App\Application\Identity\RecordSuccessfulLogin;
 use App\Domain\Audit\AuditEventType;
-use App\Domain\Identity\Nip;
-use App\Domain\Identity\Role;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\Fakes\FixedClock;
@@ -21,9 +18,7 @@ final class RecordSuccessfulLoginTest extends TestCase
         $users = new InMemoryUserAccountRepository;
         $audit = new InMemoryAuditTrail;
         $transaction = new ImmediateTransaction;
-        $userId = $users->create(new NewUserAccount(
-            Nip::fromString('999900000000000001'), 'Pengguna Uji', null, Role::Pegawai, 'hash', false,
-        ));
+        $userId = $users->seed('999900000000000001');
 
         (new RecordSuccessfulLogin($users, $audit, $transaction, new FixedClock(new DateTimeImmutable('2026-11-04 07:45:00'))))
             ->handle($userId);

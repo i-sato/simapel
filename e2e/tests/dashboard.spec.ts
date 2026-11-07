@@ -9,7 +9,7 @@ test.describe('Dashboard', { tag: '@dashboard' }, () => {
 
         await expect(page.getByRole('heading', { name: 'Akun Anda' })).toBeVisible();
         await expect(page.getByText(maskNip(accounts.admin))).toBeVisible();
-        await expect(page.getByText('Super Admin Regional').first()).toBeVisible();
+        await expect(page.getByText('Super Admin', { exact: true }).first()).toBeVisible();
         expect(await page.content()).not.toContain(accounts.admin);
     });
 });

@@ -21,18 +21,19 @@ final class E2eSeederTest extends TestCase
         config(['simapel.e2e.nip' => '999900000000000001', 'simapel.e2e.password' => 'Sandi-E2E-2026!']);
     }
 
-    public function test_seeds_three_synthetic_accounts_idempotently(): void
+    public function test_seeds_four_synthetic_accounts_idempotently(): void
     {
         $this->seed(E2eSeeder::class);
         $this->seed(E2eSeeder::class);
 
-        $this->assertSame(3, User::query()->count());
+        $this->assertSame(4, User::query()->count());
 
         $active = User::query()->where('nip', '999900000000000001')->sole();
-        $this->assertSame(Role::SuperAdminRegional, $active->role);
+        $this->assertSame(Role::SuperAdmin, $active->role);
         $this->assertTrue(Hash::check('Sandi-E2E-2026!', $active->password));
         $this->assertFalse(User::query()->where('nip', '999900000000000002')->sole()->is_active);
         $this->assertTrue(User::query()->where('nip', '999900000000000003')->sole()->password_change_required);
+        $this->assertSame(Role::Pegawai, User::query()->where('nip', '999900000000000004')->sole()->role);
     }
 
     public function test_refuses_to_run_in_production(): void

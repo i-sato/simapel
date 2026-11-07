@@ -1,48 +1,319 @@
 {
-    "description": "Peta file sumber -> tag area UI Playwright. Dipakai `make e2e-affected` dan CI agar hanya UI terdampak yang diuji. Tag '*' berarti semua area. Perbarui peta ini setiap menambah modul/halaman baru.",
-    "alwaysRunTags": ["@setup"],
-    "rules": [
-        { "pattern": "resources/views/layouts/**", "tags": ["*"] },
-        { "pattern": "resources/views/partials/**", "tags": ["*"] },
-        { "pattern": "public/css/**", "tags": ["*"] },
-        { "pattern": "public/js/**", "tags": ["*"] },
-        { "pattern": "app/Http/Middleware/**", "tags": ["*"] },
-        { "pattern": "app/Providers/**", "tags": ["*"] },
-        { "pattern": "bootstrap/**", "tags": ["*"] },
-        { "pattern": "routes/web.php", "tags": ["*"] },
-        { "pattern": "config/**", "tags": ["*"] },
-        { "pattern": "lang/**", "tags": ["*"] },
-        { "pattern": "database/migrations/**", "tags": ["*"] },
-        { "pattern": "database/seeders/E2eSeeder.php", "tags": ["*"] },
-        { "pattern": "composer.lock", "tags": ["*"] },
-        { "pattern": "compose.yaml", "tags": ["*"] },
-        { "pattern": "docker/**", "tags": ["*"] },
-        { "pattern": "e2e/playwright.config.ts", "tags": ["*"] },
-        { "pattern": "e2e/package*.json", "tags": ["*"] },
-        { "pattern": "e2e/support/**", "tags": ["*"] },
-        { "pattern": "e2e/tests/*.setup.ts", "tags": ["*"] },
-
-        { "pattern": "resources/views/auth/**", "tags": ["@auth"] },
-        { "pattern": "app/Http/Controllers/Auth/**", "tags": ["@auth"] },
-        { "pattern": "app/Http/Requests/Auth/**", "tags": ["@auth"] },
-
-        { "pattern": "resources/views/account/**", "tags": ["@account"] },
-        { "pattern": "app/Http/Controllers/Account/**", "tags": ["@account"] },
-        { "pattern": "app/Http/Requests/Account/**", "tags": ["@account"] },
-
-        { "pattern": "resources/views/dashboard/**", "tags": ["@dashboard"] },
-        { "pattern": "app/Http/Controllers/DashboardController.php", "tags": ["@dashboard"] },
-
-        { "pattern": "app/View/**", "tags": ["@layout", "@dashboard"] },
-        { "pattern": "resources/views/errors/**", "tags": ["@errors"] },
-
-        { "pattern": "app/Domain/Identity/**", "tags": ["@auth", "@account", "@dashboard"] },
-        { "pattern": "app/Application/Identity/**", "tags": ["@auth", "@account"] },
-        { "pattern": "app/Domain/Audit/**", "tags": ["@auth", "@account"] },
-        { "pattern": "app/Infrastructure/**", "tags": ["@auth", "@account"] },
-        { "pattern": "app/Models/User.php", "tags": ["@auth", "@account", "@dashboard"] },
-        { "pattern": "app/Models/AuditLog.php", "tags": ["@auth", "@account"] }
+    "description": "Peta file sumber -> tag area UI Playwright. Dipakai `make e2e-affected` dan CI agar hanya UI terdampak yang diuji. Tag '*' berarti semua area. Perbarui peta ini setiap menambah modul/halaman baru. Tag kosong ([]) berarti file sudah dipetakan tetapi tidak memengaruhi UI.",
+    "alwaysRunTags": [
+        "@setup"
     ],
-    "fallbackAllPatterns": ["app/**", "resources/**", "routes/**", "public/**", "database/**"],
+    "rules": [
+        {
+            "pattern": "resources/views/layouts/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "resources/views/partials/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "public/css/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "public/js/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "app/Http/Middleware/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "app/Providers/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "bootstrap/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "routes/web.php",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "config/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "lang/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "database/migrations/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "database/seeders/E2eSeeder.php",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "composer.lock",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "compose.yaml",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "docker/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "e2e/playwright.config.ts",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "e2e/package*.json",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "e2e/support/**",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "e2e/tests/*.setup.ts",
+            "tags": [
+                "*"
+            ]
+        },
+        {
+            "pattern": "resources/views/auth/**",
+            "tags": [
+                "@auth"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/Auth/**",
+            "tags": [
+                "@auth"
+            ]
+        },
+        {
+            "pattern": "app/Http/Requests/Auth/**",
+            "tags": [
+                "@auth"
+            ]
+        },
+        {
+            "pattern": "resources/views/account/**",
+            "tags": [
+                "@account"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/Account/**",
+            "tags": [
+                "@account"
+            ]
+        },
+        {
+            "pattern": "app/Http/Requests/Account/**",
+            "tags": [
+                "@account"
+            ]
+        },
+        {
+            "pattern": "resources/views/dashboard/**",
+            "tags": [
+                "@dashboard"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/DashboardController.php",
+            "tags": [
+                "@dashboard"
+            ]
+        },
+        {
+            "pattern": "app/View/**",
+            "tags": [
+                "@layout",
+                "@dashboard"
+            ]
+        },
+        {
+            "pattern": "resources/views/errors/**",
+            "tags": [
+                "@errors"
+            ]
+        },
+        {
+            "pattern": "app/Domain/Identity/**",
+            "tags": [
+                "@account",
+                "@auth",
+                "@dashboard",
+                "@pegawai",
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Application/Identity/**",
+            "tags": [
+                "@account",
+                "@auth",
+                "@pegawai"
+            ]
+        },
+        {
+            "pattern": "app/Domain/Audit/**",
+            "tags": [
+                "@account",
+                "@auth",
+                "@pegawai",
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Infrastructure/**",
+            "tags": [
+                "@account",
+                "@auth",
+                "@pegawai",
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Models/User.php",
+            "tags": [
+                "@account",
+                "@auth",
+                "@dashboard",
+                "@pegawai",
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Models/AuditLog.php",
+            "tags": [
+                "@auth",
+                "@account"
+            ]
+        },
+        {
+            "pattern": "resources/views/employees/**",
+            "tags": [
+                "@pegawai"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/Admin/Employee*",
+            "tags": [
+                "@pegawai"
+            ]
+        },
+        {
+            "pattern": "app/Http/Support/**",
+            "tags": [
+                "@pegawai"
+            ]
+        },
+        {
+            "pattern": "app/Http/Requests/Admin/**",
+            "tags": [
+                "@pegawai",
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "resources/views/work-teams/**",
+            "tags": [
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/WorkTeamController.php",
+            "tags": [
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/Admin/TeamMemberController.php",
+            "tags": [
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Domain/Organization/**",
+            "tags": [
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Application/Organization/**",
+            "tags": [
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Models/WorkTeam.php",
+            "tags": [
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Models/TeamMembership.php",
+            "tags": [
+                "@tim-kerja"
+            ]
+        },
+        {
+            "pattern": "app/Console/**",
+            "tags": []
+        },
+        {
+            "pattern": "database/factories/**",
+            "tags": []
+        }
+    ],
+    "fallbackAllPatterns": [
+        "app/**",
+        "resources/**",
+        "routes/**",
+        "public/**",
+        "database/**"
+    ],
     "specPattern": "e2e/tests/{name}.spec.ts"
 }
