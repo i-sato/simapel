@@ -54,4 +54,17 @@ final class InMemoryWorkTeamRepository implements WorkTeamRepository
         $team = $this->teams[$teamId];
         $this->teams[$teamId] = new WorkTeamSummary($team->id, $team->code, $team->name, $team->year, $url);
     }
+
+    public function teamIdsLedBy(int $employeeId): array
+    {
+        $ids = [];
+
+        foreach ($this->members as $teamId => $members) {
+            if (($members[$employeeId] ?? null) === TeamRole::Ketua) {
+                $ids[] = $teamId;
+            }
+        }
+
+        return $ids;
+    }
 }

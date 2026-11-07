@@ -23,4 +23,11 @@ interface WorkTeamRepository
     public function removeMember(int $teamId, int $employeeId): void;
 
     public function setRegistrationGuideUrl(int $teamId, ?string $url): void;
+
+    /**
+     * Tim kerja tempat pegawai menjadi Ketua.
+     *
+     * @return list<int>
+     */
+    public function teamIdsLedBy(int $employeeId): array;
 }
