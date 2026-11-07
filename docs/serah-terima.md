@@ -10,10 +10,11 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Clean architecture + uji arsitektur | Selesai |
 | Autentikasi NIP, keamanan akun, audit login | Selesai |
 | Tema UI referensi, layout, halaman galat | Selesai |
-| Pengujian: 101 PHPUnit, coverage 99%, 16 uji UI Playwright, 8 uji resolver | Selesai |
+| Pengujian: 220 PHPUnit, coverage 98%, 27 uji UI Playwright, 11 uji resolver | Selesai |
 | CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
 | Pegawai, tim kerja, model peran berlapis (langkah 1) | Selesai (PR `feat/peran-pegawai-tim`, ADR 0008) |
-| Pengaturan, pelatihan, penugasan, template WA, administrasi, beban kerja | Belum: langkah 2–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
+| Pengaturan link dan ketentuan SOP berversi (langkah 2) | Selesai (PR `feat/pengaturan`, ADR 0010); draf 2026 menunggu tinjauan Super Admin |
+| Pelatihan, penugasan, template WA, administrasi, beban kerja | Belum: langkah 3–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
 | SOP Builder dan alur tahap SOP | Ditunda dari MVP-1 |
 | Assessment & sertifikat | Ditunda (ADR 0007) |
 | Continuous Delivery (deploy) | Menunggu informasi server |
@@ -36,6 +37,7 @@ Tanggal keputusan: 4 November 2026.
    - CI/CD di GitHub private.
 6. MFA (usulan R6) ditunda karena target saat ini adalah MVP 1 berbentuk prototipe.
 7. Model peran berlapis diterapkan di langkah 1 (ADR 0008): peran global Super Admin/Pegawai, peran tim Ketua/Sekretaris/Anggota, kapabilitas Admin, dan penugasan per pelatihan.
+8. Ketentuan SOP berversi per tim kerja per tahun anggaran diterapkan di langkah 2 (ADR 0010). Pelatihan akan menyimpan salinannya saat difinalisasi (langkah 3).
 
 ## Cara melanjutkan
 
@@ -55,7 +57,7 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 | Topik | Pertanyaan | Pemilik |
 |---|---|---|
 | Data | Daftar pegawai dan komposisi tim diinput lewat aplikasi (impor CSV), bukan lewat repository | Pemilik proyek |
-| SOP | Tinjau draf ketentuan 2026 per tim kerja (link SOP dan tenggat dari transkripsi SOP), konfirmasi nilai bertanda bintang | Pemilik proyek |
+| SOP | Tinjau draf ketentuan 2026 di menu Pengaturan: lampirkan link SOP, konfirmasi BAP H+5 dan ST H+6 (KDD) serta ST H+4 (ASN), lalu berlakukan | Pemilik proyek |
 | Data peserta | Pembatasan akses Google Sheet peserta yang saat ini terbuka untuk siapa saja yang memiliki tautan | Pemilik proyek |
 | PDP | Dasar pemrosesan, PPDP, retensi (JRA), teks pemberitahuan privasi | Hukum/PPDP instansi |
 | GitHub | Paket akun (fitur protected branch di repo private butuh Pro/Team) | Pemilik proyek |
@@ -65,6 +67,8 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 ## Batasan yang diketahui
 
 - MFA belum tersedia (usulan R6, ditunda untuk MVP 1).
+- Pemeriksaan "ketentuan sudah dirujuk pelatihan" (`isReferenced`) selalu `false` sampai relasi pelatihan dibuat di langkah 3.
+- Uji UI berbagi satu sesi Super Admin, sehingga pesan flash dapat tertukar antara uji paralel (sesekali gagal, lulus saat diulang). Usulan perbaikan: project Playwright khusus sesi admin dengan `workers: 1`.
 - Alarm otomatis untuk event keamanan belum tersedia.
 - Ukuran image production sekitar 590 MB (Debian). Optimasi ke Alpine dapat dikaji bila diperlukan.
 - `make` membutuhkan lingkungan Unix (macOS, Linux, WSL2). Perintah `docker compose` setara tercantum di [pengembangan.md](pengembangan.md).
