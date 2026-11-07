@@ -20,6 +20,7 @@ use App\Application\Sop\Contracts\SopProvisionRepository;
 use App\Application\Training\Contracts\LearningPathRepository;
 use App\Application\Training\Contracts\TrainingRepository;
 use App\Application\Training\TrainingAccess;
+use App\Application\Workload\Contracts\WorkloadRepository;
 use App\Domain\Identity\PasswordPolicy;
 use App\Infrastructure\Persistence\DatabaseTransaction;
 use App\Infrastructure\Persistence\EloquentAdministrativeDocumentRepository;
@@ -33,6 +34,7 @@ use App\Infrastructure\Persistence\EloquentSettingsRepository;
 use App\Infrastructure\Persistence\EloquentSopProvisionRepository;
 use App\Infrastructure\Persistence\EloquentTrainingRepository;
 use App\Infrastructure\Persistence\EloquentUserAccountRepository;
+use App\Infrastructure\Persistence\EloquentWorkloadRepository;
 use App\Infrastructure\Persistence\EloquentWorkTeamRepository;
 use App\Infrastructure\Security\LaravelPasswordHasher;
 use App\Infrastructure\Session\DatabaseSessionTerminator;
@@ -71,6 +73,7 @@ class AppServiceProvider extends ServiceProvider
         CustomTemplateRepository::class => EloquentCustomTemplateRepository::class,
         AdministrativeDocumentRepository::class => EloquentAdministrativeDocumentRepository::class,
         PartnerRepository::class => EloquentPartnerRepository::class,
+        WorkloadRepository::class => EloquentWorkloadRepository::class,
         AuditTrail::class => EloquentAuditTrail::class,
         PasswordHasher::class => LaravelPasswordHasher::class,
         SessionTerminator::class => DatabaseSessionTerminator::class,
