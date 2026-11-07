@@ -6,6 +6,7 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ### Dokumentasi
 
+- Ketentuan tenggat administratif berubah menjadi ketentuan SOP berversi per tim kerja per tahun anggaran, dengan salinan pada pelatihan ([docs/perubahan/0003-ketentuan-sop-berversi.md](docs/perubahan/0003-ketentuan-sop-berversi.md)).
 - Panduan langkah MVP-1 beserta keputusan pemilik proyek dan prompt per langkah ([docs/mvp-1/panduan.md](docs/mvp-1/panduan.md)).
 
 ### Ditambahkan
