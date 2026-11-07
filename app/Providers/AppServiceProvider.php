@@ -11,6 +11,8 @@ use App\Application\Identity\Contracts\SessionTerminator;
 use App\Application\Identity\Contracts\UserAccountRepository;
 use App\Application\Messaging\Contracts\CustomTemplateRepository;
 use App\Application\Organization\Contracts\WorkTeamRepository;
+use App\Application\Partner\Contracts\PartnerRepository;
+use App\Application\Partner\SavePartner;
 use App\Application\Settings\Contracts\SettingsRepository;
 use App\Application\Shared\Contracts\Clock;
 use App\Application\Shared\Contracts\Transaction;
@@ -26,6 +28,7 @@ use App\Infrastructure\Persistence\EloquentAssignmentRepository;
 use App\Infrastructure\Persistence\EloquentAuditTrail;
 use App\Infrastructure\Persistence\EloquentCustomTemplateRepository;
 use App\Infrastructure\Persistence\EloquentLearningPathRepository;
+use App\Infrastructure\Persistence\EloquentPartnerRepository;
 use App\Infrastructure\Persistence\EloquentSettingsRepository;
 use App\Infrastructure\Persistence\EloquentSopProvisionRepository;
 use App\Infrastructure\Persistence\EloquentTrainingRepository;
@@ -67,6 +70,7 @@ class AppServiceProvider extends ServiceProvider
         AssignmentCandidateRepository::class => EloquentAssignmentCandidateRepository::class,
         CustomTemplateRepository::class => EloquentCustomTemplateRepository::class,
         AdministrativeDocumentRepository::class => EloquentAdministrativeDocumentRepository::class,
+        PartnerRepository::class => EloquentPartnerRepository::class,
         AuditTrail::class => EloquentAuditTrail::class,
         PasswordHasher::class => LaravelPasswordHasher::class,
         SessionTerminator::class => DatabaseSessionTerminator::class,
@@ -116,6 +120,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('update-training', fn (User $user, TrainingRecord $training): bool => $this->app->make(TrainingAccess::class)->canEdit($user->id, $training->id));
         Gate::define('manage-training-assignments', fn (User $user, TrainingRecord $training): bool => $this->app->make(TrainingAccess::class)->canManageAssignments($user->id, $training->id));
         Gate::define('use-message-templates', fn (User $user, TrainingRecord $training): bool => $this->app->make(TrainingAccess::class)->canUseMessageTemplates($user->id, $training->id));
+        Gate::define('manage-partners', fn (User $user): bool => $this->app->make(SavePartner::class)->canManage($user->id));
         Gate::define('finalize-training', fn (User $user, TrainingRecord $training): bool => $this->app->make(TrainingAccess::class)->canFinalize($user->id, $training->id));
 
         View::composer('layouts.app', NavigationComposer::class);

@@ -6,6 +6,7 @@ namespace App\Infrastructure\Persistence;
 
 use App\Application\Training\Contracts\TrainingRepository;
 use App\Domain\Shared\HttpUrl;
+use App\Domain\Shared\TimeOfDay;
 use App\Domain\Sop\AdministrativeDeadlines;
 use App\Domain\Training\InvalidTraining;
 use App\Domain\Training\SopSnapshot;
@@ -123,6 +124,9 @@ final class EloquentTrainingRepository implements TrainingRepository
             'lesson_hours' => $details->lessonHours,
             'participant_target' => $details->participantTarget,
             'registration_quota' => $details->registrationQuota,
+            'region' => $details->region,
+            'registration_closes_at' => $details->registrationClosesAt->value().':00',
+            'partner_id' => $details->partnerId,
             'learning_path_id' => $training->learningPathId,
             'sop_provision_id' => $snapshot?->provisionId,
             'sop_fiscal_year' => $snapshot?->fiscalYear,
@@ -163,6 +167,9 @@ final class EloquentTrainingRepository implements TrainingRepository
             lessonHours: $record->lesson_hours,
             participantTarget: $record->participant_target,
             registrationQuota: $record->registration_quota,
+            region: $record->region,
+            registrationClosesAt: TimeOfDay::fromString($record->registration_closes_at, 'registration_closes_at'),
+            partnerId: $record->partner_id,
         );
 
         $snapshot = $record->sop_provision_id === null ? null : new SopSnapshot(

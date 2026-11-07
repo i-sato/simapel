@@ -67,6 +67,7 @@ final class EloquentUserAccountRepository implements UserAccountRepository
             name: $user->name,
             role: $user->role,
             isActive: $user->is_active,
+            canBeAdmin: $user->can_be_admin,
         );
     }
 
