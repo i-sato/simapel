@@ -8,7 +8,7 @@
 | `web` | `nginx:1.30-alpine` | `127.0.0.1:8080` | Web server |
 | `db` | `mysql:8.4` | `127.0.0.1:3307` | Database `simapel` dan `simapel_testing` |
 | `adminer` (profil `tools`) | `adminer:6.3.0-standalone` | `127.0.0.1:8081` | Penelusuran database (opsional) |
-| `playwright` (profil `e2e`) | `mcr.microsoft.com/playwright:v1.64.1-noble` | — | Uji UI |
+| `playwright` (profil `e2e`) | `mcr.microsoft.com/playwright:v1.65.0-noble` | — | Uji UI |
 
 Semua port hanya terikat ke `127.0.0.1` sehingga tidak terbuka ke jaringan kantor. Port bisa diubah lewat `APP_PORT`, `FORWARD_DB_PORT`, dan `ADMINER_PORT` di `.env`.
 
