@@ -63,6 +63,7 @@ Setiap eksekusi `make e2e*` menjalankan langkah berikut:
 | `@template-wa` | `template-wa.spec.ts` | Pratinjau default "(menyusul)", tombol Salin, tautan wa.me, placeholder tak dikenal ditolak, template kustom beremoji, reset, 403 untuk pegawai di luar pelatihan |
 | `@administrasi` | `administrasi.spec.ts` | Finalisasi membuat BAP/SK/ST, status Selesai wajib nomor/tanggal/link, progres x/3, link berkas |
 | `@mitra` | `mitra.spec.ts` | Daftarkan mitra Bali, tolak duplikat, wilayah pelatihan mengikuti mitra, batas pendaftaran WITA di template WA, daftar mitra baca saja untuk pegawai biasa |
+| `@beban-kerja` | `beban-kerja.spec.ts` | Matriks memuat penugasan pegawai, tampilan bulanan, detail pegawai, tampilan ponsel tanpa gulir horizontal halaman |
 | `@setup` | `auth.setup.ts` | Selalu ikut dijalankan |
 
 Uji berjalan dengan **satu worker**. Uji Super Admin berbagi satu sesi dari `auth.setup.ts` (login dibatasi per IP), sehingga eksekusi paralel membuat pesan flash dan error formulir tertukar antaruji.
