@@ -45,6 +45,18 @@ final class InMemoryTrainingRepository implements TrainingRepository
         return array_values(array_filter($this->trainings, fn (Training $training): bool => $training->learningPathId === $learningPathId));
     }
 
+    public function running(\DateTimeImmutable $on): array
+    {
+        $today = $on->setTime(0, 0);
+
+        return array_values(array_filter($this->trainings, function (Training $training) use ($today): bool {
+            $schedule = $training->details->schedule;
+
+            return $schedule->registrationStart !== null && $schedule->trainingEnd !== null
+                && $schedule->registrationStart <= $today && $schedule->trainingEnd >= $today;
+        }));
+    }
+
     public function levelOccupant(int $learningPathId, TrainingLevel $level): ?int
     {
         foreach ($this->trainings as $id => $training) {

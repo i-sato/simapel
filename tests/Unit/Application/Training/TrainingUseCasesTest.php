@@ -28,6 +28,7 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\Fakes\FixedClock;
 use Tests\Support\Fakes\ImmediateTransaction;
+use Tests\Support\Fakes\InMemoryAdministrativeDocumentRepository;
 use Tests\Support\Fakes\InMemoryAssignmentRepository;
 use Tests\Support\Fakes\InMemoryAuditTrail;
 use Tests\Support\Fakes\InMemoryLearningPathRepository;
@@ -93,7 +94,7 @@ final class TrainingUseCasesTest extends TestCase
 
         $this->create = new CreateTrainingDraft($this->trainings, $this->teams, $actors, $placement, $this->audit, $transaction, $clock);
         $this->update = new UpdateTraining($this->trainings, $this->teams, $actors, $placement, $this->audit, $transaction, $clock);
-        $this->finalize = new FinalizeTraining($this->trainings, $this->teams, $actors, $resolve, $preparation, $this->audit, $transaction, $clock);
+        $this->finalize = new FinalizeTraining($this->trainings, $this->teams, $actors, $resolve, $preparation, new InMemoryAdministrativeDocumentRepository, $this->audit, $transaction, $clock);
         $this->access = new TrainingAccess($actors, $this->trainings);
     }
 
