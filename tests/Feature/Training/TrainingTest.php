@@ -210,17 +210,19 @@ final class TrainingTest extends TestCase
         $this->assertSame(TrainingStatus::Draft, $training->refresh()->status);
     }
 
-    public function test_final_training_is_completed_by_super_admin_only(): void
+    public function test_final_training_is_completed_by_team_ketua_and_super_admin(): void
     {
         $ketua = $this->ketuaOf('DTA');
         $admin = User::factory()->superAdmin()->create();
         $training = $this->storeAs($ketua, $this->form());
         $this->actingAs($admin)->post("/trainings/{$training->id}/finalize");
 
-        $this->actingAs($ketua)->get("/trainings/{$training->id}/edit")->assertForbidden();
+        // Ketua tim terkait melengkapi pelatihan Final; tombol finalisasi tetap tidak ada.
+        $this->actingAs($ketua)->get("/trainings/{$training->id}")->assertSee('Lengkapi')->assertDontSee('Finalisasi</button>', false);
+        $this->get("/trainings/{$training->id}/edit")->assertOk()->assertSee('Pelatihan sudah Final');
 
         // Link daftar peserta: ditolak selama pendaftaran, diterima setelah pendaftaran ditutup.
-        $this->actingAs($admin)->from("/trainings/{$training->id}/edit");
+        $this->from("/trainings/{$training->id}/edit");
         $this->put("/trainings/{$training->id}", $this->form('DTA', ['participant_list_url' => 'https://docs.example.test/peserta']))
             ->assertSessionHasErrors('participant_list_url');
 
@@ -229,9 +231,24 @@ final class TrainingTest extends TestCase
             ->assertSessionHasNoErrors();
         $this->assertSame('https://docs.example.test/peserta', $training->refresh()->participant_list_url);
 
-        $this->put("/trainings/{$training->id}", $this->form('KDD'))->assertSessionHasErrors('work_team_id');
+        // Data Final harus tetap lengkap; Ketua tidak dapat memindahkan ke tim yang tidak dipimpinnya.
         $this->put("/trainings/{$training->id}", $this->form('DTA', ['lesson_hours' => '']))->assertSessionHasErrors('general');
-        $this->assertSame(TrainingStatus::Final, $training->refresh()->status);
+        $this->put("/trainings/{$training->id}", $this->form('KDD'))->assertForbidden();
+
+        // Super Admin pun tidak dapat mengganti tim pelatihan Final.
+        $this->actingAs($admin)->from("/trainings/{$training->id}/edit");
+        $this->put("/trainings/{$training->id}", $this->form('KDD'))->assertSessionHasErrors('work_team_id');
+        $this->put("/trainings/{$training->id}", $this->form('DTA', ['name' => 'Nama oleh Super Admin', 'participant_list_url' => 'https://docs.example.test/peserta']))
+            ->assertSessionHasNoErrors();
+
+        // Ketua tim lain dan pegawai biasa tidak dapat melengkapi.
+        $this->actingAs($this->ketuaOf('KDD'))->get("/trainings/{$training->id}/edit")->assertForbidden();
+        $this->actingAs(User::factory()->create())->put("/trainings/{$training->id}", $this->form())->assertForbidden();
+
+        $training->refresh();
+        $this->assertSame(TrainingStatus::Final, $training->status);
+        $this->assertSame('Nama oleh Super Admin', $training->name);
+        $this->assertSame(2, AuditLog::query()->where('event_type', AuditEventType::TrainingUpdated)->count());
     }
 
     public function test_learning_path_neighbours_are_shown(): void
