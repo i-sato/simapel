@@ -64,6 +64,7 @@ final readonly class NavigationComposer
         return [
             'MENU UTAMA' => [
                 ['label' => 'Dashboard', 'route' => 'dashboard', 'icon' => '▦', 'pattern' => 'dashboard', 'roles' => null],
+                ['label' => 'Pelatihan', 'route' => 'trainings.index', 'icon' => '◧', 'pattern' => 'trainings.*', 'roles' => null],
                 ['label' => 'Tim Kerja', 'route' => 'work-teams.index', 'icon' => '◫', 'pattern' => 'work-teams.*', 'roles' => null],
             ],
             'ADMINISTRASI' => [

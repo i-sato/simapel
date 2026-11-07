@@ -4,6 +4,14 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Ditambahkan (MVP-1 langkah 3)
+
+- Menu Pelatihan: daftar dengan filter tim/status/periode, form draft per bagian, detail, dan finalisasi dengan konfirmasi ([docs/perubahan/0007-pelatihan.md](docs/perubahan/0007-pelatihan.md), ADR 0009).
+- Status Draft → Final dan status waktu yang diturunkan dari tanggal (Akan dibuka, Pendaftaran, Penetapan peserta, Pelaksanaan, Selesai).
+- Salinan ketentuan SOP tim kerja saat finalisasi, peringatan jeda persiapan terhadap "administrasi siap", dan kunci ketentuan yang sudah dipakai pelatihan.
+- Learning path per tim kerja (Level 1 Dasar, 2 Menengah, 3 Mahir; satu level satu pelatihan per path).
+- Hak akses pelatihan: Ketua tim terkait dan Super Admin menyusun draft, Super Admin memfinalisasi, semua pegawai melihat.
+
 ### Diperbaiki
 
 - Uji UI kembali berjalan setelah image Playwright naik ke v1.65.0: `@playwright/test` disamakan ke 1.65.0, pemeriksa versi ditambahkan di `make e2e*` dan CI, dan aturan Dependabot untuk Playwright diperbaiki ([docs/perubahan/0006-playwright-1-65.md](docs/perubahan/0006-playwright-1-65.md)).

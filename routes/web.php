@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\WorkTeamController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,15 @@ Route::middleware(['auth', 'password.change-required'])->group(function (): void
     // Tim kerja: terbuka untuk semua pegawai (read-only).
     Route::get('/work-teams', [WorkTeamController::class, 'index'])->name('work-teams.index');
     Route::get('/work-teams/{team}', [WorkTeamController::class, 'show'])->name('work-teams.show');
+
+    // Pelatihan: semua pegawai melihat; hak ubah/finalisasi diperiksa gate dan use case.
+    Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
+    Route::get('/trainings/create', [TrainingController::class, 'create'])->middleware('can:create-training')->name('trainings.create');
+    Route::post('/trainings', [TrainingController::class, 'store'])->middleware('can:create-training')->name('trainings.store');
+    Route::get('/trainings/{training}', [TrainingController::class, 'show'])->name('trainings.show');
+    Route::get('/trainings/{training}/edit', [TrainingController::class, 'edit'])->middleware('can:update-training,training')->name('trainings.edit');
+    Route::put('/trainings/{training}', [TrainingController::class, 'update'])->middleware('can:update-training,training')->name('trainings.update');
+    Route::post('/trainings/{training}/finalize', [TrainingController::class, 'finalize'])->middleware('can:finalize-training,training')->name('trainings.finalize');
 
     // Khusus Super Admin.
     Route::middleware('can:manage-organization')->group(function (): void {

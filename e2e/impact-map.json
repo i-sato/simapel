@@ -172,7 +172,8 @@
                 "@layout",
                 "@dashboard",
                 "@tim-kerja",
-                "@pengaturan"
+                "@pengaturan",
+                "@pelatihan"
             ]
         },
         {
@@ -206,7 +207,8 @@
                 "@auth",
                 "@pegawai",
                 "@tim-kerja",
-                "@pengaturan"
+                "@pengaturan",
+                "@pelatihan"
             ]
         },
         {
@@ -216,7 +218,8 @@
                 "@auth",
                 "@pegawai",
                 "@tim-kerja",
-                "@pengaturan"
+                "@pengaturan",
+                "@pelatihan"
             ]
         },
         {
@@ -283,27 +286,31 @@
         {
             "pattern": "app/Domain/Organization/**",
             "tags": [
-                "@tim-kerja"
+                "@tim-kerja",
+                "@pelatihan"
             ]
         },
         {
             "pattern": "app/Application/Organization/**",
             "tags": [
                 "@tim-kerja",
-                "@pengaturan"
+                "@pengaturan",
+                "@pelatihan"
             ]
         },
         {
             "pattern": "app/Models/WorkTeam.php",
             "tags": [
                 "@tim-kerja",
-                "@pengaturan"
+                "@pengaturan",
+                "@pelatihan"
             ]
         },
         {
             "pattern": "app/Models/TeamMembership.php",
             "tags": [
-                "@tim-kerja"
+                "@tim-kerja",
+                "@pelatihan"
             ]
         },
         {
@@ -316,7 +323,8 @@
             "pattern": "resources/views/components/**",
             "tags": [
                 "@pengaturan",
-                "@tim-kerja"
+                "@tim-kerja",
+                "@pelatihan"
             ]
         },
         {
@@ -347,7 +355,8 @@
             "pattern": "app/Domain/Sop/**",
             "tags": [
                 "@pengaturan",
-                "@tim-kerja"
+                "@tim-kerja",
+                "@pelatihan"
             ]
         },
         {
@@ -360,7 +369,8 @@
             "pattern": "app/Application/Sop/**",
             "tags": [
                 "@pengaturan",
-                "@tim-kerja"
+                "@tim-kerja",
+                "@pelatihan"
             ]
         },
         {
@@ -373,7 +383,8 @@
             "pattern": "app/Models/SopProvisionRecord.php",
             "tags": [
                 "@pengaturan",
-                "@tim-kerja"
+                "@tim-kerja",
+                "@pelatihan"
             ]
         },
         {
@@ -383,6 +394,48 @@
         {
             "pattern": "database/seeders/DatabaseSeeder.php",
             "tags": []
+        },
+        {
+            "pattern": "resources/views/trainings/**",
+            "tags": [
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "app/Http/Controllers/TrainingController.php",
+            "tags": [
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "app/Http/Requests/Training/**",
+            "tags": [
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "app/Domain/Training/**",
+            "tags": [
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "app/Application/Training/**",
+            "tags": [
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "app/Models/TrainingRecord.php",
+            "tags": [
+                "@pelatihan"
+            ]
+        },
+        {
+            "pattern": "app/Models/LearningPathRecord.php",
+            "tags": [
+                "@pelatihan"
+            ]
         },
         {
             "pattern": "app/Console/**",

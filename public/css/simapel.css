@@ -154,6 +154,9 @@ tbody tr:hover { background: #ffffff04; }
 .deadline-late { color: #fda4af; }
 .deadline-good { color: #86efac; }
 .nowrap { white-space: nowrap; }
+.meta-list { display: grid; grid-template-columns: minmax(130px, 36%) 1fr; gap: 8px 14px; margin: 0; }
+.meta-list dt { color: var(--muted); }
+.meta-list dd { margin: 0; overflow-wrap: anywhere; }
 
 /* --- Halaman masuk & galat (gaya halaman login referensi) ---------------- */
 .auth-wrap { min-height: 100vh; display: grid; place-items: center; padding: 20px; background: radial-gradient(circle at 30% 10%, #1b3151 0, #0b1220 45%); }
@@ -205,6 +208,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: non
 }
 
 @media (max-width: 720px) {
+    .meta-list { grid-template-columns: 1fr; gap: 2px; }
+    .meta-list dd { margin-bottom: 8px; }
     .layout { display: block; }
     .sidebar { position: static; padding: 12px; gap: 10px; border-right: 0; border-bottom: 1px solid var(--border); }
     .brand { padding-bottom: 10px; }

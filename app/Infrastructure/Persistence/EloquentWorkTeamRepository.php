@@ -54,4 +54,16 @@ final class EloquentWorkTeamRepository implements WorkTeamRepository
     {
         WorkTeam::query()->whereKey($teamId)->update(['registration_guide_url' => $url]);
     }
+
+    public function teamIdsLedBy(int $employeeId): array
+    {
+        $ids = TeamMembership::query()
+            ->where('user_id', $employeeId)
+            ->where('role', TeamRole::Ketua)
+            ->orderBy('work_team_id')
+            ->pluck('work_team_id')
+            ->all();
+
+        return array_values(array_map(intval(...), $ids));
+    }
 }

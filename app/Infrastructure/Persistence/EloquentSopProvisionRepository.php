@@ -11,6 +11,7 @@ use App\Domain\Sop\AdministrativeDeadlines;
 use App\Domain\Sop\SopProvision;
 use App\Domain\Sop\SopReference;
 use App\Models\SopProvisionRecord;
+use App\Models\TrainingRecord;
 use DateTimeImmutable;
 
 final class EloquentSopProvisionRepository implements SopProvisionRepository
@@ -60,9 +61,7 @@ final class EloquentSopProvisionRepository implements SopProvisionRepository
 
     public function isReferenced(int $id): bool
     {
-        // Salinan ketentuan pada pelatihan dibuat di langkah 3 MVP-1; sampai tabel
-        // pelatihan tersedia, belum ada ketentuan yang dirujuk.
-        return false;
+        return TrainingRecord::query()->where('sop_provision_id', $id)->exists();
     }
 
     /**
