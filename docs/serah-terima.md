@@ -10,7 +10,7 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Clean architecture + uji arsitektur | Selesai |
 | Autentikasi NIP, keamanan akun, audit login | Selesai |
 | Tema UI referensi, layout, halaman galat | Selesai |
-| Pengujian: 377 PHPUnit, coverage 98%, 37 uji UI Playwright, 15 uji resolver | Selesai |
+| Pengujian: 399 PHPUnit, coverage 98%, 39 uji UI Playwright, 16 uji resolver | Selesai |
 | CI/CD GitHub Actions (CI + rilis image) | Siap; berjalan setelah repository remote dibuat |
 | Pegawai, tim kerja, model peran berlapis (langkah 1) | Selesai (PR `feat/peran-pegawai-tim`, ADR 0008) |
 | Pengaturan link dan ketentuan SOP berversi (langkah 2) | Selesai (PR `feat/pengaturan`, ADR 0010); draf 2026 menunggu tinjauan Super Admin |
@@ -18,6 +18,7 @@ Dokumen ini adalah titik awal bagi siapa pun yang melanjutkan proyek. Perbarui d
 | Penugasan Admin/Panitia dan bentrok jadwal (langkah 4) | Selesai (PR `feat/penugasan`) |
 | Template WA (langkah 5) | Selesai (PR `feat/template-wa`) |
 | Administrasi BAP/SK/ST, peringatan, dashboard (langkah 6) | Selesai (PR `feat/administrasi-peringatan`) |
+| Mitra, wilayah kerja, jam penutupan pendaftaran (K18) | Selesai (PR `feat/mitra-wilayah-kerja`, ADR 0011) |
 | Pemetaan beban kerja, UAT | Belum: langkah 7–8 di [mvp-1/panduan.md](mvp-1/panduan.md) |
 | SOP Builder dan alur tahap SOP | Ditunda dari MVP-1 |
 | Assessment & sertifikat | Ditunda (ADR 0007) |
@@ -58,6 +59,10 @@ Tanggal keputusan: 4 November 2026.
     - "segera berakhir" hanya saat pelatihan berlangsung;
     - "tenggat hari ini" berlaku 00.00–23.59 WIB pada hari tenggat;
     - "administrasi kritis" mulai sehari setelah tenggat administrasi siap.
+13. Keputusan 7 November 2026 (K18, ADR 0011):
+    - wilayah kerja per pelatihan menentukan zona waktu, dan jam penutupan pendaftaran per pelatihan (default 23.59 WIB) ditampilkan di template WA sesuai zona waktunya;
+    - tabel mitra dengan autocomplete; mitra baru dapat ditambahkan Ketua, Super Admin, dan semua pegawai bertanda Admin;
+    - data lama tidak dipetakan otomatis.
 
 ## Cara melanjutkan
 
@@ -86,6 +91,7 @@ Ringkasnya, model organisasi berubah menjadi tim kerja (KDD, ASN Digital, DTA) d
 ## Batasan yang diketahui
 
 - MFA belum tersedia (usulan R6, ditunda untuk MVP 1).
+- Mengubah wilayah mitra tidak menggeser wilayah pelatihan yang sudah ada sampai pelatihan disimpan ulang; penggabungan mitra duplikat yang terlanjur ada belum tersedia.
 - Bentrok penugasan diperiksa saat penugasan dibuat; perubahan tanggal pelatihan sesudahnya hanya memunculkan badge bentrok, tanpa meminta alasan baru.
 - Uji UI berjalan dengan satu worker karena uji Super Admin berbagi satu sesi. Bila jumlah uji membuat waktu tunggu terlalu lama, pertimbangkan sesi admin per worker (perlu menyesuaikan batas login per IP di lingkungan e2e).
 - Alarm otomatis untuk event keamanan belum tersedia.

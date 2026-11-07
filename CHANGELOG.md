@@ -4,6 +4,15 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Ditambahkan (K18)
+
+- Wilayah kerja (DIY, Jawa Tengah, Bali) dan jam penutupan pendaftaran per pelatihan (default 23.59 WIB); template WA menampilkan batas pendaftaran sesuai zona waktu wilayah (WIB/WITA) ([docs/perubahan/0014-mitra-wilayah-kerja.md](docs/perubahan/0014-mitra-wilayah-kerja.md), ADR 0011).
+- Data mitra dengan autocomplete di form pelatihan; wilayah mitra otomatis menjadi wilayah pelatihan; mitra dikelola Super Admin, Ketua, dan pegawai bertanda Admin.
+
+### Diubah
+
+- Teks "Wilayah layanan" menjadi "Wilayah kerja"; isian "Mitra/lokasi" menjadi "Lokasi".
+
 ### Ditambahkan (MVP-1 langkah 6)
 
 - Dokumen administrasi BAP/SK/ST yang dibuat otomatis saat pelatihan difinalisasi: status Belum/Dalam proses/Selesai, nomor, tanggal, link berkas, dan delegasi dari Ketua ke Sekretaris tim ([docs/perubahan/0013-administrasi-peringatan.md](docs/perubahan/0013-administrasi-peringatan.md)).
