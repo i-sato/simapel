@@ -6,10 +6,12 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
     testDir: './tests',
-    fullyParallel: true,
+    // Satu worker: uji Super Admin berbagi satu sesi (auth.setup.ts, karena login dibatasi
+    // per IP), sehingga pesan flash dan error formulir tertukar bila uji berjalan paralel.
+    fullyParallel: false,
     forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 1 : 0,
-    workers: process.env.CI ? 2 : undefined,
+    workers: 1,
     reporter: [['list'], ['html', { open: 'never', outputFolder: 'playwright-report' }]],
     outputDir: 'test-results',
     use: {

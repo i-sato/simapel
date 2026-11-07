@@ -53,3 +53,9 @@ test('halaman pegawai dan tim kerja memicu area masing-masing', () => {
     assert.deepEqual(resolveTags(['resources/views/employees/index.blade.php'], map).tags, ['@pegawai']);
     assert.deepEqual(resolveTags(['app/Domain/Organization/TeamComposition.php'], map).tags, ['@tim-kerja']);
 });
+
+test('pengaturan dan ketentuan SOP memicu area @pengaturan serta tim kerja yang menampilkan badge', () => {
+    assert.deepEqual(resolveTags(['resources/views/settings/index.blade.php'], map).tags, ['@pengaturan']);
+    assert.deepEqual(resolveTags(['app/Domain/Sop/SopProvisionResolver.php'], map).tags, ['@pengaturan', '@tim-kerja']);
+    assert.deepEqual(resolveTags(['database/seeders/SopProvisionDraftSeeder.php'], map).tags, []);
+});

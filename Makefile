@@ -23,6 +23,7 @@ setup: ## Pertama kali: .env acak, build image, dependensi, APP_KEY, migrasi
 	$(APP) composer install --no-interaction --no-progress
 	@grep -q '^APP_KEY=base64:' .env || $(APP) php artisan key:generate --ansi
 	$(APP) php artisan migrate --force
+	$(APP) php artisan db:seed --force
 	$(COMPOSE) up -d --wait
 	@echo "SIMAPEL berjalan di http://localhost:$$(grep '^APP_PORT=' .env | cut -d= -f2). Buat akun pertama: make user"
 

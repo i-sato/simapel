@@ -48,7 +48,10 @@ Setiap eksekusi `make e2e*` menjalankan langkah berikut:
 | `@errors` | `errors.spec.ts` | Halaman galat bertema |
 | `@pegawai` | `pegawai.spec.ts` | Daftar pegawai (NIP tersamar), tambah pegawai, impor CSV, akses ditolak untuk pegawai biasa |
 | `@tim-kerja` | `tim-kerja.spec.ts` | Kelola anggota tim (tambah, ubah peran, keluarkan), tampilan baca saja untuk pegawai |
+| `@pengaturan` | `pengaturan.spec.ts` | Link panduan tim, penolakan link non-http(s), siklus draf ketentuan SOP (buat, validasi, ubah, hapus), badge peringatan, 403 untuk pegawai biasa |
 | `@setup` | `auth.setup.ts` | Selalu ikut dijalankan |
+
+Uji berjalan dengan **satu worker**. Uji Super Admin berbagi satu sesi dari `auth.setup.ts` (login dibatasi per IP), sehingga eksekusi paralel membuat pesan flash dan error formulir tertukar antaruji.
 
 ### Uji UI terdampak saja
 

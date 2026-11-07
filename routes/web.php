@@ -3,6 +3,8 @@
 use App\Http\Controllers\Account\PasswordController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EmployeeImportController;
+use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\SopProvisionController;
 use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -44,5 +46,17 @@ Route::middleware(['auth', 'password.change-required'])->group(function (): void
         Route::post('/work-teams/{team}/members', [TeamMemberController::class, 'store'])->name('work-teams.members.store');
         Route::put('/work-teams/{team}/members/{employee}', [TeamMemberController::class, 'update'])->name('work-teams.members.update');
         Route::delete('/work-teams/{team}/members/{employee}', [TeamMemberController::class, 'destroy'])->name('work-teams.members.destroy');
+
+        Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+        Route::put('/settings/global', [SettingsController::class, 'updateGlobal'])->name('settings.global.update');
+        Route::put('/settings/teams/{team}/guide', [SettingsController::class, 'updateTeamGuide'])->name('settings.team-guide.update');
+
+        Route::get('/settings/sop-provisions/create', [SopProvisionController::class, 'create'])->name('sop-provisions.create');
+        Route::post('/settings/sop-provisions', [SopProvisionController::class, 'store'])->name('sop-provisions.store');
+        Route::post('/settings/sop-provisions/copy', [SopProvisionController::class, 'copy'])->name('sop-provisions.copy');
+        Route::get('/settings/sop-provisions/{provision}/edit', [SopProvisionController::class, 'edit'])->name('sop-provisions.edit');
+        Route::put('/settings/sop-provisions/{provision}', [SopProvisionController::class, 'update'])->name('sop-provisions.update');
+        Route::delete('/settings/sop-provisions/{provision}', [SopProvisionController::class, 'destroy'])->name('sop-provisions.destroy');
+        Route::post('/settings/sop-provisions/{provision}/activate', [SopProvisionController::class, 'activate'])->name('sop-provisions.activate');
     });
 });

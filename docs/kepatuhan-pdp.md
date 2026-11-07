@@ -40,6 +40,7 @@ Rujukan pasal di bawah perlu diverifikasi tim hukum.
 | Keanggotaan tim kerja (tim, tahun, peran) | `team_memberships` | Pembagian kerja dan transparansi beban kerja | Selama tahun anggaran + masa arsip (**JRA**) | Perubahan tercatat di audit log; dilihat semua pegawai sesuai keputusan K9 |
 | Hash kata sandi | `users.password` | Autentikasi | Selama akun ada | bcrypt; tidak pernah ditampilkan, di-log, atau di-flash |
 | Alamat IP, user agent, waktu akses | `sessions`, `audit_logs` | Keamanan & jejak audit | Sesi: maks. lama sesi. Audit: **JRA** (usulan 2 tahun) | Audit append-only; akses dibatasi Super Admin (modul audit direncanakan) |
+| Id akun pengubah pengaturan dan ketentuan SOP | `settings.updated_by`, `sop_provisions.created_by/updated_by`, `audit_logs` | Akuntabilitas perubahan konfigurasi | Mengikuti audit (**JRA**) | Hanya id akun; isi pengaturan dan ketentuan (link, nomor SOP, angka hari) bukan data pribadi |
 | Data peserta pelatihan | Belum ada | Administrasi pelatihan | — | Menunggu data dukung & penilaian dampak |
 
 ## Aturan teknis yang wajib dipatuhi

@@ -48,4 +48,10 @@ final class InMemoryWorkTeamRepository implements WorkTeamRepository
     {
         unset($this->members[$teamId][$employeeId]);
     }
+
+    public function setRegistrationGuideUrl(int $teamId, ?string $url): void
+    {
+        $team = $this->teams[$teamId];
+        $this->teams[$teamId] = new WorkTeamSummary($team->id, $team->code, $team->name, $team->year, $url);
+    }
 }

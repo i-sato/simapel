@@ -12,8 +12,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property WorkTeamCode $code
  * @property string $name
  * @property int $year
+ * @property string|null $registration_guide_url
  */
-#[Fillable(['code', 'name', 'year'])]
+#[Fillable(['code', 'name', 'year', 'registration_guide_url'])]
 class WorkTeam extends Model
 {
     /**

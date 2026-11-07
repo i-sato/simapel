@@ -42,7 +42,7 @@ final readonly class NavigationComposer
                     'label' => $item['label'],
                     'url' => route($item['route']),
                     'icon' => $item['icon'],
-                    'active' => $this->request->routeIs($item['pattern']),
+                    'active' => $this->request->routeIs(...(array) $item['pattern']),
                 ];
             }
 
@@ -57,7 +57,7 @@ final readonly class NavigationComposer
     /**
      * Daftar menu per bagian. `roles` null berarti tampil untuk semua peran.
      *
-     * @return array<string, list<array{label: string, route: string, icon: string, pattern: string, roles: list<Role>|null}>>
+     * @return array<string, list<array{label: string, route: string, icon: string, pattern: string|list<string>, roles: list<Role>|null}>>
      */
     private function definition(): array
     {
@@ -68,6 +68,7 @@ final readonly class NavigationComposer
             ],
             'ADMINISTRASI' => [
                 ['label' => 'Pegawai', 'route' => 'employees.index', 'icon' => '♙', 'pattern' => 'employees.*', 'roles' => [Role::SuperAdmin]],
+                ['label' => 'Pengaturan', 'route' => 'settings.index', 'icon' => '≡', 'pattern' => ['settings.*', 'sop-provisions.*'], 'roles' => [Role::SuperAdmin]],
             ],
             'AKUN' => [
                 ['label' => 'Keamanan Akun', 'route' => 'account.password.edit', 'icon' => '◇', 'pattern' => 'account.*', 'roles' => null],

@@ -4,6 +4,18 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 
 ## [Belum dirilis]
 
+### Ditambahkan (MVP-1 langkah 2)
+
+- Halaman Pengaturan khusus Super Admin: link login/registrasi Digitalent, link panduan pendaftaran DTS, ambang "segera berakhir" (default 7 hari), dan link panduan pendaftaran per tim kerja ([docs/perubahan/0005-pengaturan-ketentuan-sop.md](docs/perubahan/0005-pengaturan-ketentuan-sop.md)).
+- Ketentuan SOP berversi per tim kerja per tahun anggaran: status Draf → Berlaku → Diganti, revisi di tengah tahun, salin dari tahun sebelumnya, dan resolver dengan fallback ke tahun sebelumnya (ADR 0010).
+- Badge peringatan "SOP belum dilampirkan" dan "Ketentuan 20XX belum ditetapkan" di halaman Pengaturan dan Tim Kerja.
+- Seeder draf ketentuan 2026 untuk DTA, KDD, dan ASN dari transkripsi SOP. Draf tidak diberlakukan otomatis, dan nilai yang belum pasti ditandai "Perlu konfirmasi".
+
+### Diubah (MVP-1 langkah 2)
+
+- `make setup` menjalankan `db:seed` setelah migrasi.
+- Playwright berjalan dengan satu worker agar uji yang berbagi sesi Super Admin tidak saling bertukar pesan flash.
+
 ### Ditambahkan (MVP-1 langkah 1)
 
 - Model peran berlapis (ADR 0008): peran global Super Admin/Pegawai, tim kerja KDD/ASN/DTA per tahun dengan Ketua/Sekretaris/Anggota, kapabilitas Admin pada pegawai ([docs/perubahan/0004-peran-pegawai-tim.md](docs/perubahan/0004-peran-pegawai-tim.md)).

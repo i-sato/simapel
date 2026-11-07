@@ -21,7 +21,7 @@ make user
 
 `make setup` menjalankan langkah berikut:
 1. Membuat `.env` dari `.env.example` dengan kata sandi database acak dan izin file `600`, tanpa menimpa `.env` yang sudah ada.
-2. Build image, menjalankan `composer install`, membuat `APP_KEY` bila kosong, lalu migrasi.
+2. Build image, menjalankan `composer install`, membuat `APP_KEY` bila kosong, migrasi, lalu `db:seed` (draf ketentuan SOP 2026, idempoten, tanpa akun).
 
 Tidak ada akun maupun kata sandi bawaan. Akun pertama dibuat lewat `make user` (`php artisan simapel:user:create`).
 
