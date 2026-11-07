@@ -21,6 +21,13 @@ enum AuditEventType: string
     case TeamMemberAssigned = 'team.member_assigned';
     case TeamMemberRoleChanged = 'team.member_role_changed';
     case TeamMemberRemoved = 'team.member_removed';
+    case TeamGuideUpdated = 'team.guide_updated';
+    case SettingUpdated = 'setting.updated';
+    case SopProvisionDrafted = 'sop_provision.drafted';
+    case SopProvisionUpdated = 'sop_provision.updated';
+    case SopProvisionDeleted = 'sop_provision.deleted';
+    case SopProvisionActivated = 'sop_provision.activated';
+    case SopProvisionSuperseded = 'sop_provision.superseded';
 
     public function label(): string
     {
@@ -40,6 +47,13 @@ enum AuditEventType: string
             self::TeamMemberAssigned => 'Anggota tim ditambahkan',
             self::TeamMemberRoleChanged => 'Peran anggota tim diubah',
             self::TeamMemberRemoved => 'Anggota tim dikeluarkan',
+            self::TeamGuideUpdated => 'Link panduan tim kerja diubah',
+            self::SettingUpdated => 'Pengaturan diubah',
+            self::SopProvisionDrafted => 'Draf ketentuan SOP dibuat',
+            self::SopProvisionUpdated => 'Draf ketentuan SOP diubah',
+            self::SopProvisionDeleted => 'Draf ketentuan SOP dihapus',
+            self::SopProvisionActivated => 'Ketentuan SOP diberlakukan',
+            self::SopProvisionSuperseded => 'Ketentuan SOP diganti',
         };
     }
 }
